@@ -1,0 +1,322 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.shell{background:var(--color-background-secondary);min-height:900px;display:flex;font-size:14px}
+.sidebar{width:200px;min-width:200px;background:var(--color-background-primary);border-right:0.5px solid var(--color-border-tertiary);padding:0;display:flex;flex-direction:column}
+.logo{padding:16px 16px 12px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:8px}
+.logo-icon{width:28px;height:28px;background:#185FA5;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px}
+.logo-text{font-size:13px;font-weight:500;color:var(--color-text-primary);line-height:1.2}
+.logo-sub{font-size:10px;color:var(--color-text-secondary)}
+.nav{padding:8px 0;flex:1}
+.nav-section{padding:8px 12px 4px;font-size:10px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.05em;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;color:var(--color-text-secondary);font-size:13px;border-left:2px solid transparent}
+.nav-item.active{color:#185FA5;background:var(--color-background-info);border-left-color:#185FA5;border-radius:0 4px 4px 0}
+.nav-item i{font-size:16px}
+.badge{margin-left:auto;background:#E24B4A;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px}
+.badge-warn{background:#BA7517;color:#fff}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);padding:0 20px;height:48px;display:flex;align-items:center;gap:12px}
+.topbar-title{font-weight:500;font-size:15px;color:var(--color-text-primary);flex:1}
+.tb-btn{display:flex;align-items:center;gap:6px;padding:5px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:12px;color:var(--color-text-secondary);cursor:pointer;background:var(--color-background-primary)}
+.avatar{width:28px;height:28px;border-radius:50%;background:#B5D4F4;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#0C447C}
+.content{padding:16px 20px;flex:1;overflow:auto}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.kpi{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px}
+.kpi-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;display:flex;align-items:center;gap:4px}
+.kpi-value{font-size:22px;font-weight:500;color:var(--color-text-primary);line-height:1}
+.kpi-delta{font-size:11px;margin-top:4px}
+.kpi-delta.up{color:#3B6D11}
+.kpi-delta.down{color:#A32D2D}
+.kpi-delta.warn{color:#BA7517}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.three-col{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:12px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.card-title{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.card-action{font-size:11px;color:#185FA5;cursor:pointer}
+.table{width:100%;border-collapse:collapse;font-size:12px}
+.table th{text-align:left;padding:6px 8px;color:var(--color-text-secondary);font-weight:500;border-bottom:0.5px solid var(--color-border-tertiary);font-size:11px}
+.table td{padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:middle}
+.table tr:last-child td{border-bottom:none}
+.pill{display:inline-flex;align-items:center;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:500}
+.pill-red{background:#FCEBEB;color:#791F1F}
+.pill-orange{background:#FAEEDA;color:#633806}
+.pill-green{background:#EAF3DE;color:#27500A}
+.pill-blue{background:#E6F1FB;color:#0C447C}
+.pill-gray{background:#F1EFE8;color:#444441}
+.sla-bar{height:6px;border-radius:3px;background:var(--color-background-secondary);overflow:hidden;margin-top:4px}
+.sla-fill{height:100%;border-radius:3px}
+.sla-ok{background:#639922}
+.sla-warn{background:#BA7517}
+.sla-crit{background:#E24B4A}
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:90px;padding-top:10px}
+.bar-col{display:flex;flex-direction:column;align-items:center;flex:1;gap:4px}
+.bar{width:100%;border-radius:3px 3px 0 0;min-height:4px}
+.bar-lbl{font-size:9px;color:var(--color-text-secondary)}
+.donut-row{display:flex;align-items:center;gap:16px}
+.donut-legend{flex:1;display:flex;flex-direction:column;gap:6px}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--color-text-secondary)}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.alert-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12px}
+.alert-item:last-child{border-bottom:none}
+.alert-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.alert-crit{background:#FCEBEB;color:#A32D2D}
+.alert-warn{background:#FAEEDA;color:#854F0B}
+.status-row{display:flex;align-items:center;gap:6px;font-size:11px;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.status-row:last-child{border-bottom:none}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dot-g{background:#639922}
+.dot-o{background:#BA7517}
+.dot-r{background:#E24B4A}
+</style>
+
+<div class="shell">
+  <div class="sidebar">
+    <div class="logo">
+      <div class="logo-icon"><i class="ti ti-shield-check" aria-hidden="true"></i></div>
+      <div>
+        <div class="logo-text">RéclamPro</div>
+        <div class="logo-sub">Admin — Banque SIB-CI</div>
+      </div>
+    </div>
+    <div class="nav">
+      <div class="nav-section">Pilotage</div>
+      <div class="nav-item active"><i class="ti ti-layout-dashboard" aria-hidden="true"></i> Tableau de bord</div>
+      <div class="nav-item"><i class="ti ti-chart-bar" aria-hidden="true"></i> Reportings</div>
+      <div class="nav-item"><i class="ti ti-file-export" aria-hidden="true"></i> Registre BCEAO <span class="badge-warn badge">!</span></div>
+      <div class="nav-section">Dossiers</div>
+      <div class="nav-item"><i class="ti ti-folder-open" aria-hidden="true"></i> Toutes les réclamations <span class="badge">7</span></div>
+      <div class="nav-item"><i class="ti ti-alarm" aria-hidden="true"></i> Alertes SLA</div>
+      <div class="nav-item"><i class="ti ti-arrow-up" aria-hidden="true"></i> Escalades</div>
+      <div class="nav-section">Conformité</div>
+      <div class="nav-item"><i class="ti ti-certificate" aria-hidden="true"></i> Audit & logs</div>
+      <div class="nav-item"><i class="ti ti-users" aria-hidden="true"></i> Agents</div>
+      <div class="nav-section">Administration</div>
+      <div class="nav-item"><i class="ti ti-settings" aria-hidden="true"></i> Paramètres SLA</div>
+      <div class="nav-item"><i class="ti ti-building" aria-hidden="true"></i> Multi-entités</div>
+    </div>
+    <div style="padding:12px;border-top:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:8px">
+      <div class="avatar">KD</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:500;color:var(--color-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Konan Diabaté</div>
+        <div style="font-size:10px;color:var(--color-text-secondary)">Superviseur conformité</div>
+      </div>
+      <i class="ti ti-logout" style="font-size:16px;color:var(--color-text-tertiary)" aria-hidden="true"></i>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title">Tableau de bord — Supervision</div>
+      <div class="tb-btn"><i class="ti ti-calendar" style="font-size:14px" aria-hidden="true"></i> Mai 2025</div>
+      <div class="tb-btn"><i class="ti ti-download" style="font-size:14px" aria-hidden="true"></i> Exporter</div>
+      <div class="tb-btn" style="background:var(--color-background-info);color:#185FA5;border-color:#B5D4F4"><i class="ti ti-plus" style="font-size:14px" aria-hidden="true"></i> Nouveau dossier</div>
+      <div class="avatar" style="width:32px;height:32px;font-size:13px">KD</div>
+    </div>
+
+    <div class="content">
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-label"><i class="ti ti-folder" style="font-size:13px;color:#185FA5" aria-hidden="true"></i> Reçues ce mois</div>
+          <div class="kpi-value">342</div>
+          <div class="kpi-delta up">↑ +18 vs mois dernier</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label"><i class="ti ti-clock" style="font-size:13px;color:#BA7517" aria-hidden="true"></i> En cours</div>
+          <div class="kpi-value" style="color:#BA7517">87</div>
+          <div class="kpi-delta warn">dont 12 en alerte SLA</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label"><i class="ti ti-check" style="font-size:13px;color:#3B6D11" aria-hidden="true"></i> Taux résolution 5j</div>
+          <div class="kpi-value" style="color:#3B6D11">84%</div>
+          <div class="kpi-delta up">↑ +6% vs objectif 80%</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label"><i class="ti ti-alarm" style="font-size:13px;color:#A32D2D" aria-hidden="true"></i> SLA dépassés</div>
+          <div class="kpi-value" style="color:#A32D2D">7</div>
+          <div class="kpi-delta down">↑ +3 vs semaine passée</div>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title"><i class="ti ti-folder-open" style="font-size:14px;vertical-align:-2px;margin-right:4px" aria-hidden="true"></i>Dossiers récents — alertes SLA</span>
+            <span class="card-action">Voir tout →</span>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID Dossier</th>
+                <th>Client</th>
+                <th>Catégorie</th>
+                <th>Priorité</th>
+                <th>SLA restant</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-family:var(--font-mono);font-size:11px;color:#185FA5">RECB-202505-00341</td>
+                <td>Adjoua Bamba</td>
+                <td>Débit non autorisé</td>
+                <td><span class="pill pill-red">Critique</span></td>
+                <td>
+                  <div style="color:#A32D2D;font-weight:500">Échu</div>
+                  <div class="sla-bar"><div class="sla-fill sla-crit" style="width:100%"></div></div>
+                </td>
+                <td><span class="pill pill-red">ALERTE</span></td>
+              </tr>
+              <tr>
+                <td style="font-family:var(--font-mono);font-size:11px;color:#185FA5">RECB-202505-00338</td>
+                <td>Moussa Coulibaly</td>
+                <td>Frais contestés</td>
+                <td><span class="pill pill-orange">Urgent</span></td>
+                <td>
+                  <div style="color:#BA7517;font-weight:500">4h restantes</div>
+                  <div class="sla-bar"><div class="sla-fill sla-warn" style="width:88%"></div></div>
+                </td>
+                <td><span class="pill pill-orange">EN COURS</span></td>
+              </tr>
+              <tr>
+                <td style="font-family:var(--font-mono);font-size:11px;color:#185FA5">RECB-202505-00335</td>
+                <td>Awa Konaté</td>
+                <td>Virement erroné</td>
+                <td><span class="pill pill-orange">Urgent</span></td>
+                <td>
+                  <div style="color:#BA7517;font-weight:500">1j 2h</div>
+                  <div class="sla-bar"><div class="sla-fill sla-warn" style="width:75%"></div></div>
+                </td>
+                <td><span class="pill pill-blue">EN VALIDATION</span></td>
+              </tr>
+              <tr>
+                <td style="font-family:var(--font-mono);font-size:11px;color:#185FA5">RECB-202505-00330</td>
+                <td>Ibrahim Diallo</td>
+                <td>Comportement agent</td>
+                <td><span class="pill pill-gray">Standard</span></td>
+                <td>
+                  <div style="color:#3B6D11;font-weight:500">2j 8h</div>
+                  <div class="sla-bar"><div class="sla-fill sla-ok" style="width:40%"></div></div>
+                </td>
+                <td><span class="pill pill-blue">AFFECTÉ</span></td>
+              </tr>
+              <tr>
+                <td style="font-family:var(--font-mono);font-size:11px;color:#185FA5">RECB-202505-00328</td>
+                <td>Fatou Traoré</td>
+                <td>Usurpation identité</td>
+                <td><span class="pill pill-red">Critique</span></td>
+                <td>
+                  <div style="color:#BA7517;font-weight:500">6h restantes</div>
+                  <div class="sla-bar"><div class="sla-fill sla-warn" style="width:82%"></div></div>
+                </td>
+                <td><span class="pill pill-red">ESCALADÉ</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title">Répartition par canal</span>
+            </div>
+            <div class="donut-row">
+              <svg width="72" height="72" viewBox="0 0 72 72">
+                <circle cx="36" cy="36" r="28" fill="none" stroke="#F1EFE8" stroke-width="10"/>
+                <circle cx="36" cy="36" r="28" fill="none" stroke="#185FA5" stroke-width="10" stroke-dasharray="70 106" stroke-dashoffset="17" stroke-linecap="round"/>
+                <circle cx="36" cy="36" r="28" fill="none" stroke="#1D9E75" stroke-width="10" stroke-dasharray="35 106" stroke-dashoffset="-53" stroke-linecap="round"/>
+                <circle cx="36" cy="36" r="28" fill="none" stroke="#BA7517" stroke-width="10" stroke-dasharray="25 106" stroke-dashoffset="-88" stroke-linecap="round"/>
+                <circle cx="36" cy="36" r="28" fill="none" stroke="#E24B4A" stroke-width="10" stroke-dasharray="11 106" stroke-dashoffset="-113" stroke-linecap="round"/>
+              </svg>
+              <div class="donut-legend">
+                <div class="leg-item"><div class="leg-dot" style="background:#185FA5"></div> Email — 40%</div>
+                <div class="leg-item"><div class="leg-dot" style="background:#1D9E75"></div> Agence — 20%</div>
+                <div class="leg-item"><div class="leg-dot" style="background:#BA7517"></div> WhatsApp — 15%</div>
+                <div class="leg-item"><div class="leg-dot" style="background:#E24B4A"></div> Téléphone — 7%</div>
+                <div class="leg-item"><div class="leg-dot" style="background:#888780"></div> Web / autre — 18%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><span class="card-title">Alertes actives</span><span class="badge">5</span></div>
+            <div class="alert-item">
+              <div class="alert-icon alert-crit"><i class="ti ti-clock-x" style="font-size:14px" aria-hidden="true"></i></div>
+              <div style="flex:1">
+                <div style="font-weight:500;color:var(--color-text-primary)">SLA échu — RECB-341</div>
+                <div style="color:var(--color-text-secondary);font-size:11px">Fraude · Adjoua Bamba · il y a 2h</div>
+              </div>
+            </div>
+            <div class="alert-item">
+              <div class="alert-icon alert-warn"><i class="ti ti-arrow-up" style="font-size:14px" aria-hidden="true"></i></div>
+              <div style="flex:1">
+                <div style="font-weight:500;color:var(--color-text-primary)">Escalade auto — RECB-328</div>
+                <div style="color:var(--color-text-secondary);font-size:11px">Critique · 82% SLA · Fatou Traoré</div>
+              </div>
+            </div>
+            <div class="alert-item">
+              <div class="alert-icon alert-warn"><i class="ti ti-file-alert" style="font-size:14px" aria-hidden="true"></i></div>
+              <div style="flex:1">
+                <div style="font-weight:500;color:var(--color-text-primary)">Rapport BCEAO — à valider</div>
+                <div style="color:var(--color-text-secondary);font-size:11px">Échéance : 01/06/2025</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head"><span class="card-title">Volume hebdomadaire — Mai 2025</span></div>
+          <div class="bar-chart">
+            <div class="bar-col"><div class="bar" style="height:55%;background:#B5D4F4"></div><div class="bar-lbl">S18</div></div>
+            <div class="bar-col"><div class="bar" style="height:70%;background:#B5D4F4"></div><div class="bar-lbl">S19</div></div>
+            <div class="bar-col"><div class="bar" style="height:48%;background:#B5D4F4"></div><div class="bar-lbl">S20</div></div>
+            <div class="bar-col"><div class="bar" style="height:85%;background:#185FA5"></div><div class="bar-lbl" style="color:#185FA5;font-weight:500">S21</div></div>
+          </div>
+          <div style="display:flex;gap:16px;margin-top:8px">
+            <div style="font-size:11px;color:var(--color-text-secondary)"><span style="color:#639922;font-weight:500">↑ Clôturées</span> 255</div>
+            <div style="font-size:11px;color:var(--color-text-secondary)"><span style="color:#BA7517;font-weight:500">● En cours</span> 87</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="card-title">Productivité agents — Top 5</span></div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <div class="status-row">
+              <div class="dot dot-g"></div>
+              <span style="flex:1;color:var(--color-text-primary)">Koné A.</span>
+              <span style="color:var(--color-text-secondary)">28 clôturés</span>
+              <span class="pill pill-green" style="font-size:10px">100% SLA</span>
+            </div>
+            <div class="status-row">
+              <div class="dot dot-g"></div>
+              <span style="flex:1;color:var(--color-text-primary)">Ouédraogo M.</span>
+              <span style="color:var(--color-text-secondary)">24 clôturés</span>
+              <span class="pill pill-green" style="font-size:10px">96% SLA</span>
+            </div>
+            <div class="status-row">
+              <div class="dot dot-g"></div>
+              <span style="flex:1;color:var(--color-text-primary)">Bamba S.</span>
+              <span style="color:var(--color-text-secondary)">19 clôturés</span>
+              <span class="pill pill-green" style="font-size:10px">94% SLA</span>
+            </div>
+            <div class="status-row">
+              <div class="dot dot-o"></div>
+              <span style="flex:1;color:var(--color-text-primary)">Touré D.</span>
+              <span style="color:var(--color-text-secondary)">14 clôturés</span>
+              <span class="pill pill-orange" style="font-size:10px">79% SLA</span>
+            </div>
+            <div class="status-row">
+              <div class="dot dot-r"></div>
+              <span style="flex:1;color:var(--color-text-primary)">Diallo F.</span>
+              <span style="color:var(--color-text-secondary)">11 clôturés</span>
+              <span class="pill pill-red" style="font-size:10px">61% SLA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

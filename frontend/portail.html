@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soumettre une réclamation — RéclamPro</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#185FA5">
+  <style>
+    body { background: linear-gradient(180deg, #E6F1FB 0%, #F7F5EE 300px); }
+    .portail-shell { max-width: 760px; margin: 0 auto; padding: 32px 24px; }
+    .portail-header { text-align: center; margin-bottom: 24px; }
+    .portail-logo {
+      width: 64px; height: 64px; background: var(--brand); color: #fff;
+      border-radius: 16px; display: flex; align-items: center; justify-content: center;
+      font-size: 28px; font-weight: 700; margin: 0 auto 12px;
+    }
+    .portail-title { font-size: 24px; font-weight: 600; }
+    .portail-sub { color: var(--text-soft); margin-top: 4px; }
+    .steps { display: flex; gap: 8px; margin: 16px 0 24px; justify-content: center; }
+    .step { padding: 6px 14px; border-radius: 16px; background: #fff; border: 1px solid var(--border); font-size: 12px; color: var(--text-soft); }
+    .step.active { background: var(--brand); color: #fff; border-color: var(--brand); font-weight: 500; }
+    .info-droits {
+      background: #fff; border-radius: 8px; padding: 14px 16px; margin-top: 24px;
+      font-size: 12px; color: var(--text-soft); border-left: 3px solid var(--brand);
+    }
+    .info-droits strong { color: var(--text); }
+  </style>
+</head>
+<body>
+  <div class="portail-shell">
+    <div class="portail-header">
+      <div class="portail-logo">R</div>
+      <div class="portail-title">Soumettre une réclamation</div>
+      <div class="portail-sub">Banque · Assurance — Service réclamations clients</div>
+    </div>
+
+    <div class="steps">
+      <div class="step active">1. Vos coordonnées</div>
+      <div class="step active">2. Votre réclamation</div>
+      <div class="step">3. Confirmation</div>
+    </div>
+
+    <div id="alerte"></div>
+
+    <div class="card" id="formulaire">
+      <form id="frm" class="form-grid">
+        <div><label>Votre nom *</label><input name="nom" required></div>
+        <div><label>Votre prénom *</label><input name="prenom" required></div>
+        <div><label>Votre email *</label><input name="email" type="email" required placeholder="pour recevoir l'accusé de réception"></div>
+        <div><label>Votre téléphone</label><input name="telephone" placeholder="+225 …"></div>
+        <div>
+          <label>Catégorie *</label>
+          <select name="categorie" required>
+            <option value="">— Choisir —</option>
+            <option value="FINANCIERE">Problème financier (débit, frais, virement)</option>
+            <option value="CONTRACTUELLE">Litige contractuel</option>
+            <option value="SERVICE">Problème de service / délai</option>
+            <option value="FRAUDE">Suspicion de fraude</option>
+          </select>
+        </div>
+        <div>
+          <label>Sous-catégorie</label>
+          <input name="sous_categorie" placeholder="Ex. : Débit non autorisé">
+        </div>
+        <div>
+          <label>Niveau d'urgence *</label>
+          <select name="priorite" required>
+            <option value="STANDARD">Standard</option>
+            <option value="URGENT">Urgent</option>
+            <option value="CRITIQUE">Critique (fraude, urgence)</option>
+          </select>
+        </div>
+        <div>
+          <label>Montant en jeu (FCFA)</label>
+          <input name="montant_enjeu" type="number" min="0" value="0">
+        </div>
+        <div class="full">
+          <label>Description détaillée * (10 caractères minimum)</label>
+          <textarea name="description" required minlength="10" rows="6"
+            placeholder="Décrivez les faits avec dates, références de transaction, montants…"></textarea>
+        </div>
+        <div class="full" style="display:flex;justify-content:space-between;align-items:center">
+          <a href="/portail-suivi.html" style="color:var(--brand);font-size:13px">J'ai déjà un dossier — suivre</a>
+          <button class="btn btn-primary" type="submit">Soumettre ma réclamation</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card" id="resultat" style="display:none">
+      <div style="text-align:center;padding:20px">
+        <div style="font-size:48px;margin-bottom:12px">✅</div>
+        <div style="font-size:18px;font-weight:600;margin-bottom:8px">Votre réclamation a été enregistrée</div>
+        <div style="font-size:13px;color:var(--text-soft);margin-bottom:16px">
+          Conservez précieusement votre numéro de dossier et votre lien de suivi.<br>
+          Un accusé de réception a été envoyé à votre adresse email.
+        </div>
+        <div style="background:var(--bg);padding:14px;border-radius:8px;font-family:monospace;font-size:13px;text-align:left">
+          <div style="margin-bottom:8px"><strong>N° dossier :</strong> <span id="r_code"></span></div>
+          <div><strong>Lien de suivi :</strong> <a id="r_lien" href=""></a></div>
+        </div>
+        <a href="/portail.html" class="btn" style="margin-top:16px;display:inline-block">Soumettre une autre réclamation</a>
+      </div>
+    </div>
+
+    <div class="info-droits">
+      <strong>Vos droits</strong> — Toute réclamation est traitée dans les délais réglementaires
+      fixés par la BCEAO et le CIMA. Si vous contestez la décision rendue, vous pouvez saisir
+      le médiateur du secteur ou les autorités de régulation. Vos données sont chiffrées et
+      conservées conformément à la réglementation en vigueur.
+    </div>
+  </div>
+
+  <script src="/assets/js/pwa.js"></script>
+  <script>
+    document.getElementById("frm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      const payload = {
+        canal: "WEB",
+        categorie: data.categorie,
+        sous_categorie: data.sous_categorie || null,
+        priorite: data.priorite,
+        description: data.description,
+        montant_enjeu: parseFloat(data.montant_enjeu || 0),
+        client: {
+          nom: data.nom, prenom: data.prenom,
+          email: data.email, telephone: data.telephone || null,
+        },
+      };
+      try {
+        if (!navigator.onLine) throw new Error("offline");
+        const res = await fetch("/api/public/reclamations", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.detail || "Erreur lors de la soumission");
+        document.getElementById("formulaire").style.display = "none";
+        document.getElementById("resultat").style.display = "block";
+        document.getElementById("r_code").textContent = result.code;
+        const lien = location.origin + result.url_suivi;
+        const a = document.getElementById("r_lien");
+        a.href = lien;
+        a.textContent = lien;
+      } catch (err) {
+        if (err.message === "offline" || !navigator.onLine) {
+          OfflineQueue.ajouter(payload);
+          document.getElementById("alerte").innerHTML =
+            `<div class="alert alert-success">📡 Vous êtes hors-ligne. Votre réclamation a été enregistrée localement et sera transmise dès le retour de la connexion.</div>`;
+          e.target.reset();
+        } else {
+          document.getElementById("alerte").innerHTML =
+            `<div class="alert alert-error">${err.message}</div>`;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

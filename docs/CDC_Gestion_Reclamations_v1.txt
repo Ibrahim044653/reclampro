@@ -1,0 +1,455 @@
+
+
+CAHIER DES CHARGES
+APPLICATION DE GESTION DES RÉCLAMATIONS CLIENTS
+
+Banques · Assurances · Grandes Entreprises
+Zone UEMOA / BCEAO / CIMA — Côte d'Ivoire
+
+
+
+
+1. RÉSUMÉ EXÉCUTIF
+
+1.1 Problématique actuelle
+Les établissements financiers et les grandes entreprises opérant en Côte d'Ivoire font face à des défis structurels critiques dans la gestion de leurs réclamations clients :
+Dispersion des réclamations sur de multiples canaux non interconnectés (téléphone, agence physique, WhatsApp, email, courrier papier) sans point de consolidation unique.
+Absence de traçabilité complète : les réclamations verbales ou téléphoniques ne sont pas systématiquement enregistrées, exposant l'institution à des risques réglementaires et contentieux.
+Délais de traitement non maîtrisés : sans système de SLA (Service Level Agreement), les réclamations peuvent demeurer sans réponse pendant plusieurs semaines.
+Impossibilité de produire un registre des réclamations conforme aux exigences BCEAO/CIMA pour les inspections et audits réglementaires.
+Perte d'opportunités d'amélioration : l'absence d'analyse des causes racines empêche la réduction des réclamations récurrentes.
+Risque de non-conformité : les obligations de protection du consommateur imposées par la BCEAO (Instruction n°001 sur la protection des consommateurs) et le Code CIMA ne sont pas pleinement respectées.
+
+1.2 Objectifs stratégiques
+
+1.3 Vision cible
+Disposer d'une plateforme centralisée, omnicanale et auditée de gestion des réclamations, permettant à chaque réclamation d'être captée, tracée, traitée dans les délais réglementaires et analysée pour prévenir sa récurrence — le tout en conformité totale avec les exigences BCEAO et CIMA.
+
+2. CONTEXTE & PÉRIMÈTRE
+
+2.1 Description du fonctionnement actuel (As-Is)
+Le processus actuel de gestion des réclamations est caractérisé par une forte fragmentation :
+
+2.2 Difficultés et impacts
+Impossibilité de mesurer le volume réel des réclamations.
+Clients relancent plusieurs fois car ils ne reçoivent pas de confirmation de prise en charge.
+Absence de mémoire institutionnelle : un agent qui part emporte « sa » connaissance des dossiers.
+Risque juridique : sans preuve d'accusé de réception ni de réponse formelle, l'institution ne peut se défendre en cas de contentieux.
+Non-conformité potentielle lors des inspections BCEAO ou audits CIMA.
+
+2.3 Périmètre fonctionnel
+Le présent cahier des charges couvre les fonctionnalités suivantes :
+
+2.4 Hypothèses & contraintes
+
+3. PARTIES PRENANTES & GOUVERNANCE
+
+3.1 Cartographie des parties prenantes
+
+3.2 Matrice RACI
+R = Responsible (Exécute) | A = Accountable (Décide) | C = Consulted (Consulté) | I = Informed (Informé)
+
+4. DÉFINITIONS & TYPOLOGIE
+
+4.1 Définition de la réclamation
+Une réclamation est toute expression formelle ou informelle d'une insatisfaction émanant d'un client, d'un bénéficiaire ou d'un tiers, relative à un produit, un service, une décision, un comportement ou une omission de l'institution, et nécessitant une réponse formelle dans un délai défini.
+
+4.2 Distinction des niveaux de demande
+
+4.3 Catalogue des typologies
+
+5. PROCESSUS MÉTIER
+
+5.1 Processus As-Is (État actuel)
+Description du flux actuel (dysfonctionnel) :
+Client exprime une insatisfaction via un canal quelconque (téléphone, agence, email, WhatsApp).
+L'agent reçoit le message et note (ou oublie) la réclamation dans son outil personnel (Excel, cahier, post-it).
+L'agent tente de traiter seul ou transfère verbalement à un collègue — sans traçabilité.
+Le client rappelle après plusieurs jours, n'ayant reçu aucune réponse. L'agent ne retrouve pas la réclamation initiale.
+En cas d'escalade, le superviseur n'a aucune visibilité du dossier. La réponse est improvisée.
+La clôture est informelle, non documentée. Le client n'a aucune confirmation écrite.
+Aucun registre consolidé. Impossible de reporter à la BCEAO ou au CIMA.
+
+RISQUES AS-IS : Exposition réglementaire (BCEAO/CIMA), risque contentieux, insatisfaction client chronique, absence de vision managériale.
+
+5.2 Processus To-Be (Flux cible)
+Le nouveau processus structuré suit 9 étapes séquentielles avec points de contrôle obligatoires :
+
+6. EXIGENCES MÉTIER (BRxxx)
+
+
+7. EXIGENCES FONCTIONNELLES (FRxxx)
+
+Module 1 – Capture des réclamations
+
+Module 2 – Qualification & Routage
+
+Module 3 – Traitement & Investigation
+
+Module 4 – Communication client
+
+Module 5 – Clôture
+
+Module 6 – Reporting & Pilotage
+
+8. RÈGLES DE GESTION (RGxxx)
+
+
+9. MODÈLE DE DONNÉES
+
+9.1 Entités principales
+
+10. INTÉGRATIONS SI
+
+
+11. EXIGENCES NON FONCTIONNELLES (NFRxxx)
+
+
+12. CONFORMITÉ & CONTRÔLE RÉGLEMENTAIRE
+
+12.1 Cadre réglementaire BCEAO (Établissements de crédit — UEMOA)
+Obligation de mise en place d'un dispositif formel de traitement des réclamations avec registre tenu à jour.
+Traçabilité complète des interactions avec les clients réclamants, conservée pendant la durée légale.
+Délais de réponse respectant les standards fixés par l'Instruction de la BCEAO sur la protection des consommateurs.
+Reporting interne et possibilité de communication aux autorités de contrôle sur demande.
+Information obligatoire du client sur ses droits et les voies de recours disponibles.
+
+12.2 Cadre réglementaire CIMA (Assurances)
+Obligation de traitement équitable et dans les délais de toute réclamation relative à un contrat d'assurance.
+Information du client sur ses droits contractuels et sur les possibilités de médiation ou recours externes.
+Registre des réclamations tenu à jour, accessible pour inspection par les autorités CIMA.
+Gestion et traçabilité des dossiers transmis à la médiation de l'assurance.
+
+12.3 Exigences techniques de conformité
+
+13. UX / INTERFACES CIBLES
+
+13.1 Portail Client (self-service)
+Page de soumission de réclamation : formulaire guidé en étapes (3 max), upload de pièces jointes, captcha.
+Page de suivi : accès via token (lien envoyé par SMS/email), sans création de compte obligatoire.
+Statut affiché visuellement (barre de progression) : Reçu → En cours → Décision → Clôturé.
+Affichage des coordonnées du médiateur et des droits du client.
+
+13.2 Dashboard Agent (Front-Office)
+Fil d'activité personnel : dossiers affectés, triés par priorité et date d'échéance SLA.
+Indicateur visuel de criticité SLA : vert (<60%), orange (60-80%), rouge (>80%), noir (dépassé).
+Formulaire de saisie rapide pour les réclamations reçues par téléphone ou en agence.
+Accès à la bibliothèque de modèles de réponse avec pré-remplissage automatique.
+
+13.3 Vue Dossier 360°
+En-tête : identité client, ID dossier, statut, SLA restant, priorité, canal d'entrée.
+Onglet Historique : chronologie complète de toutes les interactions, commentaires et changements.
+Onglet Pièces jointes : liste des documents avec téléchargement sécurisé.
+Onglet Communication : historique des envois client (date, canal, contenu, statut envoi).
+Onglet Audit : journal technique (uniquement visible Conformité/Admin).
+Panel action : changer statut, affecter, commenter, envoyer réponse, clôturer.
+
+13.4 Dashboard Management
+Vue d'ensemble temps réel : volume reçu, en cours, clôturé, en alerte SLA.
+Graphiques de tendance : évolution hebdomadaire/mensuelle du volume et des délais.
+Top 5 catégories de réclamations du mois avec variation vs mois précédent.
+Taux de respect SLA par service et par agence.
+Carte de chaleur par canal d'entrée des réclamations.
+
+14. TESTS & RECETTE
+
+14.1 Scénarios de test critiques
+
+15. DÉPLOIEMENT & CONDUITE DU CHANGEMENT
+
+15.1 Plan de déploiement
+
+15.2 Plan de formation
+Agents front-office (agence + call center) : 4h — saisie, qualification, communication client, utilisation portail.
+Gestionnaires back-office : 6h — instruction dossier, workflows, modèles de réponse, clôture.
+Superviseurs : 4h — tableaux de bord, gestion escalades, validation, reporting.
+Équipe Conformité : 4h — registre réglementaire, exports audit, consultation logs.
+Administrateurs DSI : 8h — administration système, paramétrage, intégrations, sécurité.
+
+15.3 Migration des données
+Audit de l'existant : inventaire des réclamations en cours dans les outils actuels (Excel, email, etc.).
+Nettoyage et normalisation : standardisation des données selon le modèle de données cible.
+Import par lot : utilisation de FR006 pour intégrer les dossiers en cours lors du basculement.
+Vérification post-import : contrôle de complétude et de cohérence des données migrées.
+
+16. REGISTRE DES RISQUES
+
+
+17. TABLEAU MOSCOW – PRIORISATION
+
+
+18. MATRICE DE TRAÇABILITÉ
+
+La matrice ci-dessous établit la correspondance entre les objectifs métier, les exigences et les modules fonctionnels :
+
+19. ANNEXES
+
+Annexe A – Catalogue des statuts
+
+Annexe B – Glossaire
+Version | 1.0 – Initial
+Date | Mai 2025
+Statut | Pour Validation
+Auteur | Business Analyst Senior
+Destinataires | MOA, DSI, Conformité, Direction
+Axe | Objectif cible | KPI associé
+Satisfaction client | Réduire le délai moyen de traitement | ≤ 72h pour 80% des réclamations standard
+Conformité | Disposer d'un registre auditable en temps réel | Taux de traçabilité = 100%
+Efficacité opérationnelle | Automatiser le routage et les notifications | Réduction de 40% du temps de traitement manuel
+Pilotage | Produire des reportings réglementaires automatisés | Rapport mensuel auto-généré BCEAO/CIMA
+Amélioration continue | Identifier et traiter les causes racines | Réduction de 25% des réclamations récurrentes en 12 mois
+Canal | Mode de capture | Mode de traitement | Problème identifié
+Agence physique | Registre papier / post-it | Transmission orale au responsable | Perte fréquente, non traçable
+Téléphone | Notes Excel individuelles | Agent référent | Pas de suivi centralisé
+Email | Boîtes mail individuelles | Réponse ad hoc | Pas de numéro de dossier
+WhatsApp | Conversations personnelles | Non formalisé | Aucune traçabilité
+Courrier | Archivage physique partiel | Traitement manuel | Délais très longs
+Module | Description | In scope
+Capture omnicanale | Réception des réclamations tous canaux | ✅
+Enregistrement & qualification | Création dossier, catégorisation, priorité | ✅
+Traitement & investigation | Workflow, commentaires, pièces jointes | ✅
+Communication client | Notifications automatiques, SMS, email | ✅
+Clôture & satisfaction | Motif clôture, enquête satisfaction | ✅
+Reporting & analytics | Tableaux de bord, registre réglementaire | ✅
+Conformité & audit | Journal d'audit, export réglementaire | ✅
+Intégrations SI | CRM, téléphonie, SMS gateway, WhatsApp | ✅
+Module financier / comptable | Hors périmètre — déjà couvert par ERP | ❌
+Gestion des sinistres assurance | Couvert par module dédié sinistres | ❌
+Hypothèse / Contrainte | Type | Impact
+Connectivité internet instable dans certaines agences | Contrainte technique | Mode offline obligatoire pour saisie agence
+Hétérogénéité des SI existants (CRM, core banking) | Contrainte SI | Nécessité d'API REST standard + adaptateurs
+Faible alphabétisation numérique de certains agents | Contrainte RH | UX simplifiée, formation obligatoire
+Multilinguisme (français + dioula, baoulé, etc.) | Contrainte fonctionnelle | Interface en français + possibilité de notes locales
+Obligation BCEAO de réponse dans les délais légaux | Contrainte réglementaire | SLA non négociables à configurer
+Données clients sensibles (données personnelles) | Contrainte légale | Chiffrement, RBAC, journalisation
+Partie prenante | Rôle | Attentes principales
+Client / Réclamant | Émetteur de la réclamation | Réponse rapide, transparence, suivi en temps réel
+Agent service client (front) | Saisie et premier traitement | Interface simple, guidage, faible charge cognitive
+Back-office / Gestionnaire | Instruction et résolution des dossiers | Accès complet au dossier, workflow clair
+Superviseur / Responsable | Contrôle qualité, validation, escalade | Vue d'ensemble, alertes de dépassement SLA
+Direction Conformité / Juridique | Contrôle réglementaire | Registre auditable, export réglementaire, preuves
+Direction Générale | Pilotage stratégique | KPI, tableaux de bord, tendances réclamations
+DSI / Équipe technique | Déploiement et maintenance | Documentation technique, API, sécurité
+Régulateur (BCEAO / CIMA) | Inspection et contrôle | Accès audit, reporting conforme, traçabilité totale
+Médiateur / Arbitre | Recours tiers si nécessaire | Dossier complet, chronologie, preuves horodatées
+Activité | Client | Agent Front | Back-office | Superviseur | Conformité | DSI
+Saisie de la réclamation | I | R | C | - | - | -
+Qualification & catégorisation | - | R | C | A | - | -
+Affectation au gestionnaire | - | C | R | A | - | -
+Instruction du dossier | I | - | R | A | C | -
+Validation de la réponse | - | - | C | R | A | -
+Communication client | R | C | R | A | - | -
+Clôture du dossier | - | - | R | A | C | -
+Reporting réglementaire | - | - | I | C | R | I
+Audit du système | - | - | - | I | R | A
+Maintenance applicative | - | - | - | - | C | R
+Type | Définition | Délai cible | Exemples
+Demande d'information | Question ne nécessitant pas de correction ni d'investigation | ≤ 24h | Solde de compte, numéro de police
+Demande de service | Requête d'une prestation standard (duplicata, débloquage) | ≤ 48h | Réédition RIB, changement adresse
+Incident | Dysfonctionnement technique temporaire sans préjudice client prouvé | ≤ 72h | CB bloquée temporairement
+Réclamation | Expression d'insatisfaction avec préjudice réel ou potentiel, nécessitant investigation formelle | ≤ 5 jours ouvrés | Débit non autorisé, refus sinistre abusif
+Réclamation complexe | Réclamation nécessitant expertise juridique ou financière approfondie | ≤ 15 jours ouvrés | Fraude, litige contractuel important
+Réclamation contentieuse | Dossier ayant donné lieu à une mise en demeure ou recours judiciaire | Selon procédure juridique | Saisie tribunal, plainte BCEAO
+Catégorie | Sous-catégorie | Description | Secteur
+Financière | Débit non autorisé | Mouvement de fonds non initié par le client | Banque
+Financière | Virement erroné | Virement vers mauvais bénéficiaire ou mauvais montant | Banque
+Financière | Frais contestés | Commissions, agios ou frais non prévus contractuellement | Banque/Assurance
+Financière | Remboursement sinistre | Montant ou délai de remboursement contesté | Assurance
+Contractuelle | Non-respect des conditions | Clause contractuelle non appliquée | Banque/Assurance
+Contractuelle | Information erronée à la vente | Produit mal présenté lors de la souscription | Assurance
+Contractuelle | Résiliation abusive | Contrat résilié sans motif valable ou sans préavis | Assurance
+Service | Délai excessif | Temps d'attente ou de traitement anormalement long | Tous
+Service | Comportement agent | Impolitesse, discrimination, manque de professionnalisme | Tous
+Service | Accès au service | Agence fermée, DAB en panne, application indisponible | Banque
+Fraude | Usurpation d'identité | Ouverture de compte ou souscription frauduleuse | Banque
+Fraude | Phishing / arnaque | Escroquerie via faux site, SMS, appel | Banque
+Fraude | Fraude interne | Agent impliqué dans détournement | Banque/Assurance
+Étape | Activité | Description | Acteur | Contrôle
+1 | Réception | La réclamation est reçue via n'importe quel canal (physique, téléphone, email, WhatsApp, web). Un accusé de réception automatique est envoyé au client. | Système / Agent | ACR < 1h
+2 | Enregistrement | Création automatique d'un dossier avec ID unique (format RECx-AAAAMM-NNNNN). Horodatage, canal, agent référent enregistrés. | Système | ID unique généré
+3 | Qualification | Catégorisation (type, sous-type), niveau de priorité (Standard/Urgent/Critique), vérification de la complétude du dossier. | Agent front / IA | Catégorie obligatoire
+4 | Affectation | Routage automatique vers le service ou gestionnaire compétent selon la matrice d'affectation paramétrable. | Système | SLA assigné
+5 | Instruction | Investigation, collecte de preuves, consultations internes, ajout de pièces jointes, commentaires horodatés. | Back-office | Traçabilité 100%
+6 | Décision | Formulation de la réponse de fond. Validation hiérarchique si montant > seuil ou catégorie sensible. | Gestionnaire / Superviseur | Validation obligatoire
+7 | Communication | Envoi de la réponse formelle au client (email, SMS, courrier) avec accusé de réception. Délai BCEAO/CIMA respecté. | Système / Agent | Preuve d'envoi
+8 | Clôture | Clôture formelle avec motif obligatoire (favorable / défavorable / partiel), enquête satisfaction optionnelle. | Gestionnaire | Motif + date clôture
+9 | Analyse | Analyse cause racine, alimentation du registre, génération des reportings réglementaires et KPI. | Système / Conformité | Rapport mensuel
+ID | Libellé | Description | Priorité
+BR001 | Dossier unique par réclamation | Le système doit créer un dossier unique et non-duplicable par réclamation, avec un identifiant unique persistant de la création à l'archivage. | Must
+BR002 | Traçabilité complète et immuable | Toute action sur un dossier (création, modification, commentaire, changement statut, clôture) doit être tracée avec : auteur, date/heure, contenu avant/après. Aucune donnée ne peut être supprimée. | Must
+BR003 | SLA paramétrables par profil | Les délais de traitement doivent être configurables par type de réclamation, niveau de priorité et profil d'établissement, avec alertes automatiques à 70% et 100% du SLA. | Must
+BR004 | Gestion omnicanale unifiée | Toute réclamation reçue via email, téléphone, agence, WhatsApp, SMS ou portail web doit atterrir dans le même système avec le même niveau de traçabilité. | Must
+BR005 | Reporting réglementaire automatisé | Le système doit générer automatiquement les rapports périodiques requis par la BCEAO et le CIMA (volumes, délais, taux de résolution) dans le format standard requis. | Must
+BR006 | Registre auditable des réclamations | Le registre des réclamations doit être disponible en consultation à tout instant et exportable pour les inspections des régulateurs (BCEAO, CIMA, commissaire aux comptes). | Must
+BR007 | Escalade automatique | Tout dossier ayant dépassé 80% de son SLA sans action doit être automatiquement remonté au superviseur. Tout dossier échu sans clôture déclenche une alerte critique. | Must
+BR008 | Communication client obligatoire | Toute réclamation reçue doit donner lieu à un accusé de réception automatique dans l'heure. Une réponse de fond doit être transmise au client dans les délais réglementaires. | Must
+BR009 | Multi-établissement | Le système doit supporter plusieurs entités (banque, assurance, filiales) avec isolation des données et tableaux de bord consolidés. | Should
+BR010 | Analyse cause racine | Le système doit permettre le tagging des causes racines et la génération d'indicateurs de récurrence pour alimenter les plans d'amélioration. | Should
+BR011 | Enquête satisfaction | Après clôture, le client doit pouvoir être invité à évaluer le traitement de sa réclamation (note + commentaire), les résultats étant accessibles dans les KPI. | Could
+BR012 | Médiation & recours | Le système doit permettre d'enregistrer et suivre les dossiers transmis au médiateur ou en voie contentieuse, avec gestion des échéances procédurales. | Should
+ID | Libellé | Description | Priorité
+FR001 | Saisie manuelle agence | Interface de saisie simplifiée pour les agents en agence, utilisable sur tablette ou ordinateur de bureau, avec mode offline synchronisable. | Must
+FR002 | Capture email automatique | Intégration d'une boîte mail dédiée (réclamations@institution.ci) : chaque email reçu crée automatiquement un dossier pré-rempli avec expéditeur, objet, corps et pièces jointes. | Must
+FR003 | Intégration WhatsApp Business | Connexion à WhatsApp Business API : les messages WhatsApp envoyés au numéro dédié créent automatiquement un dossier ou se rattachent à un dossier existant. | Must
+FR004 | Portail web client | Formulaire web accessible sans login (ou avec compte optionnel), permettant au client de soumettre sa réclamation, d'y joindre des pièces et de suivre l'avancement. | Must
+FR005 | Saisie téléphonique assistée | Module de saisie pour les agents call center, pré-rempli avec les informations CTI (numéro appelant, durée) si disponibles. | Must
+FR006 | Import par lot | Possibilité d'importer des réclamations existantes (depuis Excel, CSV) lors de la migration initiale ou de campagnes de régularisation. | Should
+FR007 | Saisie SMS entrants | Les SMS reçus sur le numéro dédié créent une alerte pour qu'un agent transforme le SMS en dossier formel (semi-automatisé). | Could
+ID | Libellé | Description | Priorité
+FR010 | Catégorisation obligatoire | Tout dossier doit être catégorisé (type, sous-type) avant d'être transmis au traitement. Le référentiel des catégories est administrable. | Must
+FR011 | Calcul automatique de priorité | La priorité (Standard / Urgent / Critique) est calculée automatiquement selon des règles configurables (type de réclamation, montant, profil client, délai de saisine). | Must
+FR012 | Matrice de routage paramétrable | Une matrice d'affectation configurable permet de router automatiquement les dossiers vers le bon service/agent selon la catégorie, la priorité et l'entité. | Must
+FR013 | Détection de doublons | Le système signale les potentiels doublons (même client, même objet, même période) pour éviter les traitements multiples. | Should
+FR014 | Identification client | Recherche du client dans le CRM/système central lors de la qualification pour enrichissement automatique du dossier (historique client). | Must
+ID | Libellé | Description | Priorité
+FR020 | Workflow configurable | Les étapes du workflow de traitement (qualification → instruction → validation → réponse → clôture) sont configurables selon le profil d'établissement. | Must
+FR021 | Journal d'activité complet | Chaque action sur le dossier (commentaire, changement statut, pièce ajoutée, notification envoyée) est enregistrée dans un journal immuable avec auteur et horodatage. | Must
+FR022 | Gestion des pièces jointes | Le système accepte les pièces jointes de tout type (PDF, image, audio). Chaque pièce est horodatée et liée au dossier de façon permanente. | Must
+FR023 | Affectation secondaire | Un dossier peut être affecté à plusieurs gestionnaires (primaire + contributeurs) ou transmis à un autre service en inter-dossier traçable. | Should
+FR024 | Modèles de réponse | Bibliothèque de modèles de réponse paramétrables par type de réclamation, avec variables automatiques (nom client, référence, délai, montant). | Should
+FR025 | Validation hiérarchique | Les réponses sur des dossiers sensibles (montant > seuil, catégorie fraude, réclamation contentieuse) doivent être validées par le superviseur avant envoi. | Must
+FR026 | Consultation croisée | Un gestionnaire peut consulter les réclamations précédentes d'un même client pour identifier les patterns de récidive. | Should
+ID | Libellé | Description | Priorité
+FR030 | Accusé de réception automatique | Dès la création du dossier, un accusé de réception est envoyé automatiquement au client (email et/ou SMS) avec le numéro de dossier, le délai estimé et les coordonnées de suivi. | Must
+FR031 | Notifications d'étape | Le client est notifié automatiquement aux étapes clés : prise en charge, demande de pièces complémentaires, décision rendue. | Must
+FR032 | Réponse formelle multi-canal | La réponse de fond est envoyée via le canal préférentiel du client (email, SMS, WhatsApp) avec preuve d'envoi archivée. | Must
+FR033 | Suivi client en ligne | Le client peut consulter l'état de sa réclamation via un lien sécurisé (token) sans création de compte obligatoire. | Should
+FR034 | Communication en français simplifié | Les modèles de communication client sont rédigés en français accessible (niveau B1), évitant le jargon technique ou juridique. | Should
+ID | Libellé | Description | Priorité
+FR040 | Motif de clôture obligatoire | Toute clôture de dossier requiert la sélection d'un motif (favorable / partiellement favorable / défavorable / sans suite / redirection médiation). | Must
+FR041 | Notification de clôture client | Lors de la clôture, le client reçoit automatiquement une notification formelle avec la décision et, si applicable, les voies de recours. | Must
+FR042 | Blocage de clôture si SLA dépassé sans justification | Un dossier dont le SLA est dépassé ne peut être clôturé sans qu'un commentaire obligatoire justifie le dépassement. | Must
+FR043 | Réouverture possible | Un dossier clôturé peut être réouvert par un superviseur si le client conteste la clôture, avec traçabilité de la réouverture. | Should
+FR044 | Enquête satisfaction post-clôture | Envoi optionnel d'une mini-enquête (1 à 3 questions) au client dans les 24h après clôture. Résultats intégrés aux KPI. | Could
+ID | Libellé | Description | Priorité
+FR050 | Tableau de bord agent | Vue personnalisée : dossiers affectés, alertes SLA, actions en attente, priorités du jour. | Must
+FR051 | Tableau de bord superviseur | Vue service : volume, SLA, dossiers en retard, productivité agents, escalades. | Must
+FR052 | Tableau de bord direction | Vue consolidée : volumes par catégorie, tendances, NPS réclamation, comparaison inter-agences. | Must
+FR053 | Registre réglementaire exportable | Registre complet des réclamations exportable en Excel/CSV/PDF avec tous les champs requis par BCEAO/CIMA. | Must
+FR054 | Rapport cause racine | Rapport mensuel automatisé des causes récurrentes avec taux d'occurrence et recommandations d'amélioration. | Should
+FR055 | Alertes automatiques | Le système envoie des alertes par email aux superviseurs et responsables conformité en cas de dépassement de SLA, de volume anormal ou de catégorie sensible. | Must
+FR056 | Connecteur BI externe | Export des données vers un outil de Business Intelligence externe (Power BI, Tableau, etc.) via API ou connecteur natif. | Could
+Règle | Description | Action système
+RG001 – SLA Standard | Délai de traitement : 5 jours ouvrés pour une réclamation standard (banque/assurance) | Calcul automatique date d'échéance. Alerte à J+3 (60%)
+RG002 – SLA Urgent | Délai de traitement : 72h pour une réclamation urgente (débit non autorisé, fraude) | Alerte immédiate au superviseur. Escalade à H+48
+RG003 – SLA Critique | Délai de traitement : 24h pour une réclamation critique (fraude avérée, médias sociaux) | Notification direction. Dossier mis en rouge immédiatement
+RG004 – Escalade automatique SLA | À 80% du délai SLA écoulé sans changement de statut : escalade automatique au superviseur N+1 | Email + alerte dashboard. Statut 'En alerte'
+RG005 – Immutabilité des données | Aucune donnée d'un dossier (commentaire, statut, pièce jointe) ne peut être supprimée — uniquement amendée avec trace | Bouton 'Supprimer' désactivé. Log de toute modification
+RG006 – Accusé de réception <1h | Tout dossier créé doit déclencher un accusé de réception automatique au client dans l'heure suivant la création | Job automatique toutes les 15 minutes vérifiant les ACR non envoyés
+RG007 – ID unique non-réutilisable | L'identifiant unique d'un dossier (RECx-AAAAMM-NNNNN) ne peut jamais être réattribué à un autre dossier, même après archivage | Séquence strictement croissante, aucun recyclage
+RG008 – Clôture avec motif obligatoire | Aucun dossier ne peut être clôturé sans sélection d'un motif de clôture dans la liste référentielle | Bouton 'Clôturer' désactivé si motif non sélectionné
+RG009 – Validation si montant > seuil | Toute réponse sur un dossier impliquant un engagement financier > seuil paramétrable (ex. 500 000 FCFA) requiert validation superviseur | Circuit de validation automatique déclenché
+RG010 – Notification de clôture client | Toute clôture déclenche une notification au client dans l'heure suivant la clôture | Job automatique. Si envoi échoué, alerte à l'agent
+RG011 – Conservation des données | Les dossiers clôturés doivent être conservés pendant 10 ans minimum (standard réglementaire banque/assurance CI) | Archivage automatique à J+5ans. Non-suppression garantie
+RG012 – Reporting mensuel automatique | Un rapport mensuel consolidé est généré automatiquement le 1er de chaque mois pour la période précédente | Scheduler mensuel. Envoi automatique aux destinataires configurés
+Entité | Attributs clés | Contraintes
+CLIENT | id_client, nom, prénom, type (personne physique/morale), téléphone, email, adresse, numéro_compte, segmentation | id_client unique. Lié à CRM/core banking.
+RÉCLAMATION | id_reclamation, date_reception, canal, statut, categorie, sous_categorie, priorite, description, montant_enjeu, id_client, id_agent_creation, date_echeance_sla, date_cloture, motif_cloture | id unique non-réutilisable. Statut géré par workflow uniquement.
+INTERACTION | id_interaction, id_reclamation, date_heure, type (commentaire/décision/notification/escalade), contenu, auteur, visible_client (booléen) | Immuable après création. Horodatage serveur.
+AGENT | id_agent, nom, prénom, service, rôle, email_pro, niveau_habilitation, actif (booléen) | Lié à annuaire AD/LDAP. Droits gérés par RBAC.
+PIÈCE_JOINTE | id_pj, id_reclamation, nom_fichier, type_mime, taille, date_upload, auteur, checksum_sha256 | Immuable. Stockage sécurisé. Lien permanent au dossier.
+STATUT | id_statut, libellé, couleur, is_final (booléen), transitions_autorisées | Référentiel administrable. Workflow contrôlé.
+NOTIFICATION | id_notif, id_reclamation, type, canal_envoi, destinataire, date_envoi, statut_envoi, contenu | Preuve d'envoi conservée. Retry automatique si échec.
+CAUSE_RACINE | id_cause, libellé, catégorie_liée, description | Référentiel administrable. Lié aux analyses.
+LOG_AUDIT | id_log, table_concernée, id_enregistrement, action, valeur_avant, valeur_après, auteur, date_heure, ip_source | Immuable. Accessible uniquement aux profils Audit/Conformité.
+Système | Type d'intégration | Données échangées | Protocole | Priorité
+CRM / Core Banking | Bidirectionnelle | Profil client, historique, numéro de compte | API REST / SOAP | Must
+Messagerie email | Entrante + sortante | Réception réclamations, envoi réponses et notifications | IMAP/SMTP | Must
+WhatsApp Business API | Bidirectionnelle | Réception et envoi de messages WhatsApp | WhatsApp Cloud API | Must
+SMS Gateway | Sortante | Envoi d'accusés de réception, notifications, réponses | SMPP / HTTP API | Must
+CTI Téléphonie | Entrante | Identification appelant, durée d'appel, enregistrement | CTI / SIP | Should
+Active Directory / LDAP | Entrante | Authentification agents, synchronisation profils | LDAP / SSO SAML | Must
+Power BI / BI externe | Sortante | Export agrégats pour dashboards avancés | API REST / Direct Query | Could
+Système d'archivage GED | Sortante | Export dossiers clôturés pour archivage longue durée | API REST / FTP sécurisé | Should
+ID | Libellé | Description | Priorité
+NFR001 | Disponibilité | La plateforme doit être disponible 99,5% du temps en heures ouvrées (7h-20h, lundi-samedi). Tolérance 0% pour le registre réglementaire. | Must
+NFR002 | Performance – temps de réponse | Toute page de l'application doit se charger en moins de 3 secondes pour 95% des requêtes dans des conditions normales de réseau (connexion 2G/3G incluse). | Must
+NFR003 | Scalabilité | L'architecture doit supporter jusqu'à 10 000 dossiers/mois et 500 utilisateurs simultanés sans dégradation de performance. | Must
+NFR004 | Sécurité – RBAC | L'accès aux fonctionnalités et données est contrôlé par un système de rôles (RBAC) : Agent / Superviseur / Back-office / Conformité / Administrateur. Pas d'accès aux données d'un autre établissement. | Must
+NFR005 | Chiffrement des données | Toutes les données personnelles sont chiffrées en base (AES-256). Les communications sont chiffrées en transit (TLS 1.2 minimum). | Must
+NFR006 | Journalisation complète | Toute connexion, action, consultation et modification est journalisée dans un log d'audit non modifiable, conservé 10 ans. | Must
+NFR007 | Auditabilité externe | Le système doit permettre l'export complet du registre et des logs d'audit dans un format lisible (Excel/CSV) pour les inspections réglementaires. | Must
+NFR008 | Mode offline agence | Le module de saisie en agence doit fonctionner en mode dégradé (offline) en cas de coupure réseau, avec synchronisation automatique au retour de connexion. | Must
+NFR009 | Compatibilité navigateurs | L'application web doit être compatible avec Chrome (v90+), Firefox (v80+), Edge (v90+) et Safari mobile sur iOS 14+. | Should
+NFR010 | Responsive mobile | L'interface doit être utilisable sur smartphone (iOS, Android) via navigateur mobile — particulièrement pour les agents terrain. | Should
+NFR011 | Sauvegarde & récupération | Sauvegarde automatique quotidienne des données avec RPO ≤ 24h et RTO ≤ 4h en cas d'incident majeur. | Must
+NFR012 | Localisation francophone | Toute l'interface est en français. Le système gère les formats de date DD/MM/YYYY et les devises FCFA (XOF). | Must
+Exigence | Description technique | Référence réglementaire
+Registre des réclamations | Base de données centralisée, complète, non modifiable, exportable à tout instant | BCEAO / CIMA
+Traçabilité horodatée | Tout événement enregistré avec timestamp serveur, auteur authentifié, impossibilité de rétrodate | BCEAO / Bonne pratique ISO
+Preuves d'envoi | Conservation de la preuve d'envoi de toute communication client (email : header complet, SMS : accusé opérateur) | CIMA / Principes contractuels
+Gestion des droits d'accès | Accès aux dossiers limité au besoin d'en connaître — pas d'accès global à tous les dossiers | Protection données personnelles
+Export audit | Export Excel/CSV/PDF du registre complet en moins de 5 minutes, filtrable par période | Inspection BCEAO/CIMA
+Conservation 10 ans | Archivage automatique des dossiers clôturés, conservation garantie 10 ans minimum | Droit commercial CI
+Voies de recours | Affichage obligatoire des coordonnées du médiateur et des autorités de régulation dans les réponses clients | Code CIMA Art. 12
+Réf. | Scénario | Given / When / Then | Critère d'acceptation
+TEST-001 | Création dossier via email | Given : email reçu sur boîte réclamations@. When : email traité. Then : dossier créé avec ID unique, ACR envoyé client < 1h. | ID unique généré. ACR envoyé. Pièces jointes attachées.
+TEST-002 | Escalade SLA auto | Given : dossier créé, SLA 5j. When : 4j écoulés sans action. Then : email d'alerte envoyé au superviseur. | Email reçu à J+4. Statut 'En alerte' visible dashboard.
+TEST-003 | Clôture sans motif | Given : dossier en statut 'Décision'. When : agent clique 'Clôturer' sans motif. Then : action bloquée. | Message d'erreur affiché. Dossier non clôturé.
+TEST-004 | Traçabilité immuable | Given : commentaire ajouté sur dossier. When : admin tente de supprimer. Then : suppression impossible. | Pas de bouton supprimer. Log conservé.
+TEST-005 | Export registre BCEAO | Given : 100 dossiers existants. When : Conformité demande export. Then : fichier Excel généré < 60s avec tous les champs requis. | Fichier complet, aucun champ manquant.
+TEST-006 | Mode offline agence | Given : agent en agence sans réseau. When : saisit réclamation. Then : dossier sauvegardé localement et synchronisé au retour réseau. | Dossier visible après reconnexion. Aucune perte de données.
+TEST-007 | Isolation multi-entité | Given : agent Banque X connecté. When : tente d'accéder dossier Banque Y. Then : accès refusé. | Message 'Accès non autorisé'. Log tentative enregistré.
+TEST-008 | Notification WhatsApp | Given : réclamation créée avec client WhatsApp. When : clôture du dossier. Then : notification WhatsApp envoyée < 1h. | Message WhatsApp reçu. Statut 'Envoyé' dans historique.
+Phase | Durée | Activités | Livrable
+Phase 0 – Préparation | 2 semaines | Installation, configuration, paramétrage référentiels, import utilisateurs | Environnement de recette prêt
+Phase 1 – Pilote | 4 semaines | Déploiement sur 1-2 agences pilotes, formation agents pilotes, suivi quotidien | Rapport de pilote, list des ajustements
+Phase 2 – Déploiement élargi | 6 semaines | Extension à toutes les agences, migration données existantes, formation tous agents | Go-live complet
+Phase 3 – Stabilisation | 4 semaines | Support renforcé, correction des anomalies, ajustements UX suite retours terrain | Version stabilisée
+Phase 4 – Optimisation | Continue | Amélioration continue, nouvelles fonctionnalités, mise à jour réglementaire | Feuille de route v2
+Risque | Probabilité | Impact | Criticité | Plan de mitigation
+Non-adoption par les agents (résistance au changement) | Élevée | Élevé | Critique | Formation intensive, champions du changement par agence, accompagnement terrain les 2 premières semaines
+Mauvaise qualité de saisie des données (champs incomplets) | Moyenne | Moyen | Élevé | Champs obligatoires configurés, contrôles de validation en temps réel, KPI qualité data par agent
+Problèmes d'intégration avec les SI existants (CRM, core banking) | Moyenne | Élevé | Critique | Phase d'analyse technique préalable, contrats d'interface documentés, mode dégradé sans intégration prévu
+Indisponibilité réseau dans les agences | Élevée (certaines zones) | Moyen | Élevé | Mode offline obligatoire (NFR008), synchronisation automatique, tests en conditions dégradées
+Dépassement du budget de déploiement | Faible | Moyen | Moyen | Cadrage strict du périmètre v1, tableau de bord coûts projet, clause de gel des évolutions en phase pilote
+Non-conformité persistante après déploiement | Faible | Critique | Élevé | Audit de conformité à 3 mois, checklist BCEAO/CIMA intégrée aux critères d'acceptation
+Fuite de données clients (sécurité) | Faible | Critique | Élevé | Chiffrement AES-256, RBAC strict, tests de pénétration avant go-live, journalisation complète
+Catégorie | Exigences incluses | Justification
+🔴 Must Have
+(Obligatoire) | BR001-BR008, FR001-FR005, FR010-FR014, FR020-FR021, FR025, FR030-FR032, FR040-FR043, FR050-FR053, FR055, NFR001-NFR008, NFR011-NFR012, RG001-RG012 | Conformité réglementaire BCEAO/CIMA non négociable. Fonctionnement de base du système. SLA et traçabilité obligatoires.
+🟠 Should Have
+(Important) | BR009, BR010, BR012, FR006, FR023-FR024, FR026, FR033-FR034, FR043, FR054, NFR009-NFR010, Intégrations CTI, BI | Améliore significativement l'efficacité et la conformité mais ne bloque pas le fonctionnement minimal.
+🟢 Could Have
+(Souhaitable) | BR011, FR007, FR044, FR056, Enquête satisfaction, Connecteur BI externe, Multi-langue local | Valeur ajoutée sur la satisfaction client et le pilotage avancé mais reportable en v2.
+⚪ Won't Have v1
+(Hors scope v1) | IA de classification automatique avancée, Chatbot de réclamation, Scoring prédictif de réclamations, Application mobile native dédiée | Complexité et coût élevés. À planifier en version 2 après stabilisation de la v1.
+Objectif métier | BR associées | FR associées | Module applicatif
+Conformité réglementaire BCEAO/CIMA | BR002, BR005, BR006 | FR053, FR055 | Module 6 – Reporting / Conformité
+Traçabilité complète et auditabilité | BR002, BR006 | FR021, FR022 | Module 3 – Traitement
+Réduction des délais de traitement | BR003, BR007 | FR011, FR012, FR050, FR051 | Modules 2, 5, 6
+Communication client améliorée | BR008 | FR030, FR031, FR032, FR033 | Module 4 – Communication
+Gestion omnicanale unifiée | BR004 | FR001-FR005, FR007 | Module 1 – Capture
+Pilotage et reporting automatisé | BR005, BR009 | FR050-FR056 | Module 6 – Reporting
+Amélioration continue | BR010 | FR054 | Module 6 – Reporting
+Sécurité et protection des données | - | NFR004, NFR005, NFR006 | Transversal – Infrastructure
+Scalabilité et disponibilité | - | NFR001, NFR002, NFR003 | Transversal – Infrastructure
+Satisfaction client | BR008, BR011 | FR033, FR034, FR044 | Modules 4 et 5
+Statut | Code | Description | Transitions autorisées | Type
+Nouveau | NOUVEAU | Dossier créé, non encore qualifié | → En qualification | Initial
+En qualification | QUALIF | En cours de catégorisation et d'affectation | → Affecté, → Rejeté | Intermédiaire
+Affecté | AFFECTE | Gestionnaire désigné, SLA démarré | → En cours de traitement | Intermédiaire
+En cours de traitement | EN_COURS | Investigation en cours par le back-office | → En attente client, → En validation, → En alerte | Intermédiaire
+En attente client | ATT_CLIENT | En attente de pièces ou d'informations du client | → En cours de traitement | Intermédiaire
+En alerte SLA | ALERTE | SLA dépassé à 80% ou totalement échu | → En cours, → Escaladé | Alerte
+Escaladé | ESCALADE | Dossier remonté au superviseur ou à la direction | → En cours, → En validation | Alerte
+En validation | VALIDATION | Réponse rédigée, en attente de validation hiérarchique | → Décision rendue, → En cours | Intermédiaire
+Décision rendue | DECISION | Réponse formelle envoyée au client | → Clôturé, → Réouvert | Terminal intermédiaire
+Clôturé | CLOTURE | Dossier clôturé avec motif. Aucune modification possible. | → Réouvert (superviseur uniquement) | Final
+Réouvert | REOUVRE | Dossier réouvert suite contestation client | → En cours de traitement | Intermédiaire
+Rejeté | REJETE | Réclamation non recevable (doublon, hors périmètre) | → (aucune) | Final
+Terme | Définition
+BCEAO | Banque Centrale des États de l'Afrique de l'Ouest – autorité de régulation bancaire de l'UEMOA
+CIMA | Conférence Interafricaine des Marchés d'Assurances – autorité de régulation des assurances en Afrique francophone
+UEMOA | Union Économique et Monétaire Ouest-Africaine (8 pays dont Côte d'Ivoire)
+SLA | Service Level Agreement – engagement de délai de traitement contractualisé
+RBAC | Role-Based Access Control – contrôle d'accès basé sur les rôles utilisateurs
+ACR | Accusé de Réception – confirmation envoyée au client lors de la création d'un dossier
+KPI | Key Performance Indicator – indicateur clé de performance
+CTI | Computer Telephony Integration – intégration téléphonie-informatique
+GED | Gestion Électronique de Documents – système d'archivage numérique
+RPO / RTO | Recovery Point Objective / Recovery Time Objective – paramètres de continuité d'activité
+Cause racine | Cause fondamentale et profonde d'une réclamation, permettant d'éliminer les récurrences
+Médiation | Procédure extrajudiciaire de règlement des différends entre un client et son institution
+WhatsApp Business API | Interface de programmation permettant l'intégration de WhatsApp dans une application professionnelle
+Mode offline | Fonctionnement d'une application sans connexion réseau, avec synchronisation différée

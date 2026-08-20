@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suivre ma réclamation — RéclamPro</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <style>
+    body { background: linear-gradient(180deg, #E6F1FB 0%, #F7F5EE 300px); }
+    .portail-shell { max-width: 760px; margin: 0 auto; padding: 32px 24px; }
+    .portail-header { text-align: center; margin-bottom: 24px; }
+    .portail-logo {
+      width: 64px; height: 64px; background: var(--brand); color: #fff;
+      border-radius: 16px; display: flex; align-items: center; justify-content: center;
+      font-size: 28px; font-weight: 700; margin: 0 auto 12px;
+    }
+    .portail-title { font-size: 24px; font-weight: 600; }
+    .portail-sub { color: var(--text-soft); margin-top: 4px; }
+    .progress { display: flex; margin: 20px 0 30px; }
+    .progress-step {
+      flex: 1; text-align: center; padding: 8px 4px;
+      border-bottom: 3px solid var(--border);
+      font-size: 11px; color: var(--text-mute);
+    }
+    .progress-step.done { border-color: var(--brand); color: var(--brand); font-weight: 500; }
+    .progress-step.active { border-color: var(--brand); color: var(--brand); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="portail-shell">
+    <div class="portail-header">
+      <div class="portail-logo">R</div>
+      <div class="portail-title">Suivi de ma réclamation</div>
+      <div class="portail-sub">Saisissez le lien de suivi reçu par email</div>
+    </div>
+
+    <div id="alerte"></div>
+
+    <div class="card" id="formulaire">
+      <form id="frm">
+        <label>Token de suivi *</label>
+        <input id="token" required placeholder="Collez ici le token reçu par email">
+        <div style="display:flex;justify-content:flex-end;margin-top:12px">
+          <button class="btn btn-primary" type="submit">Consulter mon dossier</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="resultat"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    if (params.get("token")) {
+      document.getElementById("token").value = params.get("token");
+      consulter(params.get("token"));
+    }
+
+    document.getElementById("frm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      consulter(document.getElementById("token").value.trim());
+    });
+
+    async function consulter(token) {
+      const alerte = document.getElementById("alerte");
+      const resultat = document.getElementById("resultat");
+      alerte.innerHTML = "";
+      resultat.innerHTML = `<div class="card">Chargement…</div>`;
+      try {
+        const res = await fetch(`/api/public/reclamations/${encodeURIComponent(token)}`);
+        if (!res.ok) {
+          const j = await res.json().catch(() => ({ detail: "Lien invalide ou expiré." }));
+          throw new Error(j.detail);
+        }
+        const d = await res.json();
+        resultat.innerHTML = render(d);
+      } catch (err) {
+        resultat.innerHTML = "";
+        alerte.innerHTML = `<div class="alert alert-error">${err.message}</div>`;
+      }
+    }
+
+    function render(d) {
+      const etapes = ["Reçu", "Pris en charge", "En traitement", "Décision rendue", "Clôturé"];
+      const map = { NOUVEAU: 0, QUALIF: 0, AFFECTE: 1, EN_COURS: 2, ATT_CLIENT: 2,
+        ALERTE: 2, ESCALADE: 2, VALIDATION: 2, DECISION: 3, CLOTURE: 4, REJETE: 4 };
+      const courant = map[d.statut] ?? 0;
+
+      return `
+        <div class="card">
+          <div style="text-align:center;padding:10px">
+            <div style="font-size:11px;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.05em">Numéro de dossier</div>
+            <div style="font-size:20px;font-weight:600;font-family:monospace;color:var(--brand);margin-top:4px">${d.code}</div>
+          </div>
+          <div class="progress">
+            ${etapes.map((e, i) => `
+              <div class="progress-step ${i < courant ? "done" : i === courant ? "active" : ""}">${e}</div>
+            `).join("")}
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px">
+            <div><label style="font-size:11px;color:var(--text-soft)">Statut actuel</label><div><strong>${d.statut_libelle}</strong></div></div>
+            <div><label style="font-size:11px;color:var(--text-soft)">Priorité</label><div>${d.priorite}</div></div>
+            <div><label style="font-size:11px;color:var(--text-soft)">Catégorie</label><div>${d.categorie}${d.sous_categorie ? " · " + d.sous_categorie : ""}</div></div>
+            <div><label style="font-size:11px;color:var(--text-soft)">Soumis le</label><div>${new Date(d.date_reception).toLocaleString("fr-FR")}</div></div>
+            <div><label style="font-size:11px;color:var(--text-soft)">Délai de réponse cible</label><div>${new Date(d.date_echeance_sla).toLocaleString("fr-FR")}</div></div>
+            ${d.date_cloture ? `<div><label style="font-size:11px;color:var(--text-soft)">Clôture</label><div>${new Date(d.date_cloture).toLocaleString("fr-FR")} — ${d.motif_cloture || ""}</div></div>` : ""}
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="card-title">Historique du dossier</span></div>
+          <div>${d.interactions_publiques.map(i => `
+            <div class="timeline-item">
+              <div><strong>${i.type}</strong> — ${i.contenu}</div>
+              <div class="timeline-meta">${new Date(i.date_heure).toLocaleString("fr-FR")}</div>
+            </div>`).join("")}</div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Tests E2E + bases SQLite locales (la prod utilise PostgreSQL)
+backend/tests_e2e
+backend/e2e_test.db
+backend/reclamations.db
+
+# Caches Python
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+**/htmlcov
+**/.coverage
+
+# Uploads locaux (le volume Docker en gère un autre)
+backend/uploads
+
+# Environnements virtuels et IDE
+.venv
+venv
+env
+.idea
+.vscode
+
+# Docs/builds Docker eux-mêmes
+Dockerfile
+docker-compose.yml
+.dockerignore
+.env
+.env.local
+
+# CI artifacts
+.github
+.coverage*
+junit*.xml

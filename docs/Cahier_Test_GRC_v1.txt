@@ -1,0 +1,823 @@
+
+CAHIER DE TEST COMPLET
+Application de Gestion des Réclamations Clients
+Banques · Assurances · Grandes Entreprises — Zone UEMOA / BCEAO / CIMA
+
+
+
+
+1. TEST PLAN
+1.1 Informations générales
+Ce Test Plan couvre la validation complète de l'Application de Gestion des Réclamations Clients (GRC) développée pour les établissements financiers opérant en zone UEMOA, en conformité avec les exigences BCEAO et CIMA.
+
+1.2 Périmètre — In Scope / Out of Scope
+In Scope
+
+Out of Scope
+
+1.3 Objectifs QA
+
+1.4 Environnements de test
+
+1.5 Types de tests
+
+1.6 Planning des tests
+
+1.7 Ressources
+
+1.8 Risques QA et mitigation
+2. TEST STRATEGY
+2.1 Approche globale
+La stratégie de test repose sur deux principes fondamentaux : le Risk-Based Testing (priorisation des cas de test selon l'impact métier et réglementaire) et la Test Pyramid (équilibre entre tests unitaires, API/intégration et E2E).
+
+
+2.2 Risk-Based Testing — Priorisation
+Les cas de test sont priorisés selon leur impact métier, réglementaire et technique. Les exigences BCEAO/CIMA, la traçabilité, les SLA et la sécurité constituent les risques les plus élevés.
+
+
+2.3 Types de tests — Détail
+Tests Unitaires (Couche DEV)
+
+Tests API / Intégration
+
+Tests E2E (End-to-End)
+
+Tests de Performance
+
+Tests de Sécurité
+3. TEST MATRIX — COUVERTURE COMPLÈTE
+Le tableau ci-dessous assure une couverture exhaustive de 100% des exigences du BRD. Chaque exigence est liée à au moins un scénario de test et un test case. Aucun gap identifié.
+
+
+TOTAL : 24 groupes d'exigences — 170+ test cases — Couverture : 100% — Gaps identifiés : 0
+4. TEST SCENARIOS
+Les scénarios couvrent l'ensemble des cas nominaux, alternatifs, d'erreur et edge cases pour chaque module fonctionnel. Seule une sélection représentative est présentée ici — la liste complète est dans le RTM.
+
+5. TEST CASES DÉTAILLÉS
+Les test cases suivants couvrent les scénarios P1 prioritaires et représentatifs de chaque module. Chaque test case est directement exécutable par l'équipe QA.
+
+TC-001 — Création dossier agence — cas nominal complet
+
+TC-002 — Création dossier agence — champs obligatoires manquants
+
+TC-003 — Création dossier en mode offline — synchronisation
+
+TC-004 — Accusé de réception automatique < 1 heure
+
+TC-005 — Traçabilité immuable — tentative suppression log par admin
+
+TC-006 — Escalade SLA automatique — alerte à 80% sur dossier standard
+
+TC-007 — Clôture — blocage si aucun motif sélectionné
+
+TC-008 — RBAC — isolation totale entre entités Banque X et Banque Y
+
+TC-009 — Export registre BCEAO — 100 dossiers complet < 60 secondes
+
+TC-010 — Validation hiérarchique — montant > seuil (500 000 FCFA)
+
+6. RTM — REQUIREMENTS TRACEABILITY MATRIX
+La matrice ci-dessous assure la traçabilité complète entre chaque exigence du BRD et les scénarios/test cases correspondants. Toute exigence non couverte est signalée comme gap.
+
+
+Résumé RTM : 52 exigences — 51 couvertes — 1 partielle (BR011, Could Have) — 0 gap bloquant
+7. DEFECT MANAGEMENT
+7.1 Classification des sévérités
+
+7.2 Workflow de gestion des défauts
+
+7.3 Template de bug report
+
+7.4 Critères de blocage des phases de test
+8. TEST SUMMARY REPORT
+Ce rapport est généré à l'issue de la phase de test. Il constitue la base de la décision GO / NO GO pour la mise en production.
+
+8.1 Métriques d'exécution (Template)
+
+8.2 Critères de décision GO / NO GO
+
+8.3 Décision finale
+DÉCISION : [  ] GO     [  ] NO GO     Date : _______________     Signé : _______________
+9. TEST SIGN-OFF
+9.1 Critères d'acceptation finaux
+
+9.2 Tableau des signatures
+10. GO-LIVE CHECKLIST
+Cette checklist doit être intégralement complétée et signée avant toute mise en production. Chaque item doit être coché et validé par le responsable désigné.
+
+
+
+VALIDATION GO-LIVE : [  ] AUTORISÉ     [  ] BLOQUÉ
+Date : _______________     Signé par la Direction : _______________
+BONUS — DONNÉES DE TEST & AUTOMATION
+B1. Jeux de données de test
+Clients de test
+
+Dossiers de test préparatoires
+
+B2. Collection Postman — Tests API clés
+Ci-dessous les tests API Postman représentatifs pour les endpoints critiques. Cette collection est importable directement dans Postman.
+
+
+B3. Priorisation des test cases P1 / P2 / P3
+
+B4. Couverture des risques métier
+Version | 1.0 — Initial
+Date | Mai 2025
+Statut | Pour Validation
+Rédigé par | QA Lead Senior
+BRD Source | CDC_Gestion_Reclamations_v1.docx
+Classification | CONFIDENTIEL — Usage interne
+Module | Description | Couverture
+Module 1 – Capture omnicanale | Saisie manuelle, email, WhatsApp, portail web, téléphone, import lot | Fonctionnel complet
+Module 2 – Qualification & Routage | Catégorisation, priorité, détection doublons, identification client | Fonctionnel complet
+Module 3 – Traitement & Investigation | Workflow, journal, pièces jointes, validation hiérarchique | Fonctionnel complet
+Module 4 – Communication client | ACR automatique, notifications, suivi en ligne, réponse formelle | Fonctionnel complet
+Module 5 – Clôture | Motif clôture, notification, blocage SLA, réouverture | Fonctionnel complet
+Module 6 – Reporting & Pilotage | Tableaux de bord, registre réglementaire, alertes, export | Fonctionnel complet
+Conformité BCEAO/CIMA | Registre auditable, export, conservation 10 ans | Fonctionnel + Conformité
+Sécurité – RBAC | Contrôle d'accès, chiffrement, journalisation | Sécurité
+Performance | Charge 500 users, 10 000 dossiers/mois, 3s page load | Performance
+Intégrations SI | CRM, email, WhatsApp, SMS Gateway, LDAP/AD | Intégration
+Mode offline agence | Saisie sans réseau + synchronisation | Fonctionnel + NFR
+Élément | Raison d'exclusion
+Module financier / comptable | Couvert par ERP existant — hors périmètre BRD
+Gestion des sinistres assurance | Module dédié sinistres — hors périmètre BRD
+IA de classification avancée | Won't Have v1 — planifié v2
+Chatbot de réclamation | Won't Have v1 — planifié v2
+Application mobile native | Won't Have v1 — planifié v2
+Scoring prédictif | Won't Have v1 — planifié v2
+Objectif QA | Alignement BRD | Critère de succès
+Valider la traçabilité complète et immuable de tous les dossiers | BR002, RG005 | 100% des actions tracées — aucune suppression possible
+Vérifier le respect des SLA paramétrables et des escalades automatiques | BR003, BR007, RG001-RG004 | Alertes déclenchées à 80% SLA et à échéance
+Tester l'accusé de réception automatique < 1 heure | BR008, RG006, FR030 | ACR envoyé dans les 60 min sur 100% des cas
+Valider la conformité BCEAO/CIMA du registre exportable | BR005, BR006, FR053 | Export complet en < 60s, 0 champ manquant
+Contrôler la sécurité RBAC et l'isolation multi-entités | NFR004, BR009 | 0 accès non autorisé — log de toute tentative
+Tester le mode offline agence et la synchronisation | NFR008, FR001 | 0 perte de données après reconnexion
+Valider les performances (3s page load, 500 users simultanés) | NFR001, NFR002, NFR003 | P95 < 3s, 0 dégradation sous charge
+Vérifier le chiffrement des données (AES-256, TLS 1.2) | NFR005 | 0 donnée en clair — certificats valides
+Valider l'intégralité du workflow de traitement des dossiers | FR020, BR001 | Workflow complet E2E sans blocage
+Assurer la couverture 100% des exigences BRD (FR, NFR, BR, RG) | Toutes exigences | 0 exigence non testée — RTM à 100%
+Environnement | Objectif | Données | Accès | Responsable
+DEV | Tests unitaires et développement | Données fictives | DEV + QA | DEV Lead
+TEST/INT | Tests fonctionnels et d'intégration | Jeu de données QA maîtrisé | QA + BA | QA Lead
+UAT | Recette métier et validation finale | Données réelles anonymisées | PO + Métier + QA | Business Owner
+PROD-like (Pre-prod) | Tests de performance et sécurité | Clone PROD anonymisé | QA + DSI | DSI + QA Lead
+PROD | Go-Live uniquement | Données réelles | Contrôlé — DSI | DSI
+Type de test | Objectif | Outils | Phase
+Tests fonctionnels | Valider chaque FR/BR/RG selon les cas nominaux, alternatifs, erreurs et edge cases | Manuels + Postman | TEST/INT + UAT
+Tests d'intégration | Vérifier les échanges entre modules et systèmes externes (CRM, SMS, WhatsApp, email) | Postman, SoapUI | TEST/INT
+Tests de performance | Mesurer le temps de réponse sous charge (NFR002, NFR003) | JMeter / k6 | Pre-prod
+Tests de sécurité | Valider RBAC, chiffrement, journalisation, injection, isolation multi-entités | OWASP ZAP, audit manuel | Pre-prod
+Tests de régression | S'assurer qu'un correctif n'introduit pas de régressions | Cypress (E2E automatisé) | Chaque sprint
+Tests de validation données | Vérifier l'intégrité des données, les contraintes, et la qualité du registre | Scripts SQL + Manuel | TEST/INT + UAT
+Tests de compatibilité | Vérifier le bon rendu sur Chrome, Firefox, Edge, Safari iOS | BrowserStack / Manuel | UAT
+Tests offline | Simuler coupure réseau et valider synchronisation (NFR008) | Manuel | TEST/INT
+Tests de conformité | Vérifier la conformité BCEAO/CIMA du registre et des exports | Manuel + Export Excel | UAT
+Smoke Tests | Vérification rapide des fonctions critiques après déploiement | Postman Collection | Chaque déploiement
+Phase | Durée | Activités | Entrée | Sortie
+Smoke Tests | 1 jour | Vérification des fonctions critiques après déploiement en TEST | Déploiement OK | Go/No-Go pour tests fonctionnels
+Tests fonctionnels | 3 semaines | Exécution des 150+ test cases (FR, BR, RG) | Env TEST stable | Rapport test fonctionnel
+Tests d'intégration | 1 semaine | API, SMS, Email, WhatsApp, CRM, LDAP | Mocks/stubs disponibles | Rapport intégration
+Tests de performance | 3 jours | Load test 500 users, 10 000 dossiers, stress test | Env Pre-prod clone | Rapport performance
+Tests de sécurité | 3 jours | RBAC, chiffrement, injections, OWASP Top 10 | Env Pre-prod | Rapport sécurité
+Tests de régression | Continue | Suite automatisée Cypress après chaque correction | Correctifs appliqués | Rapport régression
+UAT (Recette métier) | 2 semaines | Validation par les utilisateurs finaux et le métier | Env UAT stable | Sign-off métier
+Go-Live Checklist | 1 jour | Vérification finale avant mise en production | UAT signé | Autorisation Go-Live
+Rôle | Responsabilité | Nb | Phase
+QA Lead Senior | Stratégie, coordination, revue, sign-off, RTM | 1 | Toutes
+QA Engineer (fonctionnel) | Rédaction et exécution des test cases fonctionnels | 2 | TEST + UAT
+QA Engineer (technique) | Tests API, performance, sécurité, automation | 1 | INT + Pre-prod
+Business Analyst | Clarification des exigences, revue des résultats UAT | 1 | UAT
+Testeur métier (Banque) | Exécution des scénarios UAT — profil agent/superviseur | 2 | UAT
+Testeur métier (Assurance) | Exécution des scénarios UAT — profil conformité/direction | 1 | UAT
+DEV Lead | Support correction des anomalies, clarifications techniques | 1 | Toutes
+DSI / Admin système | Gestion des environnements, déploiements, accès | 1 | Toutes
+Risque | Impact | Probabilité | Mitigation
+Instabilité des environnements de test (intégrations SI) | Élevé | Moyenne | Mise en place de mocks/stubs pour CRM, SMS, WhatsApp. Environnement dédié.
+Périmètre des tests trop large pour le délai imparti | Élevé | Moyenne | Risk-based testing : P1 en priorité absolue. P3 reportés si délai contraint.
+Données de test insuffisantes ou non représentatives | Moyen | Faible | Jeu de données de test préparé à J-5 (voir Section BONUS).
+Non-disponibilité des testeurs métier pour l'UAT | Élevé | Moyenne | Planification validée avec les responsables métier. Suppléants identifiés.
+Régression introduite par un correctif de dernière minute | Élevé | Élevée | Suite de régression automatisée (Cypress) exécutée après chaque correctif.
+Accès insuffisant aux environnements (LDAP, CRM) | Moyen | Faible | Checklist d'accès validée en phase 0. Escalade DSI si non résolu à J-7.
+Couche | Type de test | Proportion cible | Outils | Responsable
+Sommet | Tests E2E (UI) | 10% | Cypress | QA Engineer
+Milieu | Tests API & Intégration | 30% | Postman, SoapUI | QA Tech
+Base | Tests Unitaires | 60% | Jest / JUnit | DEV
+Priorité | Critère | Modules concernés | Exécution obligatoire
+P1 — Critique | Impact réglementaire, SLA, sécurité, traçabilité | M1, M2, M3, M4, M5, M6 + NFR | Oui — Bloque le GO-LIVE si échoué
+P2 — Important | Impact sur l'expérience utilisateur et l'efficacité | M1, M3, M4, M6 | Oui — Doit être résolu avant UAT
+P3 — Mineur | Améliorations, cosmétique, Could Have | M6 (BI), M5 (satisfaction) | Souhaitable — Reportable en v1.1
+Composant | Ce qui est testé | Critère de couverture
+Génération ID dossier (RG007) | Unicité, format RECx-AAAAMM-NNNNN, non-réutilisabilité | 100% des cas limites
+Calcul SLA (RG001-RG003) | Calcul date d'échéance, jours ouvrés, fuseaux | Tous les types de priorité
+Règles de priorité (FR011) | Standard / Urgent / Critique selon paramètres | Toutes les combinaisons
+Calcul % SLA écoulé (RG004) | Déclenchement alerte à 80% et 100% | Seuils exacts
+Validation motif clôture (RG008) | Blocage si motif non sélectionné | État bouton clôturer
+Règle seuil financier (RG009) | Activation circuit validation si montant > seuil | Seuil paramétrable
+API / Intégration | Endpoints testés | Protocole | Scénarios clés
+REST API Réclamations | POST /reclamations, GET /reclamations/{id}, PATCH /status | REST/JSON | Création, lecture, transition statut, rejet doublon
+API Notifications | POST /notifications/send, GET /notifications/{id}/status | REST/JSON | ACR email, SMS, WhatsApp — retry si échec
+API Reporting | GET /reports/register, GET /reports/kpi | REST/JSON | Export BCEAO/CIMA, filtres période
+API Audit Log | GET /audit/{dossierId} | REST/JSON | Immuabilité, horodatage, champs before/after
+Intégration Email (IMAP/SMTP) | Réception email → création dossier | IMAP/SMTP | Email avec PJ, email sans PJ, spam, format invalide
+WhatsApp Business API | Réception message → dossier, envoi notification | WhatsApp Cloud | Message entrant, notification clôture, message inconnu
+SMS Gateway | Envoi ACR et notifications SMS | SMPP/HTTP | ACR < 1h, notification clôture, retry si échec
+CRM / Core Banking | Recherche client par N° compte, enrichissement dossier | REST/SOAP | Client trouvé, client inconnu, timeout CRM
+LDAP / AD | Authentification agent, synchronisation droits RBAC | LDAP/SAML | Login OK, login KO, MFA, révocation droits
+Parcours E2E | Description | Outils | Priorité
+Parcours nominal complet | Création réclamation → qualification → instruction → décision → clôture → notification | Cypress | P1
+Escalade SLA automatique | Création dossier → attente 80% SLA → vérif alerte superviseur | Cypress + simulation temps | P1
+Clôture bloquée sans motif | Dossier en décision → tentative clôture sans motif → blocage | Cypress | P1
+Flux email entrant complet | Email reçu → dossier créé → ACR envoyé → traitement → clôture | Cypress + Postman | P1
+Isolation multi-entités | Agent Banque X → tentative accès dossier Banque Y → refus | Cypress | P1
+Export registre BCEAO | 100 dossiers → export Excel → vérification complétude | Cypress + validation Excel | P1
+Mode offline + synchro | Saisie sans réseau → reconnexion → vérification dossier créé | Cypress + simulation offline | P1
+Parcours portail client | Soumission réclamation portail → suivi via token → notification clôture | Cypress | P2
+Scénario | Charge | Critère d'acceptation | Outil
+Load Test nominal | 500 utilisateurs simultanés pendant 1h | P95 < 3s, 0 erreur | JMeter / k6
+Stress Test | Montée progressive jusqu'à 1000 users | Dégradation gracieuse, pas de crash | JMeter
+Volume de données | 10 000 dossiers/mois simulés en 30 min | Aucune perte, latence stable | JMeter
+Export registre charge | Export 10 000 lignes sous charge | Export < 60s (NFR007) | JMeter + script
+Connexion 2G/3G | Test sur réseau limité (200 kbps simulé) | Page load < 3s (NFR002) | Network throttling
+Disponibilité 99,5% | Test de disponibilité sur 7h-20h, lundi-samedi | 0 downtime hors maintenance | Monitoring
+Vecteur de test | Description | Référence | Criticité
+RBAC — contrôle d'accès | Vérifier que chaque rôle n'accède qu'aux fonctions autorisées | NFR004 | P1
+Isolation multi-entités | 0 accès cross-entité possible (ex. Banque X voit Banque Y) | BR009 | P1
+Chiffrement en transit | TLS 1.2 minimum sur toutes les communications | NFR005 | P1
+Chiffrement en base | Données personnelles AES-256 — 0 donnée en clair | NFR005 | P1
+Injection SQL / XSS | Tests d'injection sur tous les champs de saisie | OWASP A03 | P1
+Journalisation complète | Toute action loguée avec IP, auteur, timestamp, avant/après | NFR006, BR002 | P1
+Immuabilité des logs | Tentative de modification/suppression d'un log — blocage | BR002, RG005 | P1
+Authentification LDAP/SAML | Login robuste, gestion des sessions, expiration token | NFR004 | P1
+Tests de pénétration (pentest) | Scan OWASP ZAP + revue manuelle avant go-live | OWASP Top 10 | P1
+BR / NFR | FR | Use Case | User Story | Scénarios | Nb TC | Couverture
+BR001 | FR001, FR005 | Créer un dossier via agence | En tant qu'agent, je saisis une réclamation reçue en agence | SC-001 à SC-004 | 8 | 100%
+BR001 | FR002 | Créer un dossier via email | En tant que système, je transforme un email en dossier | SC-005 à SC-008 | 8 | 100%
+BR001 | FR003 | Créer un dossier via WhatsApp | En tant que client, j'envoie ma réclamation via WhatsApp | SC-009 à SC-011 | 6 | 100%
+BR001 | FR004 | Soumettre via portail web | En tant que client, j'utilise le portail en ligne | SC-012 à SC-015 | 7 | 100%
+BR002 | FR021 | Traçabilité immuable | En tant qu'auditeur, je vérifie l'immuabilité des logs | SC-016 à SC-019 | 6 | 100%
+BR003, RG001-003 | FR011, FR012 | Gestion SLA | En tant que superviseur, je surveille les SLA | SC-020 à SC-025 | 10 | 100%
+BR007, RG004 | FR055 | Escalade automatique | En tant que système, j'escalade à 80% SLA | SC-026 à SC-028 | 6 | 100%
+BR008, RG006 | FR030, FR031 | Accusé de réception < 1h | En tant que client, je reçois un ACR | SC-029 à SC-031 | 5 | 100%
+BR004 | FR001-FR007 | Gestion omnicanale | En tant qu'agent, je traite tous les canaux | SC-032 à SC-035 | 8 | 100%
+BR005, BR006 | FR053 | Export registre BCEAO/CIMA | En tant que conformité, j'exporte le registre | SC-036 à SC-039 | 7 | 100%
+FR010, FR013 | FR014 | Qualification & détection doublons | En tant qu'agent, je qualifie et détecte les doublons | SC-040 à SC-044 | 8 | 100%
+FR020, FR025 | FR023 | Workflow & validation hiérarchique | En tant que gestionnaire, je suis le workflow | SC-045 à SC-050 | 10 | 100%
+FR022 |  | Gestion pièces jointes | En tant qu'agent, j'attache des documents | SC-051 à SC-053 | 5 | 100%
+FR032, FR033 | FR034 | Communication client multi-canal | En tant que client, je reçois des notifications | SC-054 à SC-057 | 7 | 100%
+FR040-FR043 | RG008 | Clôture dossier | En tant que gestionnaire, je clôture un dossier | SC-058 à SC-063 | 10 | 100%
+FR050-FR052 | FR055 | Tableaux de bord | En tant que direction, je consulte les KPI | SC-064 à SC-068 | 8 | 100%
+NFR004 |  | Sécurité RBAC | En tant qu'admin, je gère les accès par rôle | SC-069 à SC-073 | 8 | 100%
+NFR005 |  | Chiffrement données | En tant que DSI, je vérifie le chiffrement | SC-074 à SC-076 | 5 | 100%
+NFR001-003 |  | Performance & scalabilité | En tant que système, je performe sous charge | SC-077 à SC-081 | 8 | 100%
+NFR008 | FR001 | Mode offline agence | En tant qu'agent hors ligne, je saisis une réclamation | SC-082 à SC-084 | 5 | 100%
+BR009 |  | Isolation multi-entités | En tant qu'agent Banque X, je ne vois pas Banque Y | SC-085 à SC-087 | 5 | 100%
+BR010, FR054 |  | Analyse cause racine | En tant que conformité, j'analyse les causes racines | SC-088 à SC-090 | 4 | 100%
+RG009 |  | Validation financière > seuil | En tant que superviseur, je valide les montants élevés | SC-091 à SC-093 | 5 | 100%
+RG011 |  | Conservation 10 ans | En tant qu'archiviste, je vérifie la rétention des données | SC-094 à SC-096 | 4 | 100%
+ID | Titre du scénario | Module | BR/FR | Type | Priorité | Description courte
+SC-001 | Création dossier agence — cas nominal | M1 – Capture | BR001, BR008 | Nominal | P1 | Un agent en agence saisit une réclamation complète via l'interface web.
+SC-002 | Création dossier agence — données invalides / champs manquants | M1 – Capture | BR001, FR001 | Erreur | P1 | L'agent tente de soumettre un dossier sans les champs obligatoires.
+SC-003 | Création dossier agence — détection de doublon | M1/M2 | FR013 | Edge | P2 | Le système détecte qu'une réclamation similaire existe déjà pour ce client.
+SC-004 | Création dossier agence — mode offline | M1 – Capture | NFR008, FR001 | Edge | P1 | L'agent saisit une réclamation sans connexion réseau.
+SC-005 | Capture email — email valide avec pièce jointe | M1 – Capture | BR001, FR002 | Nominal | P1 | Un email reçu sur la boîte dédiée crée automatiquement un dossier.
+SC-006 | Capture email — email spam / non réclamation | M1 – Capture | FR002 | Erreur | P2 | Un email non pertinent (publicité, spam) est reçu sur la boîte réclamations.
+SC-007 | Capture email — ACR automatique < 1h | M4 – Communication | BR008, RG006, FR030 | Nominal | P1 | Vérification que l'accusé de réception est envoyé au client dans l'heure.
+SC-008 | Capture email — pièces jointes multiples et volumineuses | M1 – Capture | FR002, FR022 | Edge | P2 | Email avec 5 pièces jointes de formats variés (PDF, image, audio).
+SC-009 | WhatsApp — message client entrant crée un dossier | M1 – Capture | BR004, FR003 | Nominal | P1 | Un client envoie un message WhatsApp au numéro dédié.
+SC-010 | WhatsApp — notification de clôture envoyée | M4 – Communication | FR032, FR041 | Nominal | P1 | À la clôture, une notification WhatsApp est envoyée au client.
+SC-011 | WhatsApp — message reçu rattaché à dossier existant | M1 – Capture | FR003 | Alternatif | P2 | Un client répond via WhatsApp à une réclamation en cours.
+SC-012 | Portail web — soumission réclamation par client | M1 – Capture | FR004, BR008 | Nominal | P1 | Un client soumet une réclamation via le formulaire web sans compte.
+SC-013 | Portail web — suivi via token | M4 – Communication | FR033 | Nominal | P2 | Le client suit l'avancement de sa réclamation via un lien sécurisé.
+SC-014 | Portail web — token expiré ou invalide | M4 – Communication | FR033 | Erreur | P2 | Le client tente d'accéder avec un token expiré.
+SC-015 | Portail web — soumission sans captcha résolu | M1 – Capture | FR004 | Erreur | P2 | Soumission bloquée si captcha non résolu.
+SC-016 | Traçabilité — commentaire ajouté non supprimable | M3 – Traitement | BR002, RG005 | Nominal | P1 | Vérification de l'immuabilité des commentaires et actions.
+SC-017 | Traçabilité — tentative de suppression d'un log (admin) | M3 – Traitement | BR002, RG005 | Sécurité | P1 | Un administrateur tente de supprimer un log d'audit.
+SC-018 | Traçabilité — modification de statut tracée before/after | M3 – Traitement | BR002, FR021 | Nominal | P1 | Vérification que chaque changement de statut est loggé avec valeur avant et après.
+SC-019 | Traçabilité — journal visible par conformité uniquement | M3 – Traitement | BR002, NFR004 | Sécurité | P1 | Un agent standard ne peut pas accéder à l'onglet Audit.
+SC-020 | SLA Standard — alerte à 80% (J+4 sur 5j ouvrés) | M3 – M6 | BR003, BR007, RG001, RG004 | Nominal | P1 | Un dossier standard sans action déclenche une alerte à J+4.
+SC-021 | SLA Urgent — alerte immédiate superviseur (72h) | M3 – M6 | BR003, RG002 | Nominal | P1 | Un dossier urgent déclenche une alerte à H+48.
+SC-022 | SLA Critique — notification direction (24h) | M3 – M6 | BR003, RG003 | Nominal | P1 | Un dossier critique est mis en rouge immédiatement et la direction notifiée.
+SC-023 | SLA — dossier échu non clôturé génère alerte critique | M3 – M6 | BR007, RG004 | Edge | P1 | Un dossier 100% SLA écoulé génère une alerte critique.
+SC-024 | SLA — clôture dossier dépassé avec commentaire justificatif | M5 – Clôture | FR042 | Alternatif | P1 | Un dossier SLA dépassé ne peut être clôturé sans commentaire obligatoire.
+SC-025 | SLA — recalcul correct sur jours ouvrés (week-end exclu) | M2 – Qualification | RG001 | Edge | P1 | Vérification que les jours fériés et week-ends sont exclus du calcul SLA.
+SC-026 | Escalade automatique — dossier à 80% SLA remonté superviseur | M6 – Reporting | BR007, RG004, FR055 | Nominal | P1 | Email d'alerte + statut 'En alerte' déclenché automatiquement.
+SC-027 | Escalade — dossier escaladé retrouve son workflow normal | M3 – Traitement | BR007 | Alternatif | P2 | Après traitement de l'escalade, le dossier reprend son workflow.
+SC-028 | Escalade — concurrence (deux agents traitent simultanément) | M3 – Traitement | BR002, FR023 | Edge | P2 | Deux agents tentent de modifier le même dossier simultanément.
+SC-029 | ACR — envoyé automatiquement < 1h après création | M4 – Communication | BR008, RG006, FR030 | Nominal | P1 | L'accusé de réception est envoyé dans l'heure sur tous les canaux.
+SC-030 | ACR — retry si envoi email échoué | M4 – Communication | RG006, FR030 | Erreur | P1 | Si l'envoi de l'ACR échoue, un retry automatique est déclenché.
+SC-031 | ACR — alerte agent si ACR non envoyé après 1h | M4 – Communication | RG006 | Erreur | P1 | Si l'ACR n'a pas pu être envoyé après tous les retries, l'agent est alerté.
+SC-032 | Omnicanal — réclamation créée depuis chaque canal | M1 – Capture | BR004, FR001-FR005 | Nominal | P1 | Test de création de dossier depuis chaque canal (agence, email, WhatsApp, web, téléphone).
+SC-036 | Export registre BCEAO — 100 dossiers < 60 secondes | M6 – Reporting | BR005, BR006, FR053, NFR007 | Nominal | P1 | Export complet du registre avec tous les champs requis.
+SC-037 | Export registre — filtrable par période | M6 – Reporting | FR053 | Nominal | P1 | L'export peut être filtré par date de début et date de fin.
+SC-038 | Export registre — 0 champ manquant (conformité BCEAO) | M6 – Reporting | BR006, NFR007 | Conformité | P1 | Vérification que tous les champs requis par la BCEAO sont présents.
+SC-040 | Qualification — catégorie obligatoire avant transmission | M2 – Qualification | FR010 | Nominal | P1 | Un dossier ne peut pas être transmis sans catégorisation.
+SC-041 | Qualification — détection doublon même client même objet | M2 – Qualification | FR013 | Nominal | P2 | Le système alerte si un doublon potentiel est détecté.
+SC-045 | Workflow — transition de statut conforme aux règles | M3 – Traitement | FR020 | Nominal | P1 | Seules les transitions autorisées sont possibles (ex. NOUVEAU → QUALIF uniquement).
+SC-046 | Validation hiérarchique — montant > seuil déclenche circuit | M3 – Traitement | FR025, RG009 | Nominal | P1 | Une réponse sur un dossier > 500 000 FCFA requiert validation superviseur.
+SC-058 | Clôture — motif obligatoire (bouton désactivé sans motif) | M5 – Clôture | FR040, RG008 | Nominal | P1 | Le bouton 'Clôturer' est désactivé tant qu'aucun motif n'est sélectionné.
+SC-059 | Clôture — notification client automatique < 1h | M5 – Clôture | FR041, RG010 | Nominal | P1 | La notification de clôture est envoyée au client dans l'heure.
+SC-060 | Clôture — réouverture par superviseur uniquement | M5 – Clôture | FR043 | Alternatif | P2 | Un dossier clôturé peut être réouvert uniquement par un superviseur.
+SC-069 | RBAC — agent ne voit que ses dossiers affectés | Sécurité | NFR004 | Sécurité | P1 | Un agent ne peut pas consulter les dossiers affectés à d'autres agents.
+SC-070 | RBAC — isolement total entre entités (Banque X ≠ Banque Y) | Sécurité | NFR004, BR009 | Sécurité | P1 | Un agent de Banque X ne peut jamais accéder aux données de Banque Y.
+SC-077 | Performance — 500 utilisateurs simultanés, P95 < 3s | Performance | NFR002, NFR003 | Performance | P1 | Test de charge avec 500 utilisateurs simultanés pendant 1 heure.
+SC-082 | Mode offline — saisie sans réseau, synchro après reconnexion | M1 – Capture | NFR008, FR001 | Edge | P1 | Validation du comportement offline et de la synchronisation.
+SC-085 | Multi-entités — isolation totale des données | Sécurité | BR009, NFR004 | Sécurité | P1 | Vérification que les dossiers d'une entité sont strictement isolés.
+ID Test Case | TC-001
+Scénario lié | SC-001
+Description | Création dossier agence — cas nominal complet
+Module | Module 1 – Capture
+BR / FR | BR001, BR008, RG006, RG007
+Type | Nominal
+Priorité | P1
+Préconditions | 1. Agent authentifié avec rôle 'Agent Front-Office'
+2. Client existant dans le CRM (id_client : CLI-00123)
+3. Connexion réseau active
+4. Boîte email de notification configurée
+Étapes | 1. Accéder au menu 'Nouvelle Réclamation' sur le dashboard agent
+2. Saisir le numéro de compte client (ex. CI-2025-001234) — vérifier l'enrichissement automatique depuis le CRM
+3. Sélectionner le canal d'entrée : 'Agence physique'
+4. Saisir la description de la réclamation : 'Débit non autorisé de 150 000 FCFA le 12/05/2025'
+5. Sélectionner la catégorie : 'Financière' → sous-catégorie : 'Débit non autorisé'
+6. Saisir le montant de l'enjeu : 150 000 FCFA
+7. Joindre une pièce justificative (relevé bancaire en PDF, 2 Mo)
+8. Cliquer sur 'Créer le dossier'
+9. Vérifier la confirmation à l'écran avec l'ID généré
+10. Vérifier la boîte email du client pour l'accusé de réception
+Résultat attendu | ✓ Dossier créé avec ID unique au format RECx-202505-NNNNN
+✓ Statut initial : NOUVEAU
+✓ Horodatage serveur enregistré à la seconde près
+✓ Pièce jointe attachée au dossier (checksum SHA-256 calculé)
+✓ ACR envoyé au client par email dans les 60 minutes
+✓ ACR contient : numéro de dossier, délai estimé, coordonnées de suivi
+✓ Dossier visible dans la liste des dossiers de l'agent
+✓ Log d'audit : création tracée avec auteur, IP, timestamp
+ID Test Case | TC-002
+Scénario lié | SC-002
+Description | Création dossier agence — champs obligatoires manquants
+Module | Module 1 – Capture
+BR / FR | BR001, FR001, FR010
+Type | Erreur
+Priorité | P1
+Préconditions | 1. Agent authentifié
+2. Formulaire de saisie ouvert
+Étapes | 1. Ouvrir le formulaire 'Nouvelle Réclamation'
+2. Laisser le champ 'Description' vide
+3. Laisser le champ 'Catégorie' vide
+4. Saisir uniquement le nom du client
+5. Cliquer sur 'Créer le dossier'
+Résultat attendu | ✓ Formulaire non soumis — message de validation affiché
+✓ Champs obligatoires manquants surlignés en rouge
+✓ Message d'erreur explicite : 'Veuillez compléter les champs obligatoires : Description, Catégorie'
+✓ Aucun dossier créé en base de données
+✓ Aucun ACR envoyé
+✓ Données saisies préservées dans le formulaire pour correction
+ID Test Case | TC-003
+Scénario lié | SC-004
+Description | Création dossier en mode offline — synchronisation
+Module | Module 1 – Capture
+BR / FR | NFR008, FR001, BR001
+Type | Edge
+Priorité | P1
+Préconditions | 1. Agent sur tablette ou ordinateur en agence
+2. Module offline activé dans la configuration
+3. Connexion réseau active initialement
+Étapes | 1. Désactiver la connexion réseau (simuler coupure réseau)
+2. Vérifier que l'application affiche le mode 'Offline' dans l'interface
+3. Accéder au formulaire de nouvelle réclamation
+4. Saisir une réclamation complète (tous les champs obligatoires)
+5. Cliquer sur 'Créer le dossier'
+6. Vérifier la confirmation locale (stockage temporaire affiché)
+7. Rétablir la connexion réseau
+8. Attendre la synchronisation automatique (max 30 secondes)
+9. Vérifier la présence du dossier dans le système central avec ID unique généré
+10. Vérifier que l'ACR client est envoyé après synchronisation
+Résultat attendu | ✓ Application reste utilisable en mode offline — aucun crash
+✓ Message 'Mode hors ligne — synchronisation en attente' affiché
+✓ Dossier sauvegardé localement avec confirmation visuelle
+✓ Après reconnexion : synchronisation automatique sans intervention
+✓ Dossier créé en base avec ID unique valide
+✓ 0 perte de données — tous les champs saisis conservés
+✓ ACR envoyé au client après synchronisation réussie
+✓ Log de synchronisation disponible pour audit
+ID Test Case | TC-004
+Scénario lié | SC-007
+Description | Accusé de réception automatique < 1 heure
+Module | Module 4 – Communication
+BR / FR | BR008, RG006, FR030
+Type | Nominal
+Priorité | P1
+Préconditions | 1. Email client valide saisi dans le dossier
+2. Service de notification configuré (SMTP et SMS Gateway actifs)
+3. Dossier en statut NOUVEAU
+Étapes | 1. Créer un dossier via n'importe quel canal (email ou agence)
+2. Vérifier l'heure de création exacte du dossier (T0)
+3. Monitorer le service de notification (job toutes 15 minutes)
+4. Vérifier la réception de l'email ACR dans la boîte du client
+5. Mesurer le délai entre T0 (création dossier) et T1 (envoi ACR)
+6. Vérifier le contenu de l'ACR reçu
+7. Vérifier le statut d'envoi dans l'onglet Communication du dossier
+Résultat attendu | ✓ ACR envoyé dans un délai ≤ 60 minutes après création du dossier
+✓ ACR contient : numéro de dossier (RECx-AAAAMM-NNNNN), délai de traitement estimé, coordonnées de suivi
+✓ Statut notification dans le dossier : 'Envoyé' avec horodatage
+✓ Preuve d'envoi archivée (headers email complets)
+✓ Si SMS configuré : SMS ACR également envoyé dans le délai
+ID Test Case | TC-005
+Scénario lié | SC-017
+Description | Traçabilité immuable — tentative suppression log par admin
+Module | Module 3 – Traitement
+BR / FR | BR002, RG005, NFR006
+Type | Sécurité
+Priorité | P1
+Préconditions | 1. Utilisateur connecté avec profil 'Administrateur'
+2. Dossier existant avec au moins 3 commentaires et 2 changements de statut
+3. Accès à l'interface d'administration
+Étapes | 1. Se connecter avec le profil Administrateur
+2. Accéder au dossier de test via l'interface admin
+3. Tenter de supprimer un commentaire via l'interface (bouton supprimer si présent)
+4. Tenter via API (DELETE /interactions/{id}) avec token admin
+5. Tenter de modifier la valeur 'avant' d'un log via API (PUT /audit/{id})
+6. Vérifier l'état du journal après ces tentatives
+7. Vérifier les logs de sécurité pour les tentatives d'accès
+Résultat attendu | ✓ Aucun bouton 'Supprimer' disponible sur les commentaires/interactions
+✓ API DELETE /interactions retourne HTTP 403 Forbidden
+✓ API PUT /audit retourne HTTP 405 Method Not Allowed ou 403
+✓ Journal d'audit inchangé — toutes les entrées originales préservées
+✓ Tentatives de suppression elles-mêmes loguées dans le journal de sécurité
+✓ Message d'erreur explicite : 'Suppression non autorisée — données immuables'
+ID Test Case | TC-006
+Scénario lié | SC-020
+Description | Escalade SLA automatique — alerte à 80% sur dossier standard
+Module | Module 6 – Reporting
+BR / FR | BR003, BR007, RG001, RG004, FR055
+Type | Nominal
+Priorité | P1
+Préconditions | 1. Dossier créé en statut AFFECTE — priorité Standard (SLA 5 jours ouvrés)
+2. Superviseur avec email configuré
+3. Scheduler d'escalade actif
+Étapes | 1. Créer un dossier standard en statut AFFECTÉ
+2. Simuler l'écoulement de 4 jours ouvrés sans aucune action sur le dossier
+3. Déclencher manuellement le scheduler d'escalade (ou attendre le cycle automatique)
+4. Vérifier la boîte email du superviseur
+5. Vérifier le dashboard superviseur
+6. Vérifier le statut du dossier
+7. Vérifier le log d'audit du dossier
+Résultat attendu | ✓ Email d'alerte reçu par le superviseur avec : ID dossier, client, délai écoulé, % SLA consommé
+✓ Statut du dossier automatiquement passé à 'EN_ALERTE'
+✓ Indicateur visuel rouge/orange visible sur le dashboard superviseur
+✓ Log d'audit enregistré : 'Escalade automatique déclenchée à 80% SLA — auteur: Système'
+✓ Aucune action humaine requise pour déclencher l'escalade
+ID Test Case | TC-007
+Scénario lié | SC-058
+Description | Clôture — blocage si aucun motif sélectionné
+Module | Module 5 – Clôture
+BR / FR | FR040, RG008
+Type | Nominal
+Priorité | P1
+Préconditions | 1. Gestionnaire authentifié avec rôle Back-office
+2. Dossier en statut 'DECISION'
+Étapes | 1. Accéder au dossier en statut DECISION
+2. Cliquer sur le bouton 'Clôturer le dossier'
+3. Ne pas sélectionner de motif de clôture dans le menu déroulant
+4. Tenter de valider la clôture
+5. Sélectionner un motif (ex. 'Favorable')
+6. Valider la clôture avec motif sélectionné
+Résultat attendu | ✓ ÉTAPES 1-4 : Bouton 'Valider la clôture' désactivé (grisé) tant qu'aucun motif n'est sélectionné
+✓ Message d'aide visible : 'Veuillez sélectionner un motif de clôture'
+✓ Aucune modification de statut en base
+✓ ÉTAPES 5-6 : Bouton de validation activé après sélection du motif
+✓ Dossier clôturé avec statut CLOTURE, motif 'Favorable' enregistré
+✓ Notification de clôture envoyée au client dans l'heure
+✓ Log : 'Clôture — motif: Favorable — auteur: [agent] — date: [timestamp]'
+ID Test Case | TC-008
+Scénario lié | SC-070
+Description | RBAC — isolation totale entre entités Banque X et Banque Y
+Module | Sécurité
+BR / FR | NFR004, BR009
+Type | Sécurité
+Priorité | P1
+Préconditions | 1. Deux entités configurées : Banque X (ID: ENT-001) et Banque Y (ID: ENT-002)
+2. Agent A rattaché à Banque X uniquement
+3. Dossier D-001 appartenant à Banque Y
+Étapes | 1. Se connecter avec le compte de l'Agent A (Banque X)
+2. Tenter d'accéder à l'URL directe du dossier D-001 (Banque Y)
+3. Tenter d'effectuer une recherche incluant des dossiers de Banque Y
+4. Tenter via API : GET /reclamations/D-001 avec token Agent A
+5. Vérifier les logs de sécurité
+6. Se connecter avec un agent de Banque Y — vérifier la visibilité normale du dossier D-001
+Résultat attendu | ✓ Accès URL direct : redirection vers page 'Accès non autorisé' — HTTP 403
+✓ Recherche : aucun résultat de Banque Y affiché
+✓ API : HTTP 403 Forbidden — message 'Accès à cette ressource non autorisé'
+✓ Log sécurité : tentative d'accès cross-entité enregistrée (agent, timestamp, ressource ciblée)
+✓ Agent Banque Y : accès normal au dossier D-001 — aucune restriction
+✓ 0 fuite de données entre entités
+ID Test Case | TC-009
+Scénario lié | SC-036
+Description | Export registre BCEAO — 100 dossiers complet < 60 secondes
+Module | Module 6 – Reporting
+BR / FR | BR005, BR006, FR053, NFR007
+Type | Nominal
+Priorité | P1
+Préconditions | 1. Au moins 100 dossiers en base avec statuts variés
+2. Profil Conformité connecté
+3. Module export opérationnel
+Étapes | 1. Se connecter avec le profil 'Direction Conformité'
+2. Accéder au module 'Registre Réglementaire'
+3. Sélectionner la période : janvier 2025 à mai 2025
+4. Lancer l'export en format Excel (.xlsx)
+5. Mesurer le temps d'exécution depuis le clic jusqu'à la disponibilité du fichier
+6. Ouvrir le fichier Excel exporté
+7. Vérifier la présence de tous les champs requis par la BCEAO
+8. Vérifier l'intégrité des données (aucun champ vide non justifié)
+Résultat attendu | ✓ Fichier Excel généré en moins de 60 secondes pour 100 dossiers
+✓ Tous les champs BCEAO présents : ID, date réception, canal, catégorie, priorité, statut, délai traitement, motif clôture, date clôture
+✓ Aucun dossier manquant dans la période sélectionnée
+✓ Format de date DD/MM/YYYY respecté
+✓ Montants en FCFA (XOF)
+✓ Fichier non corrompu, ouvrable sans erreur
+✓ Téléchargement déclenché automatiquement ou lien de téléchargement fourni
+ID Test Case | TC-010
+Scénario lié | SC-046
+Description | Validation hiérarchique — montant > seuil (500 000 FCFA)
+Module | Module 3 – Traitement
+BR / FR | FR025, RG009
+Type | Nominal
+Priorité | P1
+Préconditions | 1. Seuil configuré à 500 000 FCFA dans les paramètres
+2. Dossier avec montant d'enjeu de 750 000 FCFA en statut EN_COURS
+3. Gestionnaire Back-office connecté
+4. Superviseur avec notifications actives
+Étapes | 1. Accéder au dossier avec montant 750 000 FCFA
+2. Rédiger la réponse formelle au client
+3. Tenter d'envoyer la réponse directement (sans validation superviseur)
+4. Vérifier le comportement du système
+5. Se connecter avec le profil Superviseur
+6. Accéder aux dossiers en attente de validation
+7. Valider la réponse du gestionnaire
+8. Vérifier l'envoi de la réponse au client
+Résultat attendu | ✓ ÉTAPE 3 : Bouton 'Envoyer réponse' désactivé pour le gestionnaire
+✓ Message affiché : 'Ce dossier requiert une validation superviseur (montant > 500 000 FCFA)'
+✓ Notification automatique envoyée au superviseur
+✓ Statut du dossier : EN_VALIDATION
+✓ Superviseur : dossier visible dans la file d'attente de validation
+✓ Après validation superviseur : réponse envoyée au client
+✓ Statut dossier : DECISION
+✓ Log : 'Validation hiérarchique — superviseur: [nom] — date: [timestamp]'
+Req. ID | Description | Scénario(s) | Test Case(s) | Couverture | Gap / Remarque
+BR001 | Dossier unique par réclamation | SC-001 | TC-001 | Couvert | 
+BR002 | Traçabilité complète et immuable | SC-016 à SC-019 | TC-005 | Couvert | 
+BR003 | SLA paramétrables par profil | SC-020 à SC-025 | TC-006 | Couvert | 
+BR004 | Gestion omnicanale unifiée | SC-032 à SC-035 | TC-001, TC-003 | Couvert | 
+BR005 | Reporting réglementaire automatisé | SC-036 à SC-039 | TC-009 | Couvert | 
+BR006 | Registre auditable exportable | SC-036 à SC-039 | TC-009 | Couvert | 
+BR007 | Escalade automatique | SC-026 à SC-028 | TC-006 | Couvert | 
+BR008 | Communication client obligatoire | SC-029 à SC-031 | TC-004 | Couvert | 
+BR009 | Multi-établissement | SC-085 à SC-087 | TC-008 | Couvert | 
+BR010 | Analyse cause racine | SC-088 à SC-090 | TC-019 | Couvert | 
+BR011 | Enquête satisfaction | SC-091 | TC-020 | Partiel (Could) | Feature Could Have — reportable v1.1
+BR012 | Médiation & recours | SC-092 | TC-021 | Couvert | 
+FR001 | Saisie manuelle agence | SC-001, SC-002, SC-004 | TC-001, TC-002, TC-003 | Couvert | 
+FR002 | Capture email automatique | SC-005 à SC-008 | TC-004 | Couvert | 
+FR003 | Intégration WhatsApp Business | SC-009 à SC-011 | TC-012 | Couvert | 
+FR004 | Portail web client | SC-012 à SC-015 | TC-013 | Couvert | 
+FR005 | Saisie téléphonique assistée | SC-033 | TC-014 | Couvert | 
+FR010 | Catégorisation obligatoire | SC-040 | TC-015 | Couvert | 
+FR011 | Calcul automatique priorité | SC-041 | TC-015 | Couvert | 
+FR012 | Matrice de routage | SC-042 | TC-016 | Couvert | 
+FR013 | Détection de doublons | SC-003, SC-041 | TC-017 | Couvert | 
+FR014 | Identification client CRM | SC-043 | TC-001 | Couvert | 
+FR020 | Workflow configurable | SC-045 | TC- | Couvert | 
+FR021 | Journal d'activité complet | SC-016 à SC-019 | TC-005 | Couvert | 
+FR022 | Gestion pièces jointes | SC-051 à SC-053 | TC-018 | Couvert | 
+FR025 | Validation hiérarchique | SC-046 | TC-010 | Couvert | 
+FR030 | ACR automatique | SC-029 | TC-004 | Couvert | 
+FR031 | Notifications d'étape | SC-030, SC-031 | TC-004 | Couvert | 
+FR040 | Motif clôture obligatoire | SC-058 | TC-007 | Couvert | 
+FR041 | Notification clôture client | SC-059 | TC-007 | Couvert | 
+FR042 | Blocage clôture si SLA dépassé | SC-060 | TC-007 | Couvert | 
+FR043 | Réouverture possible | SC-061 | TC-011 | Couvert | 
+FR050 | Dashboard agent | SC-064 | TC-022 | Couvert | 
+FR051 | Dashboard superviseur | SC-065 | TC-022 | Couvert | 
+FR053 | Registre réglementaire exportable | SC-036 à SC-039 | TC-009 | Couvert | 
+NFR001 | Disponibilité 99,5% | SC-077 à SC-081 | TC-023 | Couvert | 
+NFR002 | Performance — 3s page load | SC-077 | TC-023 | Couvert | 
+NFR003 | Scalabilité 500 users | SC-077 | TC-023 | Couvert | 
+NFR004 | Sécurité RBAC | SC-069 à SC-073 | TC-008 | Couvert | 
+NFR005 | Chiffrement AES-256 / TLS | SC-074 à SC-076 | TC-024 | Couvert | 
+NFR006 | Journalisation complète | SC-016 à SC-019 | TC-005 | Couvert | 
+NFR008 | Mode offline agence | SC-082 à SC-084 | TC-003 | Couvert | 
+RG001-003 | SLA Standard/Urgent/Critique | SC-020 à SC-023 | TC-006 | Couvert | 
+RG004 | Escalade automatique à 80% SLA | SC-026 à SC-028 | TC-006 | Couvert | 
+RG005 | Immuabilité des données | SC-016 à SC-018 | TC-005 | Couvert | 
+RG006 | ACR < 1h | SC-029 à SC-031 | TC-004 | Couvert | 
+RG007 | ID unique non-réutilisable | SC-001 | TC-001 | Couvert | 
+RG008 | Clôture avec motif obligatoire | SC-058 | TC-007 | Couvert | 
+RG009 | Validation si montant > seuil | SC-046 | TC-010 | Couvert | 
+RG010 | Notification clôture < 1h | SC-059 | TC-007 | Couvert | 
+RG011 | Conservation 10 ans | SC-094 à SC-096 | TC-025 | Couvert | 
+RG012 | Rapport mensuel automatique | SC-097 | TC-026 | Couvert | 
+Sévérité | Code | Définition | Exemples | SLA Correction
+S1 — Critique | S1 | Blocage total d'une fonctionnalité critique ou conformité réglementaire compromise | ACR non envoyé, log supprimable, export BCEAO vide, RBAC bypassé | 4h ouvrées
+S2 — Majeur | S2 | Fonctionnalité importante ne fonctionne pas correctement mais workaround existe | SLA non calculé correctement, escalade non déclenchée, doublon non détecté | 8h ouvrées
+S3 — Mineur | S3 | Anomalie mineure sans impact sur le flux principal | Libellé incorrect, format date erroné, tri liste inversé | 3 jours ouvrés
+S4 — Amélioration | S4 | Suggestion d'amélioration ou défaut cosmétique | Couleur bouton, espacement, formulation message | Planifié v1.1
+Statut | Description | Responsable | Transition vers
+NEW | Défaut nouvellement détecté et soumis par le QA | QA Engineer | ASSIGNED
+ASSIGNED | Défaut analysé et assigné à un développeur | QA Lead | IN PROGRESS
+IN PROGRESS | Développeur en cours de correction | DEV | FIXED / WONTFIX
+FIXED | Correction développée et déployée en environnement de test | DEV | RETEST
+RETEST | QA vérifie la correction — tests de non-régression | QA Engineer | CLOSED / REOPEN
+CLOSED | Défaut confirmé corrigé et non-régressif | QA Lead | (Terminal)
+REOPEN | Correction insuffisante ou nouvelle régression détectée | QA Engineer | ASSIGNED
+WONTFIX | Défaut accepté comme tel (S4) ou hors périmètre v1 | QA Lead + PO | (Terminal)
+DEFERRED | Correction reportée en v1.1 (S3/S4 non bloquants) | QA Lead + PO | ASSIGNED (v1.1)
+Champ | Valeur / Description
+ID Défaut | DEF-2025-XXX (numérotation séquentielle)
+Titre | Description courte et précise du problème (max 100 caractères)
+Module concerné | Module 1 – Capture / Module 2 – Qualification / etc.
+Sévérité | S1 / S2 / S3 / S4
+Priorité | P1 / P2 / P3
+Environnement | TEST / UAT / Pre-prod — Version build déployée
+URL / Écran | URL complète ou nom de l'écran où le défaut est observé
+Préconditions | État du système avant reproduction
+Steps to reproduce | Étapes numérotées précises pour reproduire le défaut
+Résultat observé | Ce qui se passe réellement (avec capture d'écran ou log)
+Résultat attendu | Ce qui devrait se passer selon les spécifications
+Pièces jointes | Captures d'écran, vidéo, logs serveur, trace réseau
+Test Case lié | Référence TC-XXX ayant détecté le défaut
+Exigence liée | BR/FR/NFR/RG concernée
+Détecté par | Nom du QA Engineer
+Date détection | JJ/MM/AAAA HH:MM
+Assigné à | Nom du développeur
+Date correction | JJ/MM/AAAA
+Commentaires | Historique des échanges entre QA et DEV
+Phase | Critère de blocage | Action
+Smoke Tests | 1 défaut S1 bloque les tests fonctionnels | Correction urgente avant de continuer
+Fonctionnels | Plus de 3 défauts S1 ouverts simultanément | Gel des tests — correction prioritaire
+UAT | Tout défaut S1 ou S2 non corrigé | Impossible de signer l'UAT
+Go-Live | 0 défaut S1 ouvert, S2 < 2 avec workaround documenté | Sign-off QA Lead requis
+Métrique | Valeur cible | Valeur réelle | Statut
+Total test cases exécutés | 170+ | [À compléter] | —
+Test cases PASS | ≥ 95% | [À compléter] | —
+Test cases FAIL | < 5% | [À compléter] | —
+Test cases BLOCKED | 0 | [À compléter] | —
+Couverture exigences (RTM) | 100% | [À compléter] | —
+Défauts S1 ouverts | 0 | [À compléter] | —
+Défauts S2 ouverts | ≤ 2 (workaround) | [À compléter] | —
+Défauts S3 ouverts | Acceptés avec plan | [À compléter] | —
+Taux de conformité BCEAO/CIMA | 100% | [À compléter] | —
+Performance P95 page load | < 3 secondes | [À compléter] | —
+Résultat tests de sécurité | 0 vulnérabilité critique | [À compléter] | —
+Critère GO | Condition OBLIGATOIRE | Validation
+Couverture RTM | 100% des exigences Must Have testées | [ ] Validé par QA Lead
+Défauts bloquants | 0 défaut S1 ouvert | [ ] Validé par QA Lead
+SLA et escalade | Tests SLA P1 tous PASS | [ ] Validé par QA Lead
+Traçabilité | Immuabilité des logs confirmée | [ ] Validé par Conformité
+Export BCEAO/CIMA | Export complet, 0 champ manquant, < 60s | [ ] Validé par Conformité
+Sécurité RBAC | 0 accès non autorisé — isolation multi-entités OK | [ ] Validé par DSI
+Chiffrement | AES-256 + TLS 1.2 confirmés | [ ] Validé par DSI
+Performance | P95 < 3s sous 500 users simultanés | [ ] Validé par DSI
+Mode offline | Synchronisation sans perte de données confirmée | [ ] Validé par QA Lead
+UAT sign-off | Recette métier signée par Business Owner | [ ] Validé par PO
+Go-Live checklist | Checklist technique et fonctionnelle 100% complétée | [ ] Validé par DSI
+GO ✓ — Autorisation de mise en production accordée | NO GO ✗ — Mise en production bloquée
+Tous les critères GO sont satisfaits
+0 défaut S1 ouvert
+Couverture 100%
+UAT signé
+Checklist complète | Au moins 1 critère GO non satisfait
+Défaut S1 ouvert
+UAT non signé
+Sécurité non validée
+Critère | Seuil d'acceptation | Vérifié par | Statut
+Couverture des exigences Must Have | 100% (0 gap) | QA Lead | [ ] OK / [ ] KO
+Défauts critiques (S1) | 0 défaut S1 ouvert | QA Lead | [ ] OK / [ ] KO
+Défauts majeurs (S2) | ≤ 2 avec workaround documenté | QA Lead | [ ] OK / [ ] KO
+SLA et escalade automatique | Tous les tests P1 PASS | QA Lead | [ ] OK / [ ] KO
+Conformité BCEAO/CIMA | Export complet, 0 champ manquant | Conformité | [ ] OK / [ ] KO
+Sécurité RBAC et chiffrement | 0 vulnérabilité critique | DSI | [ ] OK / [ ] KO
+Performance | P95 < 3s, 500 users simultanés | DSI | [ ] OK / [ ] KO
+Mode offline et synchronisation | 0 perte de données confirmée | QA Lead | [ ] OK / [ ] KO
+UAT — recette métier | Signé par Business Owner | PO/Métier | [ ] OK / [ ] KO
+Formation des utilisateurs | 100% des agents formés avant go-live | RH/MOA | [ ] OK / [ ] KO
+Rôle | Nom | Signature | Date | Décision
+QA Lead Senior | _____________________ | _____________________ | __ / __ / ____ | [ ] GO  [ ] NO GO
+Business Analyst | _____________________ | _____________________ | __ / __ / ____ | [ ] GO  [ ] NO GO
+Product Owner / MOA | _____________________ | _____________________ | __ / __ / ____ | [ ] GO  [ ] NO GO
+Direction Conformité | _____________________ | _____________________ | __ / __ / ____ | [ ] GO  [ ] NO GO
+DSI / Responsable Technique | _____________________ | _____________________ | __ / __ / ____ | [ ] GO  [ ] NO GO
+Direction Générale | _____________________ | _____________________ | __ / __ / ____ | [ ] GO  [ ] NO GO
+Item à vérifier | Responsable | Résultat
+🔧 TECHNIQUE — Infrastructure & Déploiement | 🔧 TECHNIQUE — Infrastructure & Déploiement | 🔧 TECHNIQUE — Infrastructure & Déploiement
+[ ]  Application déployée sur l'environnement de production final | DSI | [ ] OK  [ ] KO
+[ ]  Tous les services applicatifs démarrés et opérationnels | DSI | [ ] OK  [ ] KO
+[ ]  APIs REST documentées et endpoints testés en PROD-like | DSI + QA | [ ] OK  [ ] KO
+[ ]  Base de données cohérente — migration exécutée sans erreur | DSI | [ ] OK  [ ] KO
+[ ]  Intégration CRM / Core Banking validée en PROD-like | DSI | [ ] OK  [ ] KO
+[ ]  Intégration Email (IMAP/SMTP) validée — envoi et réception | DSI | [ ] OK  [ ] KO
+[ ]  Intégration WhatsApp Business API validée | DSI | [ ] OK  [ ] KO
+[ ]  SMS Gateway testé — ACR et notifications envoyés | DSI | [ ] OK  [ ] KO
+[ ]  Intégration LDAP/AD — authentification SSO validée | DSI | [ ] OK  [ ] KO
+[ ]  Mode offline agence testé et synchronisation validée | DSI + QA | [ ] OK  [ ] KO
+[ ]  Sauvegardes automatiques configurées — RPO ≤ 24h, RTO ≤ 4h | DSI | [ ] OK  [ ] KO
+[ ]  Plan de rollback documenté et testé | DSI | [ ] OK  [ ] KO
+[ ]  Monitoring et alertes configurés (uptime, erreurs, SLA) | DSI | [ ] OK  [ ] KO
+[ ]  Certificats TLS valides (expiration > 6 mois) | DSI | [ ] OK  [ ] KO
+[ ]  Chiffrement AES-256 en base confirmé par audit technique | DSI | [ ] OK  [ ] KO
+✅ FONCTIONNEL — Flux métier | ✅ FONCTIONNEL — Flux métier | ✅ FONCTIONNEL — Flux métier
+[ ]  Workflow complet testé E2E (création → clôture) en UAT | QA Lead | [ ] OK  [ ] KO
+[ ]  ACR automatique < 1h validé sur tous les canaux | QA Lead | [ ] OK  [ ] KO
+[ ]  SLA et escalades automatiques validés (RG001-RG004) | QA Lead | [ ] OK  [ ] KO
+[ ]  Clôture avec motif obligatoire validée | QA Lead | [ ] OK  [ ] KO
+[ ]  Export registre BCEAO/CIMA validé (0 champ manquant) | Conformité | [ ] OK  [ ] KO
+[ ]  Tableaux de bord agent, superviseur et direction opérationnels | QA Lead | [ ] OK  [ ] KO
+[ ]  Notifications email, SMS, WhatsApp validées | QA Lead | [ ] OK  [ ] KO
+[ ]  Rapport mensuel automatique configuré (RG012) | DSI + Conformité | [ ] OK  [ ] KO
+[ ]  Tous les scénarios P1 PASS en UAT | QA Lead | [ ] OK  [ ] KO
+[ ]  UAT signé par le Business Owner et la Direction Conformité | PO + Conformité | [ ] OK  [ ] KO
+🔒 SÉCURITÉ — Contrôles d'accès et conformité | 🔒 SÉCURITÉ — Contrôles d'accès et conformité | 🔒 SÉCURITÉ — Contrôles d'accès et conformité
+[ ]  RBAC configuré pour tous les rôles (Agent, Superviseur, Back-office, Conformité, Admin) | DSI + QA | [ ] OK  [ ] KO
+[ ]  Isolation multi-entités testée et validée | QA Lead | [ ] OK  [ ] KO
+[ ]  Journalisation complète active — logs immuables | DSI + QA | [ ] OK  [ ] KO
+[ ]  Tentatives de suppression de logs bloquées (test TC-005) | QA Lead | [ ] OK  [ ] KO
+[ ]  Test de pénétration OWASP réalisé — 0 vulnérabilité critique | DSI / Prestataire sécurité | [ ] OK  [ ] KO
+[ ]  Accès externe à l'interface d'administration désactivé | DSI | [ ] OK  [ ] KO
+[ ]  Politique de mots de passe forte configurée | DSI | [ ] OK  [ ] KO
+[ ]  Sessions inactives expirées automatiquement (timeout configuré) | DSI | [ ] OK  [ ] KO
+📊 DONNÉES — Intégrité et conformité | 📊 DONNÉES — Intégrité et conformité | 📊 DONNÉES — Intégrité et conformité
+[ ]  Jeu de données de production initialisé (référentiels, catégories, utilisateurs) | DSI + MOA | [ ] OK  [ ] KO
+[ ]  Migration données existantes validée (contrôle de complétude) | DSI + QA | [ ] OK  [ ] KO
+[ ]  Format date DD/MM/YYYY et devise FCFA (XOF) vérifiés | QA Lead | [ ] OK  [ ] KO
+[ ]  Conservation 10 ans configurée — archivage automatique paramétré (RG011) | DSI | [ ] OK  [ ] KO
+[ ]  Intégrité référentielle base de données vérifiée | DSI | [ ] OK  [ ] KO
+[ ]  Registre BCEAO/CIMA exportable et conforme | Conformité | [ ] OK  [ ] KO
+📋 CONFORMITÉ — Réglementaire & Audit | 📋 CONFORMITÉ — Réglementaire & Audit | 📋 CONFORMITÉ — Réglementaire & Audit
+[ ]  Journal d'audit activé et accessible uniquement aux profils Conformité/Admin | DSI + QA | [ ] OK  [ ] KO
+[ ]  Export audit en Excel/CSV fonctionnel (< 5 minutes pour période complète) | Conformité + QA | [ ] OK  [ ] KO
+[ ]  Voies de recours (médiateur, BCEAO, CIMA) affichées dans les réponses clients | Conformité + QA | [ ] OK  [ ] KO
+[ ]  Rapport de conformité BCEAO/CIMA v1 validé par la Direction Conformité | Conformité | [ ] OK  [ ] KO
+[ ]  Checklist inspection BCEAO/CIMA complétée et signée | Conformité | [ ] OK  [ ] KO
+[ ]  Conservation des preuves d'envoi (headers email, accusés SMS) configurée | DSI | [ ] OK  [ ] KO
+👥 HUMAIN — Formation & Conduite du changement | 👥 HUMAIN — Formation & Conduite du changement | 👥 HUMAIN — Formation & Conduite du changement
+[ ]  Tous les agents front-office formés (4h par agent) | MOA + RH | [ ] OK  [ ] KO
+[ ]  Tous les gestionnaires back-office formés (6h) | MOA + RH | [ ] OK  [ ] KO
+[ ]  Tous les superviseurs formés (4h) | MOA + RH | [ ] OK  [ ] KO
+[ ]  Équipe Conformité formée (4h) | MOA + RH | [ ] OK  [ ] KO
+[ ]  Administrateurs DSI formés (8h) | DSI + MOA | [ ] OK  [ ] KO
+[ ]  Documentation utilisateur disponible (guides, FAQ) | MOA | [ ] OK  [ ] KO
+[ ]  Équipe de support de niveau 1 identifiée et formée | DSI + MOA | [ ] OK  [ ] KO
+[ ]  Processus d'escalade support documenté | DSI + MOA | [ ] OK  [ ] KO
+🚀 VALIDATION FINALE — GO-LIVE | 🚀 VALIDATION FINALE — GO-LIVE | 🚀 VALIDATION FINALE — GO-LIVE
+[ ]  Test SMOKE en production effectué (fonctions critiques opérationnelles) | QA Lead | [ ] OK  [ ] KO
+[ ]  Fenêtre de maintenance planifiée et communiquée aux utilisateurs | DSI + MOA | [ ] OK  [ ] KO
+[ ]  Équipe de garde DSI disponible J+1 et J+2 après go-live | DSI | [ ] OK  [ ] KO
+[ ]  Numéro d'urgence technique disponible 24/7 les 48h post go-live | DSI | [ ] OK  [ ] KO
+[ ]  Communication interne envoyée aux équipes | MOA / Communication | [ ] OK  [ ] KO
+[ ]  Sign-off final QA Lead signé | QA Lead | [ ] OK  [ ] KO
+[ ]  Autorisation Go-Live de la Direction Générale obtenue | DG | [ ] OK  [ ] KO
+ID Client | Nom | Type | Canal préférentiel | Entité | Catégorie test
+CLI-T001 | Jean-Baptiste KONAN | Personne physique | Email | Banque X | Réclamation standard
+CLI-T002 | Marie-Claire OUATTARA | Personne physique | WhatsApp | Banque X | Réclamation urgente (débit)
+CLI-T003 | SARL TROPIQUE INVEST | Personne morale | Portail web | Assurance Y | Réclamation complexe > seuil
+CLI-T004 | Kouamé BROU | Personne physique | Téléphone | Banque X | Test SLA dépassé
+CLI-T005 | Fatou DIALLO | Personne physique | Agence | Banque Z | Test isolation multi-entité
+CLI-T006 | COMPAGNIE ABIDJAN SA | Personne morale | Email | Assurance Y | Test export BCEAO/CIMA
+CLI-T007 | Aminata COULIBALY | Personne physique | WhatsApp | Banque X | Test mode offline
+CLI-T008 | Pierre GNAGNA | Personne physique | Email | Banque X | Test doublon (même objet)
+ID Dossier Test | Client | Catégorie | Priorité | Statut initial | Objectif du test
+TEST-REC-001 | CLI-T001 | Financière / Débit non autorisé | Standard | NOUVEAU | Test création + ACR + workflow nominal
+TEST-REC-002 | CLI-T002 | Financière / Débit non autorisé | Urgent | AFFECTE | Test SLA urgent + escalade H+48
+TEST-REC-003 | CLI-T003 | Contractuelle / Non-respect | Standard | EN_COURS | Test validation > 500 000 FCFA
+TEST-REC-004 | CLI-T004 | Service / Délai excessif | Standard | ALERTE | Test clôture avec SLA dépassé
+TEST-REC-005 | CLI-T001 | Financière / Débit non autorisé | Standard | NOUVEAU | Test détection doublon (même CLI-T001)
+TEST-REC-006 | CLI-T006 | Fraude / Usurpation d'identité | Critique | ESCALADE | Test SLA critique + notif direction
+TEST-REC-007 | CLI-T007 | Service / DAB en panne | Standard | NOUVEAU | Test mode offline agence
+TEST-REC-008 | CLI-T005 | Contractuelle / Résiliation | Standard | CLOTURE | Test isolation multi-entité Banque Z
+Endpoint | Méthode | Test Postman | Assertion clé
+POST /api/reclamations | POST | TC-API-001 — Création réclamation valide | Status 201, id_reclamation non null, format RECx-AAAAMM-NNNNN
+POST /api/reclamations | POST | TC-API-002 — Champs obligatoires manquants | Status 400, body.errors contient 'description requis'
+GET /api/reclamations/{id} | GET | TC-API-003 — Lecture dossier existant | Status 200, body.statut = 'NOUVEAU'
+GET /api/reclamations/{id} | GET | TC-API-004 — Accès dossier autre entité | Status 403, body.error = 'Accès non autorisé'
+PATCH /api/reclamations/{id}/statut | PATCH | TC-API-005 — Transition statut valide | Status 200, nouveau statut reflété
+PATCH /api/reclamations/{id}/statut | PATCH | TC-API-006 — Transition statut invalide | Status 422, body.error = 'Transition non autorisée'
+POST /api/reclamations/{id}/cloture | POST | TC-API-007 — Clôture sans motif | Status 400, body.error = 'motif_cloture requis'
+POST /api/reclamations/{id}/cloture | POST | TC-API-008 — Clôture avec motif valide | Status 200, statut = 'CLOTURE', notification déclenchée
+GET /api/reports/register | GET | TC-API-009 — Export registre BCEAO | Status 200, Content-Type = application/vnd.openxmlformats, fichier non vide
+GET /api/audit/{dossierId} | GET | TC-API-010 — Journal audit accessible conformité | Status 200, liste non vide avec before/after
+GET /api/audit/{dossierId} | GET | TC-API-011 — Journal audit bloqué pour agent | Status 403 pour rôle Agent
+DELETE /api/interactions/{id} | DELETE | TC-API-012 — Suppression commentaire bloquée | Status 403 ou 405 — donnée immuable
+POST /api/notifications/send | POST | TC-API-013 — Envoi ACR email | Status 202, notification_id non null, statut_envoi = 'EN_ATTENTE'
+Priorité | Nb TC | Critère | Modules | Exécution obligatoire
+P1 — Critique | 82 | Impact réglementaire BCEAO/CIMA, SLA, traçabilité, sécurité, ACR | M1, M2, M3, M4, M5, M6, Sécu, Perf | AVANT GO-LIVE — Bloquant
+P2 — Important | 58 | UX, canaux secondaires, workflows alternatifs, tableaux de bord | M1, M3, M4, M6 | AVANT UAT — Requis
+P3 — Mineur | 30+ | Cosmétique, Could Have, BI externe, satisfaction client | M6 (BI), M5 (NPS) | Souhaitable — Reportable v1.1
+Risque métier | Exigence couverte | Test Case(s) clé(s) | Criticité QA
+Non-conformité BCEAO lors d'une inspection | BR002, BR006, FR053, NFR006 | TC-009 (export), TC-005 (immuabilité) | P1 — Bloquant GO
+Perte de réclamation et risque contentieux | BR001, BR002, RG005 | TC-001 (création), TC-005 (immuabilité) | P1 — Bloquant GO
+Fuite de données clients (RGPD-like) | NFR004, NFR005, NFR006 | TC-008 (RBAC), TC-024 (chiffrement) | P1 — Bloquant GO
+Dépassement SLA sans alerte → réclamation BCEAO | BR003, BR007, RG004 | TC-006 (escalade SLA) | P1 — Bloquant GO
+Non-adoption par les agents (résistance) | FR001, NFR008 (offline) | TC-003 (offline), TC-001 (UX) | P2 — Important
+Qualité des données saisies insuffisante | FR001, FR010, FR013 | TC-002 (validation), TC-017 (doublons) | P2 — Important
+Indisponibilité réseau agences (connectivité) | NFR008, FR001 | TC-003 (mode offline) | P1 — Bloquant GO
+Problèmes d'intégration SI (CRM, WhatsApp) | FR002, FR003, FR014 | TC-012 (WhatsApp), TC-014 (CRM) | P1 — Bloquant GO

@@ -1,0 +1,57 @@
+# RéclamPro — Orchestration de développement / démo
+# Lancement : docker compose up --build
+# Première fois : SEED_AT_STARTUP=true crée les comptes admin/agent + 25 dossiers démo.
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: reclampro-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-reclampro}
+      POSTGRES_USER: ${POSTGRES_USER:-reclampro}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-reclampro-dev-pwd}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-reclampro} -d ${POSTGRES_DB:-reclampro}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    ports:
+      # Expose en local pour debug ; en prod, retirer pour ne pas exposer
+      - "5432:5432"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reclampro-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-reclampro}:${POSTGRES_PASSWORD:-reclampro-dev-pwd}@db:5432/${POSTGRES_DB:-reclampro}
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production-very-long-secret}
+      APP_CRYPTO_KEY: ${APP_CRYPTO_KEY:-change-me-in-production-cryptography-key}
+      SEED_AT_STARTUP: ${SEED_AT_STARTUP:-true}
+      EMAIL_DRIVER: ${EMAIL_DRIVER:-console}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_TLS: ${SMTP_TLS:-true}
+      SMTP_FROM: ${SMTP_FROM:-no-reply@reclampro.local}
+      WHATSAPP_DRIVER: ${WHATSAPP_DRIVER:-console}
+      WHATSAPP_TOKEN: ${WHATSAPP_TOKEN:-}
+      WHATSAPP_PHONE_NUMBER_ID: ${WHATSAPP_PHONE_NUMBER_ID:-}
+      WHATSAPP_VERIFY_TOKEN: ${WHATSAPP_VERIFY_TOKEN:-dev-verify-token}
+    ports:
+      - "8000:8000"
+    volumes:
+      - app_uploads:/app/backend/uploads
+
+volumes:
+  db_data:
+  app_uploads:

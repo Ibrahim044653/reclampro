@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RéclamPro — Connexion</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <style>
+    body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      width: 380px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .login-head { text-align: center; margin-bottom: 20px; }
+    .login-logo {
+      width: 56px; height: 56px; background: var(--brand); color: #fff;
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      font-size: 24px; font-weight: 700; margin: 0 auto 12px;
+    }
+    .login-title { font-size: 18px; font-weight: 600; }
+    .login-sub { font-size: 12px; color: var(--text-soft); }
+    .demo-credentials {
+      background: var(--brand-bg); border-radius: 6px; padding: 10px 12px;
+      font-size: 11px; margin-top: 16px; color: #0C447C;
+      font-family: "SF Mono", Consolas, monospace;
+    }
+    .demo-credentials b { font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-head">
+      <div class="login-logo">R</div>
+      <div class="login-title">RéclamPro</div>
+      <div class="login-sub">Gestion des réclamations clients</div>
+    </div>
+
+    <div id="alerte"></div>
+
+    <form id="frm">
+      <div style="margin-bottom:12px">
+        <label>Identifiant</label>
+        <input name="username" autocomplete="username" required autofocus>
+      </div>
+      <div style="margin-bottom:16px">
+        <label>Mot de passe</label>
+        <input name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <div id="mfa_block" style="display:none;margin-bottom:16px">
+        <label>Code à 6 chiffres (Google Authenticator / Authy)</label>
+        <input name="code_mfa" maxlength="6" pattern="[0-9]*" inputmode="numeric"
+               placeholder="123456" autocomplete="one-time-code">
+      </div>
+      <button class="btn btn-primary" type="submit" style="width:100%">Se connecter</button>
+    </form>
+
+    <div class="demo-credentials">
+      <div><b>Comptes de démo</b></div>
+      <div>admin / admin123 — tous droits (clôture, export registre)</div>
+      <div>agent / agent123 — lecture, création, commentaire</div>
+    </div>
+
+    <div style="text-align:center;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);font-size:12px">
+      <a href="/portail.html" style="color:var(--brand);text-decoration:none">Vous êtes client ? Soumettre une réclamation →</a>
+    </div>
+  </div>
+
+  <script src="/assets/js/api.js"></script>
+  <script>
+    document.getElementById("frm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const alerte = document.getElementById("alerte");
+      alerte.innerHTML = "";
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      const payload = { username: data.username, password: data.password };
+      if (data.code_mfa) payload.code_mfa = data.code_mfa;
+      try {
+        const res = await api.post("/api/auth/login", payload);
+        localStorage.setItem("rp_token", res.access_token);
+        localStorage.setItem("rp_user", JSON.stringify(res.utilisateur));
+        location.href = "/";
+      } catch (err) {
+        if (err.message === "MFA_REQUIRED") {
+          document.getElementById("mfa_block").style.display = "block";
+          alerte.innerHTML = `<div class="alert alert-success">Compte protégé par MFA — saisissez votre code à 6 chiffres.</div>`;
+        } else {
+          alerte.innerHTML = `<div class="alert alert-error">${err.message}</div>`;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "name": "RéclamPro — Gestion des réclamations",
+  "short_name": "RéclamPro",
+  "description": "Application de gestion des réclamations clients (BCEAO/CIMA)",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F7F5EE",
+  "theme_color": "#185FA5",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Nouveau dossier",
+      "url": "/nouvelle.html",
+      "icons": [{ "src": "/assets/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Ma file",
+      "url": "/ma-file.html"
+    }
+  ]
+}
