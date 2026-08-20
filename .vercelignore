@@ -1,0 +1,10 @@
+.pytest_cache
+backend/tests
+backend/tests_e2e
+tests_e2e
+*.db
+*.sqlite3
+backend/uploads
+.env
+.env.local
+docs/*.docx
