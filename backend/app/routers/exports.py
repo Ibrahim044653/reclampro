@@ -15,7 +15,7 @@ from sqlalchemy import select
 
 from .. import models
 from ..database import get_db
-from .auth import utilisateur_admin
+from .auth import utilisateur_admin_download
 
 router = APIRouter(prefix="/api/exports", tags=["exports"])
 
@@ -48,7 +48,7 @@ def _toutes_reclamations(db: Session):
 @router.get("/registre.csv")
 def export_csv(
     db: Session = Depends(get_db),
-    _admin: models.Agent = Depends(utilisateur_admin),
+    _admin: models.Agent = Depends(utilisateur_admin_download),
 ):
     reclamations = _toutes_reclamations(db)
     buffer = io.StringIO()
@@ -68,7 +68,7 @@ def export_csv(
 @router.get("/registre.xlsx")
 def export_xlsx(
     db: Session = Depends(get_db),
-    _admin: models.Agent = Depends(utilisateur_admin),
+    _admin: models.Agent = Depends(utilisateur_admin_download),
 ):
     """Excel formaté pour les inspections BCEAO/CIMA (FR053)."""
     from openpyxl import Workbook
@@ -147,7 +147,7 @@ def export_rapport_mensuel(
     annee: int,
     mois: int,
     db: Session = Depends(get_db),
-    _admin: models.Agent = Depends(utilisateur_admin),
+    _admin: models.Agent = Depends(utilisateur_admin_download),
 ):
     """Rapport mensuel BCEAO/CIMA (RG012) au format PDF."""
     if not 1 <= mois <= 12:
@@ -166,7 +166,7 @@ def export_rapport_mensuel(
 @router.get("/registre.pdf")
 def export_pdf(
     db: Session = Depends(get_db),
-    _admin: models.Agent = Depends(utilisateur_admin),
+    _admin: models.Agent = Depends(utilisateur_admin_download),
 ):
     """Registre PDF pour archivage / inspection physique."""
     from reportlab.lib.pagesizes import A4, landscape

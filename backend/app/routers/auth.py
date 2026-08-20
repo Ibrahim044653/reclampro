@@ -69,6 +69,26 @@ def utilisateur_admin(agent: models.Agent = Depends(utilisateur_courant)) -> mod
     return agent
 
 
+def utilisateur_admin_download(
+    token: str | None = None,
+    credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme),
+    db: Session = Depends(get_db),
+) -> models.Agent:
+    """Accepte le JWT en Bearer header OU en query param ?token= (pour les téléchargements)."""
+    raw = token or (credentials.credentials if credentials else None)
+    if not raw:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Authentification requise.")
+    payload = auth_service.decoder_token(raw)
+    if payload is None:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Token invalide ou expiré.")
+    agent = db.get(models.Agent, int(payload["sub"]))
+    if agent is None or not agent.actif:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Compte inconnu ou désactivé.")
+    if agent.role != "ADMIN":
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "Droits administrateur requis.")
+    return agent
+
+
 @router.get("/me", response_model=schemas.AgentOut)
 def me(agent: models.Agent = Depends(utilisateur_courant)):
     return agent

@@ -14,7 +14,7 @@ function renderLayout(pageActive, titre) {
     { id: "mfa",          href: "/mfa.html",                 label: t("Sécurité (MFA)"),       section: t("Mon espace"), adminOnly: false },
     { id: "liste",        href: "/reclamations.html",        label: t("Réclamations"),         section: t("Dossiers"), adminOnly: false },
     { id: "nouvelle",     href: "/nouvelle.html",            label: t("Nouveau dossier"),      section: t("Dossiers"), adminOnly: false },
-    { id: "registre",     href: "/api/exports/registre.csv", label: t("Registre BCEAO (CSV)"), section: t("Conformité"), adminOnly: true },
+    { id: "registre",     href: `/api/exports/registre.csv?token=${auth.token()}`, label: t("Registre BCEAO (CSV)"), section: t("Conformité"), adminOnly: true },
     { id: "utilisateurs", href: "/utilisateurs.html",        label: t("Utilisateurs"),         section: t("Administration"), adminOnly: true },
   ].filter(it => !it.adminOnly || estAdmin);
 
