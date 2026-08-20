@@ -15,4 +15,4 @@ httpx>=0.27
 # Tests E2E navigateur — installer le navigateur avec : python -m playwright install chromium
 pytest-playwright>=0.6
 # Driver PostgreSQL
-psycopg[binary]>=3.2
+psycopg2-binary>=2.9

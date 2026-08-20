@@ -11,9 +11,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 _db_url = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'reclamations.db'}")
 # SQLAlchemy + psycopg3 exige le préfixe postgresql+psycopg://
 if _db_url.startswith("postgresql://"):
-    _db_url = _db_url.replace("postgresql://", "postgresql+psycopg://", 1)
+    _db_url = _db_url.replace("postgresql://", "postgresql+psycopg2://", 1)
 elif _db_url.startswith("postgres://"):
-    _db_url = _db_url.replace("postgres://", "postgresql+psycopg://", 1)
+    _db_url = _db_url.replace("postgres://", "postgresql+psycopg2://", 1)
 DATABASE_URL = _db_url
 
 ENTITE_CODE = "RECB"

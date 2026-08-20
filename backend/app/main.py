@@ -13,7 +13,11 @@ from .routers import (
     templates, approbations, imap, retention, whatsapp, bi,
 )
 
-Base.metadata.create_all(bind=engine)
+try:
+    Base.metadata.create_all(bind=engine)
+except Exception as _db_err:
+    import logging
+    logging.getLogger(__name__).error("DB init error: %s", _db_err)
 
 app = FastAPI(
     title="RéclamPro — API gestion des réclamations",
