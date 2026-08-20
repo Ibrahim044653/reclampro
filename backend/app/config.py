@@ -11,6 +11,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 def _build_db_url() -> str:
     from urllib.parse import urlparse, urlencode, urlunparse, parse_qs
     raw = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'reclamations.db'}")
+    raw = raw.strip()
+    if raw.startswith('﻿'):  # retire BOM UTF-8 ajouté par PowerShell
+        raw = raw[1:]
     # Normalise le schéma pour SQLAlchemy + psycopg2
     for old, new in [("postgresql://", "postgresql+psycopg2://"),
                      ("postgres://", "postgresql+psycopg2://")]:
