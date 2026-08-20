@@ -1,13 +1,17 @@
 """Portail client public (FR004 + FR033) — sans authentification.
 
-- POST /api/public/reclamations : soumission directe par un client
+- POST /api/public/reclamations         : soumission directe par un client
 - GET  /api/public/reclamations/{token} : suivi via token opaque
+- GET  /api/public/recherche            : retrouver son dossier par email + code
 
 Aucun de ces endpoints n'expose les données sensibles d'un autre client :
 le token sert de capability — connaître le token = avoir accès au dossier.
+Pour la recherche email+code : on vérifie que l'email est bien celui du client
+qui a ouvert le dossier avant de retourner les informations.
 """
+import hashlib
 from datetime import datetime
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from pydantic import BaseModel
@@ -84,16 +88,7 @@ STATUTS_LIBELLES = {
 TYPES_VISIBLES = {"CREATION", "ACR", "CHANGEMENT_STATUT", "NOTIFICATION", "CLOTURE"}
 
 
-@router.get("/reclamations/{token}", response_model=PublicSuiviResponse)
-def suivre(token: str, db: Session = Depends(get_db)):
-    if not token or len(token) < 20:
-        raise HTTPException(404, "Token invalide.")
-    reclamation = db.scalar(
-        select(models.Reclamation).where(models.Reclamation.token_suivi == token)
-    )
-    if not reclamation:
-        raise HTTPException(404, "Dossier introuvable ou lien expiré.")
-
+def _construire_reponse_suivi(reclamation: models.Reclamation) -> PublicSuiviResponse:
     interactions = [
         PublicSuiviInteraction(
             type=i.type, contenu=i.contenu, date_heure=i.date_heure,
@@ -114,3 +109,44 @@ def suivre(token: str, db: Session = Depends(get_db)):
         motif_cloture=reclamation.motif_cloture,
         interactions_publiques=interactions,
     )
+
+
+@router.get("/reclamations/{token}", response_model=PublicSuiviResponse)
+def suivre(token: str, db: Session = Depends(get_db)):
+    if not token or len(token) < 20:
+        raise HTTPException(404, "Token invalide.")
+    reclamation = db.scalar(
+        select(models.Reclamation).where(models.Reclamation.token_suivi == token)
+    )
+    if not reclamation:
+        raise HTTPException(404, "Dossier introuvable ou lien expiré.")
+    return _construire_reponse_suivi(reclamation)
+
+
+@router.get("/recherche", response_model=PublicSuiviResponse)
+def rechercher_par_email_et_code(
+    email: str = Query(..., description="Adresse email fournie lors de la soumission"),
+    code: str = Query(..., description="Numéro de dossier (ex. RECB-202508-00001)"),
+    db: Session = Depends(get_db),
+):
+    """Retrouver un dossier sans token, par email + numéro de dossier.
+
+    Vérifie que l'email est bien celui du client titulaire du dossier
+    pour éviter toute fuite d'information.
+    """
+    email_hash = hashlib.sha256(email.strip().lower().encode()).hexdigest()
+    client = db.scalar(select(models.Client).where(models.Client.email_hash == email_hash))
+    if not client:
+        raise HTTPException(404, "Aucun compte trouvé avec cette adresse email.")
+    reclamation = db.scalar(
+        select(models.Reclamation).where(
+            models.Reclamation.code == code.strip().upper(),
+            models.Reclamation.id_client == client.id,
+        )
+    )
+    if not reclamation:
+        raise HTTPException(
+            404,
+            "Dossier introuvable. Vérifiez l'adresse email et le numéro de dossier.",
+        )
+    return _construire_reponse_suivi(reclamation)

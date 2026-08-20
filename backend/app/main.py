@@ -1,6 +1,6 @@
 """Point d'entrée FastAPI — lance avec : uvicorn app.main:app --reload"""
 from pathlib import Path
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -11,7 +11,7 @@ from .database import Base, engine
 from .routers import (
     reclamations, dashboard, exports, agents, auth, users,
     equipes, notifications, reports, pieces_jointes, public,
-    templates, approbations, imap, retention, whatsapp, bi,
+    templates, approbations, imap, retention, whatsapp, bi, cron,
 )
 
 def _init_db():
@@ -70,6 +70,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Rate limiting — protège les endpoints publics contre les abus.
+# Sur Vercel serverless, le compteur est par instance (pas global).
+# Pour un rate limiting global en prod, configurer REDIS_URL + slowapi avec Redis.
+try:
+    from slowapi import Limiter, _rate_limit_exceeded_handler
+    from slowapi.util import get_remote_address
+    from slowapi.errors import RateLimitExceeded
+    limiter = Limiter(key_func=get_remote_address, default_limits=["300/minute"])
+    app.state.limiter = limiter
+    app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+except ImportError:
+    pass  # slowapi optionnel — l'app démarre sans
+
 app.include_router(auth.router)
 app.include_router(public.router)
 app.include_router(users.router)
@@ -87,6 +100,7 @@ app.include_router(bi.router)
 app.include_router(dashboard.router)
 app.include_router(exports.router)
 app.include_router(agents.router)
+app.include_router(cron.router)
 
 
 @app.get("/api/health")

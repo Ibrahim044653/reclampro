@@ -16,6 +16,15 @@
     }
     .portail-title { font-size: 24px; font-weight: 600; }
     .portail-sub { color: var(--text-soft); margin-top: 4px; }
+    .tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
+    .tab {
+      padding: 10px 20px; cursor: pointer; font-size: 13px; font-weight: 500;
+      color: var(--text-soft); border-bottom: 2px solid transparent; margin-bottom: -2px;
+      transition: color .15s, border-color .15s;
+    }
+    .tab.active { color: var(--brand); border-bottom-color: var(--brand); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
     .progress { display: flex; margin: 20px 0 30px; }
     .progress-step {
       flex: 1; text-align: center; padding: 8px 4px;
@@ -24,6 +33,10 @@
     }
     .progress-step.done { border-color: var(--brand); color: var(--brand); font-weight: 500; }
     .progress-step.active { border-color: var(--brand); color: var(--brand); font-weight: 600; }
+    .portail-footer {
+      text-align: center; margin-top: 20px; font-size: 12px; color: var(--text-soft);
+    }
+    .portail-footer a { color: var(--brand); text-decoration: none; }
   </style>
 </head>
 <body>
@@ -31,37 +44,90 @@
     <div class="portail-header">
       <div class="portail-logo">R</div>
       <div class="portail-title">Suivi de ma réclamation</div>
-      <div class="portail-sub">Saisissez le lien de suivi reçu par email</div>
+      <div class="portail-sub">Consultez l'avancement de votre dossier</div>
     </div>
 
     <div id="alerte"></div>
 
-    <div class="card" id="formulaire">
-      <form id="frm">
-        <label>Token de suivi *</label>
-        <input id="token" required placeholder="Collez ici le token reçu par email">
-        <div style="display:flex;justify-content:flex-end;margin-top:12px">
-          <button class="btn btn-primary" type="submit">Consulter mon dossier</button>
-        </div>
-      </form>
+    <div class="card">
+      <div class="tabs">
+        <div class="tab active" id="tab_token" onclick="switchTab('token')">J'ai mon lien de suivi</div>
+        <div class="tab" id="tab_email" onclick="switchTab('email')">Je recherche par email</div>
+      </div>
+
+      <!-- Onglet 1 : par token -->
+      <div class="tab-panel active" id="panel_token">
+        <form id="frm_token">
+          <label>Lien ou code de suivi *</label>
+          <input id="token" required placeholder="Collez ici le token reçu par email">
+          <div style="display:flex;justify-content:flex-end;margin-top:12px">
+            <button class="btn btn-primary" type="submit">Consulter mon dossier</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Onglet 2 : par email + code -->
+      <div class="tab-panel" id="panel_email">
+        <p style="font-size:12px;color:var(--text-soft);margin-bottom:12px">
+          Si vous n'avez plus le lien de suivi, retrouvez votre dossier en saisissant l'email utilisé lors de la soumission et votre numéro de dossier.
+        </p>
+        <form id="frm_email">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <label>Votre adresse email *</label>
+              <input id="email_search" type="email" required placeholder="email@exemple.ci">
+            </div>
+            <div>
+              <label>Numéro de dossier *</label>
+              <input id="code_search" required placeholder="RECB-202508-00001">
+            </div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;margin-top:12px">
+            <button class="btn btn-primary" type="submit">Rechercher mon dossier</button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <div id="resultat"></div>
+
+    <div class="portail-footer">
+      <a href="/portail.html">Soumettre une nouvelle réclamation</a>
+      &nbsp;·&nbsp;
+      <a href="/login.html">Espace agents</a>
+    </div>
   </div>
 
   <script>
+    function switchTab(tab) {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+      document.getElementById("tab_" + tab).classList.add("active");
+      document.getElementById("panel_" + tab).classList.add("active");
+      document.getElementById("alerte").innerHTML = "";
+      document.getElementById("resultat").innerHTML = "";
+    }
+
+    // Pré-remplir si token dans l'URL
     const params = new URLSearchParams(location.search);
     if (params.get("token")) {
       document.getElementById("token").value = params.get("token");
-      consulter(params.get("token"));
+      consulterParToken(params.get("token"));
     }
 
-    document.getElementById("frm").addEventListener("submit", (e) => {
+    document.getElementById("frm_token").addEventListener("submit", (e) => {
       e.preventDefault();
-      consulter(document.getElementById("token").value.trim());
+      consulterParToken(document.getElementById("token").value.trim());
     });
 
-    async function consulter(token) {
+    document.getElementById("frm_email").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email_search").value.trim();
+      const code = document.getElementById("code_search").value.trim().toUpperCase();
+      consulterParEmail(email, code);
+    });
+
+    async function consulterParToken(token) {
       const alerte = document.getElementById("alerte");
       const resultat = document.getElementById("resultat");
       alerte.innerHTML = "";
@@ -72,8 +138,26 @@
           const j = await res.json().catch(() => ({ detail: "Lien invalide ou expiré." }));
           throw new Error(j.detail);
         }
-        const d = await res.json();
-        resultat.innerHTML = render(d);
+        resultat.innerHTML = render(await res.json());
+      } catch (err) {
+        resultat.innerHTML = "";
+        alerte.innerHTML = `<div class="alert alert-error">${err.message}</div>`;
+      }
+    }
+
+    async function consulterParEmail(email, code) {
+      const alerte = document.getElementById("alerte");
+      const resultat = document.getElementById("resultat");
+      alerte.innerHTML = "";
+      resultat.innerHTML = `<div class="card">Recherche en cours…</div>`;
+      try {
+        const url = `/api/public/recherche?email=${encodeURIComponent(email)}&code=${encodeURIComponent(code)}`;
+        const res = await fetch(url);
+        if (!res.ok) {
+          const j = await res.json().catch(() => ({ detail: "Dossier introuvable." }));
+          throw new Error(j.detail);
+        }
+        resultat.innerHTML = render(await res.json());
       } catch (err) {
         resultat.innerHTML = "";
         alerte.innerHTML = `<div class="alert alert-error">${err.message}</div>`;
@@ -86,12 +170,18 @@
         ALERTE: 2, ESCALADE: 2, VALIDATION: 2, DECISION: 3, CLOTURE: 4, REJETE: 4 };
       const courant = map[d.statut] ?? 0;
 
+      const alerteSla = d.statut === "ALERTE" || d.statut === "ESCALADE"
+        ? `<div class="alert alert-error" style="margin-bottom:12px">
+             Votre dossier est en attente de traitement prioritaire. Nos équipes ont été alertées.
+           </div>` : "";
+
       return `
         <div class="card">
           <div style="text-align:center;padding:10px">
             <div style="font-size:11px;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.05em">Numéro de dossier</div>
             <div style="font-size:20px;font-weight:600;font-family:monospace;color:var(--brand);margin-top:4px">${d.code}</div>
           </div>
+          ${alerteSla}
           <div class="progress">
             ${etapes.map((e, i) => `
               <div class="progress-step ${i < courant ? "done" : i === courant ? "active" : ""}">${e}</div>
@@ -107,15 +197,22 @@
           </div>
         </div>
 
+        ${d.interactions_publiques.length > 0 ? `
         <div class="card">
-          <div class="card-head"><span class="card-title">Historique du dossier</span></div>
+          <div class="card-head"><span class="card-title">Historique de votre dossier</span></div>
           <div>${d.interactions_publiques.map(i => `
             <div class="timeline-item">
-              <div><strong>${i.type}</strong> — ${i.contenu}</div>
+              <div><strong>${_libelle_type(i.type)}</strong> — ${i.contenu}</div>
               <div class="timeline-meta">${new Date(i.date_heure).toLocaleString("fr-FR")}</div>
             </div>`).join("")}</div>
-        </div>
+        </div>` : ""}
       `;
+    }
+
+    function _libelle_type(type) {
+      const m = { CREATION: "Enregistrement", ACR: "Accusé de réception",
+        CHANGEMENT_STATUT: "Mise à jour", NOTIFICATION: "Message", CLOTURE: "Clôture" };
+      return m[type] || type;
     }
   </script>
 </body>

@@ -16,3 +16,5 @@ httpx>=0.27
 pytest-playwright>=0.6
 # Driver PostgreSQL
 psycopg2-binary>=2.9
+# Rate limiting (optionnel — l'app démarre sans si absent)
+slowapi>=0.1.9
