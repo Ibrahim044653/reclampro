@@ -22,6 +22,17 @@ def _init_db():
     except Exception as e:
         _log.error("create_all error: %s", e)
         return
+    # Migration incrémentale : ajoute les colonnes manquantes sans toucher aux données.
+    try:
+        from sqlalchemy import text, inspect as sa_inspect
+        with engine.connect() as conn:
+            col_names = [c["name"] for c in sa_inspect(engine).get_columns("reclamations")]
+            if "tags" not in col_names:
+                conn.execute(text("ALTER TABLE reclamations ADD COLUMN tags TEXT"))
+                conn.commit()
+                print("[INIT] Migration : colonne 'tags' ajoutée.", flush=True)
+    except Exception as e:
+        print(f"[INIT] Migration ignorée : {e}", flush=True)
     _seed_flag = os.getenv("SEED_AT_STARTUP", "").strip().lstrip('﻿').lower()
     print(f"[INIT] SEED_AT_STARTUP={repr(_seed_flag)}", flush=True)
     if _seed_flag != "true":

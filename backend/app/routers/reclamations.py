@@ -1,6 +1,7 @@
 """Endpoints réclamations : création, lecture, workflow, clôture."""
 from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, Query, Response
+from pydantic import BaseModel, Field
 from sqlalchemy import select, or_
 from sqlalchemy.orm import Session
 
@@ -380,3 +381,45 @@ def cloturer(
     return schemas.ReclamationDetail.model_validate(reclamation).model_copy(
         update=crud.annoter_sla(reclamation)
     )
+
+
+# ── Réassignation en masse ────────────────────────────────────────────────────
+
+class BulkAffectationRequest(BaseModel):
+    codes: list[str] = Field(..., min_length=1)
+    id_agent: int
+
+
+@router.patch("/bulk/affecter", summary="Réassigner plusieurs dossiers à un agent")
+def bulk_affecter(
+    payload: BulkAffectationRequest,
+    db: Session = Depends(get_db),
+    user: models.Agent = Depends(utilisateur_admin),
+):
+    count = crud.bulk_affecter(
+        db, payload.codes, payload.id_agent,
+        auteur=user.username or user.email_pro,
+    )
+    return {"reassignes": count}
+
+
+# ── Étiquettes libres ────────────────────────────────────────────────────────
+
+class TagsRequest(BaseModel):
+    tags: list[str]
+
+
+@router.patch("/{code}/tags", summary="Mettre à jour les étiquettes d'un dossier")
+def mettre_a_jour_tags(
+    code: str,
+    payload: TagsRequest,
+    db: Session = Depends(get_db),
+    user: models.Agent = Depends(utilisateur_courant),
+):
+    try:
+        r = crud.mettre_a_jour_tags(
+            db, code, payload.tags, auteur=user.username or user.email_pro
+        )
+    except ValueError as e:
+        raise HTTPException(404, str(e))
+    return schemas.ReclamationDetail.model_validate(r).model_copy(update=crud.annoter_sla(r))

@@ -83,6 +83,18 @@ function render(d, agents, equipes, pjs) {
         <div><label>Agent affecté</label><div>${d.agent_affecte ? `${d.agent_affecte.prenom} ${d.agent_affecte.nom}` : "—"}</div></div>
         <div class="full"><label>Description</label><div>${d.description}</div></div>
         ${d.motif_cloture ? `<div class="full"><label>Motif de clôture</label><div>${d.motif_cloture} — clôturé le ${formaterDate(d.date_cloture)}</div></div>` : ""}
+        <div class="full">
+          <label>Étiquettes</label>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center" id="tags_display">
+            ${(d.tags || "").split(",").filter(Boolean).map(t => `
+              <span style="background:var(--brand-bg);color:var(--brand);padding:3px 10px;border-radius:12px;font-size:12px">${esc(t)}</span>`).join("") || `<span style="color:var(--text-soft);font-size:12px">Aucune étiquette</span>`}
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px">
+            <input id="tags_input" placeholder="ajouter,des,etiquettes" value="${esc(d.tags || "")}" style="font-size:12px;flex:1">
+            <button class="btn" id="btn_tags" style="font-size:12px">Enregistrer</button>
+          </div>
+          <div style="font-size:11px;color:var(--text-soft);margin-top:3px">Séparez les étiquettes par des virgules. Ex: fraude,agence-plateau</div>
+        </div>
       </div>
     </div>
 
@@ -270,6 +282,16 @@ function brancher(d) {
       URL.revokeObjectURL(url);
     } catch (e) { erreur(e); }
   });
+
+  const btnTags = document.getElementById("btn_tags");
+  if (btnTags) btnTags.onclick = async () => {
+    const raw = document.getElementById("tags_input").value;
+    const tags = raw.split(",").map(t => t.trim().toLowerCase()).filter(Boolean);
+    try {
+      await api.patch(`/api/reclamations/${code}/tags`, { tags });
+      succes("Étiquettes enregistrées."); setTimeout(charger, 500);
+    } catch (e) { erreur(e); }
+  };
 
   const btnLien = document.getElementById("btn_copier_lien");
   if (btnLien && d.token_suivi) btnLien.onclick = () => {

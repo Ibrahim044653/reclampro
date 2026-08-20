@@ -31,6 +31,13 @@ function renderLayout(pageActive, titre) {
     ? `<a class="btn" href="/api/exports/registre.csv?token=${auth.token()}" id="btn_export_topbar">📥 Exporter</a>`
     : "";
 
+  // Barre de recherche globale : redirige vers la liste filtrée par nom de client ou code
+  const searchBar = `
+    <form id="global_search_form" style="display:flex;align-items:center;gap:6px" onsubmit="event.preventDefault(); const q = document.getElementById('gs_input').value.trim(); if(q) location.href='/reclamations.html?q='+encodeURIComponent(q);">
+      <input id="gs_input" placeholder="Rechercher client, code…" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;width:180px;background:var(--bg)" autocomplete="off">
+      <button type="submit" class="btn" style="padding:5px 10px;font-size:12px">🔍</button>
+    </form>`;
+
   return `
     <div class="shell">
       <div class="sidebar">
@@ -59,6 +66,7 @@ function renderLayout(pageActive, titre) {
       <div class="main">
         <div class="topbar">
           <div class="topbar-title">${titre}</div>
+          ${searchBar}
           <a class="btn" id="btn_notifs" href="/notifications.html" title="Notifications" style="position:relative">
             🔔 <span id="notif_badge" style="display:none;position:absolute;top:-4px;right:-4px;background:#E24B4A;color:#fff;border-radius:10px;padding:1px 6px;font-size:10px;font-weight:600">0</span>
           </a>

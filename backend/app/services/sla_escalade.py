@@ -52,3 +52,44 @@ def escalader_dossiers_en_retard(db: Session) -> dict:
         db.commit()
 
     return {"verifies": len(recs), "escalades": escalades, "ts": now.isoformat()}
+
+
+def rappeler_agents_echeance(db: Session) -> dict:
+    """Envoie un email à l'agent assigné pour chaque dossier à moins de 24h de l'échéance.
+
+    Idempotent sur la même journée : si plusieurs crons tournent dans la journée,
+    le rappel peut être envoyé plusieurs fois (acceptable — pas de flag d'envoi).
+    """
+    from datetime import timedelta
+    from . import communication
+    now = datetime.utcnow()
+    fenetre_fin = now + timedelta(hours=24)
+
+    recs = list(db.scalars(
+        select(models.Reclamation).where(
+            models.Reclamation.statut.in_(STATUTS_ESCALADABLES),
+            models.Reclamation.date_echeance_sla > now,
+            models.Reclamation.date_echeance_sla <= fenetre_fin,
+            models.Reclamation.archivee == False,
+        )
+    ))
+
+    rappels = 0
+    for r in recs:
+        agent = r.agent_affecte
+        if not agent or not agent.email_pro:
+            continue
+        heures = (r.date_echeance_sla - now).total_seconds() / 3600
+        sujet = f"[RéclamPro] Rappel SLA : dossier {r.code} expire dans {heures:.0f}h"
+        corps = (
+            f"Bonjour {agent.prenom} {agent.nom},\n\n"
+            f"Le dossier {r.code} ({r.categorie} · {r.priorite}) expire dans "
+            f"environ {heures:.0f} heures.\n"
+            f"Échéance : {r.date_echeance_sla.strftime('%d/%m/%Y %H:%M')} UTC\n\n"
+            f"Merci d'agir rapidement pour respecter le délai réglementaire.\n\n"
+            f"RéclamPro — Gestion des réclamations BCEAO/CIMA\n"
+        )
+        communication.envoyer_email(agent.email_pro, sujet, corps)
+        rappels += 1
+
+    return {"verifies": len(recs), "rappels": rappels, "ts": now.isoformat()}

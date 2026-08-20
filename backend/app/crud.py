@@ -101,10 +101,13 @@ def _construire_filtres(
         stmt = stmt.where(models.Reclamation.date_reception <= date_fin)
     if q:
         motif = f"%{q.strip()}%"
+        stmt = stmt.join(models.Client, models.Reclamation.id_client == models.Client.id)
         stmt = stmt.where(or_(
             models.Reclamation.code.ilike(motif),
             models.Reclamation.description.ilike(motif),
             models.Reclamation.sous_categorie.ilike(motif),
+            models.Client.nom.ilike(motif),
+            models.Client.prenom.ilike(motif),
         ))
     return stmt
 
@@ -150,6 +153,52 @@ def lister(
 
 def obtenir(db: Session, code: str) -> models.Reclamation | None:
     return db.scalar(select(models.Reclamation).where(models.Reclamation.code == code))
+
+
+def bulk_affecter(
+    db: Session, codes: list[str], id_agent: int, auteur: str = "admin"
+) -> int:
+    """Réassigne une liste de dossiers à un agent. Retourne le nombre de dossiers modifiés."""
+    agent = db.get(models.Agent, id_agent)
+    if not agent:
+        return 0
+    count = 0
+    for code in codes:
+        r = obtenir(db, code)
+        if not r or r.statut in {"CLOTURE", "REJETE"}:
+            continue
+        ancien = str(r.id_agent_affecte) if r.id_agent_affecte else "—"
+        r.id_agent_affecte = id_agent
+        if r.statut in {"NOUVEAU", "QUALIF"}:
+            r.statut = "AFFECTE"
+        audit.enregistrer(
+            db, r.id, "AFFECTATION",
+            f"Réassigné (en masse) à {agent.prenom} {agent.nom}.",
+            auteur=auteur, valeur_avant=ancien, valeur_apres=str(id_agent),
+        )
+        count += 1
+    if count:
+        db.commit()
+    return count
+
+
+def mettre_a_jour_tags(
+    db: Session, code: str, tags: list[str], auteur: str = "agent"
+) -> models.Reclamation:
+    """Met à jour les étiquettes d'un dossier."""
+    r = obtenir(db, code)
+    if not r:
+        raise ValueError("Dossier introuvable")
+    anciens = r.tags or ""
+    r.tags = ",".join(t.strip().lower() for t in tags if t.strip()) or None
+    audit.enregistrer(
+        db, r.id, "MISE_A_JOUR",
+        f"Étiquettes mises à jour : {r.tags or '(aucune)'}.",
+        auteur=auteur, valeur_avant=anciens, valeur_apres=r.tags or "",
+    )
+    db.commit()
+    db.refresh(r)
+    return r
 
 
 def annoter_sla(reclamation: models.Reclamation, now: datetime | None = None) -> dict:

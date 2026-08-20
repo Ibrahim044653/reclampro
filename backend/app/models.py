@@ -118,6 +118,8 @@ class Reclamation(Base):
     motif_cloture = Column(String(40))
     # Token opaque envoyé au client pour le suivi public (FR033).
     token_suivi = Column(String(80), unique=True, index=True)
+    # Étiquettes libres, séparées par des virgules (ex. "fraude,agence-abidjan").
+    tags = Column(Text, nullable=True)
     # Conservation BCEAO/CIMA (RG011).
     archivee = Column(Boolean, default=False, nullable=False, index=True)
     date_archivage = Column(DateTime)

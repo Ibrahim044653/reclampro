@@ -10,6 +10,7 @@ const PRIORITES = ["STANDARD", "URGENT", "CRITIQUE"];
 const CATEGORIES = ["FINANCIERE", "CONTRACTUELLE", "SERVICE", "FRAUDE"];
 const CANAUX = ["EMAIL", "AGENCE", "TELEPHONE", "WEB", "WHATSAPP", "COURRIER"];
 
+let agents = [];
 const params = new URLSearchParams(location.search);
 const filtres = {
   statut:     params.get("statut") || "",
@@ -30,7 +31,10 @@ let total = 0;
 async function charger() {
   content.innerHTML = `<div class="card">Chargement…</div>`;
   try {
-    equipes = await api.get("/api/equipes");
+    [equipes, agents] = await Promise.all([
+      api.get("/api/equipes"),
+      auth.isAdmin() ? api.get("/api/agents") : Promise.resolve([]),
+    ]);
     const qs = new URLSearchParams();
     Object.entries(filtres).forEach(([k, v]) => {
       if (v === "" || v === false || v === 0) return;
@@ -145,14 +149,26 @@ function render(list) {
     return filtreUi + compteur + `<div class="card empty">Aucune réclamation ne correspond aux filtres.</div>`;
   }
 
+  const bulkBar = auth.isAdmin() ? `
+    <div id="bulk_bar" style="display:none;position:sticky;bottom:16px;background:var(--brand);color:#fff;border-radius:10px;padding:12px 18px;display:none;align-items:center;gap:12px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:100;margin-top:10px">
+      <span id="bulk_count" style="font-weight:600"></span> sélectionné(s)
+      <select id="bulk_agent" style="padding:5px 8px;border-radius:6px;border:none;font-size:13px">
+        ${agents.map(a => `<option value="${a.id}">${a.prenom} ${a.nom} — ${a.role}</option>`).join("")}
+      </select>
+      <button class="btn" id="bulk_affecter" style="background:#fff;color:var(--brand);font-weight:600">Réassigner</button>
+      <button class="btn" id="bulk_cancel" style="background:rgba(255,255,255,.2);color:#fff">Annuler</button>
+    </div>` : "";
+
   const table = `<div class="card">
     <table class="tbl">
       <thead><tr>
+        ${auth.isAdmin() ? `<th style="width:32px"><input type="checkbox" id="chk_all" title="Tout sélectionner"></th>` : ""}
         <th>Dossier</th><th>Client</th><th>Catégorie</th><th>Canal</th><th>Priorité</th>
         <th>Équipe</th><th>SLA</th><th>Statut</th><th>Reçue le</th>
       </tr></thead>
       <tbody>${list.map(r => `
-        <tr onclick="location='/detail.html?code=${r.code}'">
+        <tr onclick="location='/detail.html?code=${r.code}'" data-code="${r.code}">
+          ${auth.isAdmin() ? `<td onclick="event.stopPropagation()"><input type="checkbox" class="chk_row" value="${r.code}"></td>` : ""}
           <td><span class="code">${r.code}</span></td>
           <td>${esc(r.client.prenom)} ${esc(r.client.nom)}</td>
           <td>${esc(r.sous_categorie || r.categorie)}</td>
@@ -164,7 +180,7 @@ function render(list) {
           <td style="font-size:12px;color:var(--text-soft)">${formaterDate(r.date_reception)}</td>
         </tr>`).join("")}</tbody>
     </table>
-  </div>`;
+  </div>${bulkBar}`;
 
   return filtreUi + compteur + table;
 }
@@ -217,6 +233,47 @@ function brancherFiltres() {
     qs.set("skip", filtres.skip + filtres.limit);
     qs.set("limit", filtres.limit);
     location.search = qs.toString();
+  };
+
+  // Sélection en masse (admin uniquement)
+  if (!auth.isAdmin()) return;
+  const chkAll = document.getElementById("chk_all");
+  const bulkBar = document.getElementById("bulk_bar");
+  if (!chkAll || !bulkBar) return;
+
+  function majBulkBar() {
+    const sel = document.querySelectorAll(".chk_row:checked");
+    if (sel.length > 0) {
+      bulkBar.style.display = "flex";
+      document.getElementById("bulk_count").textContent = sel.length;
+    } else {
+      bulkBar.style.display = "none";
+    }
+  }
+
+  chkAll.onchange = () => {
+    document.querySelectorAll(".chk_row").forEach(c => { c.checked = chkAll.checked; });
+    majBulkBar();
+  };
+  document.querySelectorAll(".chk_row").forEach(c => c.onchange = majBulkBar);
+
+  document.getElementById("bulk_cancel").onclick = () => {
+    document.querySelectorAll(".chk_row").forEach(c => { c.checked = false; });
+    chkAll.checked = false;
+    bulkBar.style.display = "none";
+  };
+
+  document.getElementById("bulk_affecter").onclick = async () => {
+    const codes = [...document.querySelectorAll(".chk_row:checked")].map(c => c.value);
+    const id_agent = parseInt(document.getElementById("bulk_agent").value, 10);
+    if (!codes.length) return;
+    try {
+      const res = await api.patch("/api/reclamations/bulk/affecter", { codes, id_agent });
+      alert(`${res.reassignes} dossier(s) réassigné(s) avec succès.`);
+      charger();
+    } catch (e) {
+      alert("Erreur : " + e.message);
+    }
   };
 }
 

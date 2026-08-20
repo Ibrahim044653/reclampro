@@ -122,6 +122,7 @@ class ReclamationOut(BaseModel):
     sla_pourcentage: Optional[float] = None
     sla_statut: Optional[str] = None
     token_suivi: Optional[str] = None
+    tags: Optional[str] = None
     model_config = ConfigDict(from_attributes=True)
 
 
