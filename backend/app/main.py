@@ -22,7 +22,9 @@ def _init_db():
     except Exception as e:
         _log.error("create_all error: %s", e)
         return
-    if os.getenv("SEED_AT_STARTUP", "").lower() != "true":
+    _seed_flag = os.getenv("SEED_AT_STARTUP", "").strip().lstrip('﻿').lower()
+    print(f"[INIT] SEED_AT_STARTUP={repr(_seed_flag)}", flush=True)
+    if _seed_flag != "true":
         return
     # Seed minimal et idempotent : crée admin + agent si absents
     try:
@@ -46,11 +48,11 @@ def _init_db():
                     id_equipe=equipe.id, id_entite=entite.id,
                 ))
             db.commit()
-            _log.info("Seed minimal OK : admin + agent créés.")
+            print("[INIT] Seed minimal OK : admin + agent créés.", flush=True)
         finally:
             db.close()
     except Exception as e:
-        _log.error("Seed error: %s", e)
+        print(f"[INIT] Seed error: {e}", flush=True)
 
 _init_db()
 
