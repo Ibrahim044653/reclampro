@@ -8,17 +8,24 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-_db_url = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'reclamations.db'}")
-# SQLAlchemy + psycopg2 exige le préfixe postgresql+psycopg2://
-if _db_url.startswith("postgresql://"):
-    _db_url = _db_url.replace("postgresql://", "postgresql+psycopg2://", 1)
-elif _db_url.startswith("postgres://"):
-    _db_url = _db_url.replace("postgres://", "postgresql+psycopg2://", 1)
-# psycopg2 ne supporte pas channel_binding — on le retire
-if "channel_binding" in _db_url:
-    import re as _re
-    _db_url = _re.sub(r"[&?]channel_binding=[^&]*", "", _db_url)
-DATABASE_URL = _db_url
+def _build_db_url() -> str:
+    from urllib.parse import urlparse, urlencode, urlunparse, parse_qs
+    raw = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'reclamations.db'}")
+    # Normalise le schéma pour SQLAlchemy + psycopg2
+    for old, new in [("postgresql://", "postgresql+psycopg2://"),
+                     ("postgres://", "postgresql+psycopg2://")]:
+        if raw.startswith(old):
+            raw = new + raw[len(old):]
+            break
+    # Retire les paramètres non supportés par psycopg2
+    parsed = urlparse(raw)
+    params = parse_qs(parsed.query, keep_blank_values=True)
+    for bad in ("channel_binding",):
+        params.pop(bad, None)
+    clean_query = urlencode({k: v[0] for k, v in params.items()})
+    return urlunparse(parsed._replace(query=clean_query))
+
+DATABASE_URL = _build_db_url()
 
 ENTITE_CODE = "RECB"
 
