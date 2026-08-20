@@ -9,11 +9,15 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 _db_url = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'reclamations.db'}")
-# SQLAlchemy + psycopg3 exige le préfixe postgresql+psycopg://
+# SQLAlchemy + psycopg2 exige le préfixe postgresql+psycopg2://
 if _db_url.startswith("postgresql://"):
     _db_url = _db_url.replace("postgresql://", "postgresql+psycopg2://", 1)
 elif _db_url.startswith("postgres://"):
     _db_url = _db_url.replace("postgres://", "postgresql+psycopg2://", 1)
+# psycopg2 ne supporte pas channel_binding — on le retire
+if "channel_binding" in _db_url:
+    import re as _re
+    _db_url = _re.sub(r"[&?]channel_binding=[^&]*", "", _db_url)
 DATABASE_URL = _db_url
 
 ENTITE_CODE = "RECB"
