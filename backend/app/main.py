@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
+import os
 from .config import CORS_ORIGINS
 from .database import Base, engine
 from .routers import (
@@ -15,6 +16,9 @@ from .routers import (
 
 try:
     Base.metadata.create_all(bind=engine)
+    if os.getenv("SEED_AT_STARTUP", "").lower() == "true":
+        from .seed import reset_et_seed
+        reset_et_seed()
 except Exception as _db_err:
     import logging
     logging.getLogger(__name__).error("DB init error: %s", _db_err)
