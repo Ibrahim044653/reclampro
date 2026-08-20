@@ -14,14 +14,45 @@ from .routers import (
     templates, approbations, imap, retention, whatsapp, bi,
 )
 
-try:
-    Base.metadata.create_all(bind=engine)
-    if os.getenv("SEED_AT_STARTUP", "").lower() == "true":
-        from .seed import reset_et_seed
-        reset_et_seed()
-except Exception as _db_err:
+def _init_db():
     import logging
-    logging.getLogger(__name__).error("DB init error: %s", _db_err)
+    _log = logging.getLogger(__name__)
+    try:
+        Base.metadata.create_all(bind=engine)
+    except Exception as e:
+        _log.error("create_all error: %s", e)
+        return
+    if os.getenv("SEED_AT_STARTUP", "").lower() != "true":
+        return
+    # Seed minimal et idempotent : crée admin + agent si absents
+    try:
+        from .database import SessionLocal
+        from . import models
+        from .services import auth as auth_svc
+        db = SessionLocal()
+        try:
+            if db.query(models.Agent).filter_by(username="admin").first():
+                return  # déjà seedé
+            entite = models.Entite(code="RECB", libelle="Banque RéclamPro", type="BANQUE")
+            db.add(entite); db.flush()
+            equipe = models.Equipe(code="ADMIN", libelle="Administration",
+                                   description="Équipe admin", id_entite=entite.id)
+            db.add(equipe); db.flush()
+            for username, mdp, role in [("admin", "admin123", "ADMIN"), ("agent", "agent123", "AGENT")]:
+                db.add(models.Agent(
+                    nom=username.capitalize(), prenom="Demo", email_pro=f"{username}@reclampro.ci",
+                    role=role, service=equipe.libelle, username=username,
+                    password_hash=auth_svc.hasher_mot_de_passe(mdp),
+                    id_equipe=equipe.id, id_entite=entite.id,
+                ))
+            db.commit()
+            _log.info("Seed minimal OK : admin + agent créés.")
+        finally:
+            db.close()
+    except Exception as e:
+        _log.error("Seed error: %s", e)
+
+_init_db()
 
 app = FastAPI(
     title="RéclamPro — API gestion des réclamations",
