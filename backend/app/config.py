@@ -44,7 +44,7 @@ SEUIL_VALIDATION_FCFA = 500_000
 
 CORS_ORIGINS = ["*"]
 
-JWT_SECRET = os.getenv("JWT_SECRET", "dev-secret-change-me-in-production")
+JWT_SECRET = os.getenv("JWT_SECRET", "dev-secret-change-me-in-production").strip().lstrip('﻿') or "dev-secret-change-me-in-production"
 JWT_ALGORITHM = "HS256"
 JWT_EXPIRATION_HEURES = 8
 
