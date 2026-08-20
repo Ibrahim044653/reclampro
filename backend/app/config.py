@@ -8,7 +8,13 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'reclamations.db'}")
+_db_url = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'reclamations.db'}")
+# SQLAlchemy + psycopg3 exige le préfixe postgresql+psycopg://
+if _db_url.startswith("postgresql://"):
+    _db_url = _db_url.replace("postgresql://", "postgresql+psycopg://", 1)
+elif _db_url.startswith("postgres://"):
+    _db_url = _db_url.replace("postgres://", "postgresql+psycopg://", 1)
+DATABASE_URL = _db_url
 
 ENTITE_CODE = "RECB"
 
@@ -54,7 +60,9 @@ WHATSAPP_PHONE_NUMBER_ID = os.getenv("WHATSAPP_PHONE_NUMBER_ID", "")
 WHATSAPP_VERIFY_TOKEN = os.getenv("WHATSAPP_VERIFY_TOKEN", "dev-verify-token")
 WHATSAPP_API_URL = os.getenv("WHATSAPP_API_URL", "https://graph.facebook.com/v21.0")
 
-UPLOAD_DIR = BASE_DIR / "uploads"
+# Sur Vercel le filesystem est en lecture seule — on utilise /tmp
+_upload_env = os.getenv("UPLOAD_DIR", "")
+UPLOAD_DIR = Path(_upload_env) if _upload_env else (Path("/tmp/uploads") if os.getenv("VERCEL") else BASE_DIR / "uploads")
 UPLOAD_TAILLE_MAX = 10 * 1024 * 1024  # 10 MB
 UPLOAD_MIME_AUTORISES = {
     "application/pdf",
