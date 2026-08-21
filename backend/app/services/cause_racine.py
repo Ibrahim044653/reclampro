@@ -5,7 +5,7 @@ des descriptions, fusion si sim >= seuil. Retourne des grappes avec
 un libellé représentatif (mots les plus distinctifs).
 
 Pas de dépendance externe (pas de scikit-learn) — fonctionne sur des
-volumes < 10000 dossiers ce qui couvre largement les besoins MVP.
+volumes < 10000 dossiers ce qui couvre largement les besoins.
 """
 from collections import Counter
 from datetime import datetime, timedelta

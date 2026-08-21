@@ -1,6 +1,6 @@
 {
-  "name": "RéclamPro — Gestion des réclamations",
-  "short_name": "RéclamPro",
+  "name": "Réclamatik — Gestion des réclamations",
+  "short_name": "Réclamatik",
   "description": "Application de gestion des réclamations clients (BCEAO/CIMA)",
   "start_url": "/",
   "display": "standalone",

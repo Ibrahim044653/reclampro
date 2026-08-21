@@ -1,7 +1,7 @@
 // Service Worker — cache statique + queue offline pour les soumissions publiques.
 // Stratégie : network-first pour les APIs (toujours frais), cache-first pour les assets.
 
-const CACHE_NAME = "reclampro-v2";
+const CACHE_NAME = "reclamatik-v2";
 const ASSETS_A_CACHER = [
   "/",
   "/portail.html",

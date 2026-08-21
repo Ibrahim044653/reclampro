@@ -7,7 +7,7 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-// File offline simple — stockée dans localStorage (suffisant pour MVP).
+// File offline simple — stockée dans localStorage (suffisant).
 const OfflineQueue = {
   ajouter(payload) {
     const file = JSON.parse(localStorage.getItem("rp_offline_queue") || "[]");

@@ -54,7 +54,7 @@ SMTP_PORT = int(os.getenv("SMTP_PORT", "1025"))
 SMTP_USER = os.getenv("SMTP_USER", "")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
 SMTP_TLS = os.getenv("SMTP_TLS", "false").lower() == "true"
-SMTP_FROM = os.getenv("SMTP_FROM", "no-reply@reclampro.local")
+SMTP_FROM = os.getenv("SMTP_FROM", "no-reply@reclamatik.local")
 
 # IMAP entrant — boîte « reclamations@… » qui crée automatiquement les dossiers.
 IMAP_HOST = os.getenv("IMAP_HOST", "")

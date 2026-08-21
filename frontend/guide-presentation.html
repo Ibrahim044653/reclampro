@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RéclamPro — Guide de Présentation Client</title>
+  <title>Réclamatik — Guide de Présentation Client</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -126,7 +126,7 @@
 
   <!-- COVER -->
   <div class="cover">
-    <h1>RéclamPro — Guide de Présentation Client</h1>
+    <h1>Réclamatik — Guide de Présentation Client</h1>
     <h2>Application de Gestion des Réclamations Clients</h2>
     <div class="cover-meta">
       <strong>Secteur cible :</strong> Banques · Compagnies d'assurance · UEMOA<br>
@@ -139,7 +139,7 @@
   <div class="avant-propos">
     <h3>AVANT-PROPOS</h3>
     <p style="margin-top:8px">
-      Ce document présente le fonctionnement de RéclamPro à travers le <strong>cycle de vie complet d'une réclamation client</strong>,
+      Ce document présente le fonctionnement de Réclamatik à travers le <strong>cycle de vie complet d'une réclamation client</strong>,
       depuis la soumission par le client jusqu'à la clôture et la production du registre réglementaire BCEAO.
       Chaque module est illustré par des actions concrètes, dans l'ordre chronologique où un agent les utiliserait au quotidien.
     </p>
@@ -154,7 +154,7 @@
       de <strong>350 000 FCFA</strong> sur son compte le 15 août 2026. Elle se rend sur le site de la banque pour
       signaler le problème — sans se déplacer en agence, sans attendre en file.
     </p>
-    <h4>Ce que fait Mme Koné dans RéclamPro</h4>
+    <h4>Ce que fait Mme Koné dans Réclamatik</h4>
     <p class="menu">Portail client → Soumettre une réclamation</p>
     <p>Elle renseigne un formulaire simple :</p>
     <ul>
@@ -165,7 +165,7 @@
       <li>Montant en jeu : <strong>350 000 FCFA</strong></li>
       <li>Description : « Le 15/08/2026, un prélèvement de 350 000 FCFA a été effectué sans mon autorisation… »</li>
     </ul>
-    <p>RéclamPro génère automatiquement :</p>
+    <p>Réclamatik génère automatiquement :</p>
     <div class="auto-box">Numéro de dossier unique : RECB-202608-00127
 Token de suivi sécurisé   : aX9kP2mQvTrZ…
 Statut initial            : NOUVEAU
@@ -184,7 +184,7 @@ Délai SLA                 : 24 heures (CRITIQUE)</div>
       L'Instruction BCEAO n°008-05-2015 impose à tout établissement financier d'adresser un accusé de réception
       au client dans un délai maximal de <strong>48 heures</strong> après la réception de sa réclamation.
     </p>
-    <h4>Ce que fait RéclamPro</h4>
+    <h4>Ce que fait Réclamatik</h4>
     <p>Dès la soumission du dossier, le système envoie automatiquement un email à Mme Koné :</p>
     <div class="auto-box">Objet : Accusé de réception de votre réclamation RECB-202608-00127
 
@@ -195,7 +195,7 @@ sous la référence : RECB-202608-00127
 
 Elle sera traitée dans les délais réglementaires applicables.
 Vous pouvez suivre l'avancement via le lien ci-dessous :
-https://reclampro.vercel.app/portail-suivi.html?token=aX9kP2mQvTrZ…
+https://reclamatik.vercel.app/portail-suivi.html?token=aX9kP2mQvTrZ…
 
 Cordialement,
 Le service réclamations</div>
@@ -213,7 +213,7 @@ Le service réclamations</div>
       L'agent de réception, M. <strong>Traoré Ibrahima</strong>, prend en charge le dossier entrant dans la file de traitement.
       Son tableau de bord lui signale un dossier CRITIQUE avec moins de 24 heures de délai.
     </p>
-    <h4>Ce que fait M. Traoré dans RéclamPro</h4>
+    <h4>Ce que fait M. Traoré dans Réclamatik</h4>
     <p class="menu">Tableau de bord → File d'attente → RECB-202608-00127 → Qualifier</p>
     <ul>
       <li>Vérification de la complétude du dossier</li>
@@ -236,11 +236,11 @@ Le service réclamations</div>
       Le dossier de Mme Koné concerne une fraude potentielle. Le superviseur doit l'orienter vers
       l'équipe spécialisée en fraudes et litiges financiers.
     </p>
-    <h4>Ce que fait le superviseur dans RéclamPro</h4>
+    <h4>Ce que fait le superviseur dans Réclamatik</h4>
     <p class="menu">Dossier RECB-202608-00127 → Affecter à un agent</p>
     <ul>
       <li>Sélection de l'agent : <strong>Mme Bah Mariama</strong> (Équipe Fraudes & Litiges)</li>
-      <li>RéclamPro notifie instantanément Mme Bah par email et notification in-app</li>
+      <li>Réclamatik notifie instantanément Mme Bah par email et notification in-app</li>
       <li>Statut : <code>QUALIF → AFFECTE</code></li>
     </ul>
     <p>Alternative : le superviseur peut transférer le dossier à une équipe entière :</p>
@@ -260,7 +260,7 @@ Le service réclamations</div>
       Mme <strong>Bah Mariama</strong> prend en charge le dossier. Elle contacte le service monétique, obtient
       un relevé de transactions et demande une pièce justificative complémentaire à la cliente.
     </p>
-    <h4>Ce que fait Mme Bah dans RéclamPro</h4>
+    <h4>Ce que fait Mme Bah dans Réclamatik</h4>
     <p class="menu">Dossier RECB-202608-00127 → Traitement</p>
     <ul>
       <li>Passage au statut <code>EN_COURS</code></li>
@@ -281,10 +281,10 @@ Le service réclamations</div>
     <h4>Situation</h4>
     <p>
       Sans système automatisé, un agent peut oublier qu'un dossier CRITIQUE doit être résolu en 24 heures, ou
-      qu'un dossier URGENT expire dans 3 heures. RéclamPro surveille en permanence tous les délais.
+      qu'un dossier URGENT expire dans 3 heures. Réclamatik surveille en permanence tous les délais.
     </p>
-    <h4>Ce que fait RéclamPro</h4>
-    <p>Pour chaque dossier ouvert, RéclamPro calcule en temps réel :</p>
+    <h4>Ce que fait Réclamatik</h4>
+    <p>Pour chaque dossier ouvert, Réclamatik calcule en temps réel :</p>
     <div class="auto-box">RECB-202608-00127 | CRITIQUE | 24h de délai
 Temps écoulé   : 19h 22min
 SLA consommé   : 80,6 %
@@ -310,7 +310,7 @@ Barre visuelle : ████████░░ 80 %</div>
       Un agent est absent, un dossier urgent n'a pas été traité à temps. Sans escalade automatique,
       le client attend, la banque est en infraction réglementaire.
     </p>
-    <h4>Ce que fait RéclamPro</h4>
+    <h4>Ce que fait Réclamatik</h4>
     <p>Tous les jours à 7h00 UTC, le système analyse l'ensemble du portefeuille et agit automatiquement :</p>
     <div class="auto-box">Cron quotidien 07h00 UTC — Résultats :
 → 3 dossiers passés en statut ALERTE (SLA ≥ 80 %)
@@ -334,9 +334,9 @@ Auteur : système/cron | 22/08/2026 07:00:14</div>
       Mme Koné transmet son relevé de compte. Mme Bah reçoit également du service juridique un
       formulaire de contestation de transaction signé. Ces documents doivent être centralisés dans le dossier.
     </p>
-    <h4>Ce que fait Mme Bah dans RéclamPro</h4>
+    <h4>Ce que fait Mme Bah dans Réclamatik</h4>
     <p class="menu">Dossier RECB-202608-00127 → Pièces jointes → + Ajouter un fichier</p>
-    <p>RéclamPro accepte tous les formats courants (PDF, JPG, PNG, Word, Excel) jusqu'à 10 Mo par fichier.
+    <p>Réclamatik accepte tous les formats courants (PDF, JPG, PNG, Word, Excel) jusqu'à 10 Mo par fichier.
     Chaque document est enregistré avec :</p>
     <ul>
       <li>Nom du fichier, type MIME, taille</li>
@@ -356,10 +356,10 @@ Auteur : système/cron | 22/08/2026 07:00:14</div>
     <h4>Situation</h4>
     <p>
       Le montant en jeu est de 350 000 FCFA, supérieur au seuil de validation interne fixé à
-      500 000 FCFA. Dans ce cas, RéclamPro n'exige pas de validation supplémentaire.
+      500 000 FCFA. Dans ce cas, Réclamatik n'exige pas de validation supplémentaire.
       Mais pour les dossiers dépassant ce seuil, le processus de validation est automatiquement déclenché.
     </p>
-    <h4>Ce que fait RéclamPro pour les montants importants</h4>
+    <h4>Ce que fait Réclamatik pour les montants importants</h4>
     <p class="menu">Dossier (montant &gt; 500 000 FCFA) → Statut automatique : VALIDATION</p>
     <ul>
       <li>Le dossier passe en attente de validation hiérarchique</li>
@@ -381,13 +381,13 @@ Auteur : système/cron | 22/08/2026 07:00:14</div>
       L'enquête confirme un prélèvement frauduleux. La banque rembourse Mme Koné et clôture le dossier
       en sa faveur. La décision doit lui être communiquée officiellement.
     </p>
-    <h4>Ce que fait l'administrateur dans RéclamPro</h4>
+    <h4>Ce que fait l'administrateur dans Réclamatik</h4>
     <p class="menu">Dossier RECB-202608-00127 → Clôturer le dossier</p>
     <ul>
       <li>Motif de clôture : <strong>FAVORABLE</strong></li>
       <li>Commentaire : « Prélèvement frauduleux confirmé. Remboursement de 350 000 FCFA effectué. »</li>
     </ul>
-    <p>RéclamPro envoie automatiquement un email de clôture à Mme Koné :</p>
+    <p>Réclamatik envoie automatiquement un email de clôture à Mme Koné :</p>
     <div class="auto-box">Objet : Décision concernant votre réclamation RECB-202608-00127
 
 Bonjour Aminata Koné,
@@ -442,7 +442,7 @@ Le service réclamations</div>
       Le Directeur de la conformité de la Banque Régionale doit présenter en comité de direction
       les indicateurs de traitement des réclamations du mois d'août 2026.
     </p>
-    <h4>Ce que fait RéclamPro</h4>
+    <h4>Ce que fait Réclamatik</h4>
     <p class="menu">Tableau de bord → Vue d'ensemble</p>
     <p>En temps réel, sans export manuel :</p>
     <table>
@@ -470,9 +470,9 @@ Le service réclamations</div>
       La BCEAO effectue une inspection et demande le registre complet des réclamations reçues et traitées
       depuis le début de l'exercice, conformément à l'Instruction n°008-05-2015.
     </p>
-    <h4>Ce que fait RéclamPro</h4>
+    <h4>Ce que fait Réclamatik</h4>
     <p class="menu">Sidebar → Conformité → Registre BCEAO (CSV) ou (XLSX) ou (PDF)</p>
-    <p>En un clic, RéclamPro génère le registre complet :</p>
+    <p>En un clic, Réclamatik génère le registre complet :</p>
     <ul>
       <li><strong>CSV</strong> : export brut pour retraitement Excel par la BCEAO</li>
       <li><strong>XLSX</strong> : format Excel mis en forme avec en-tête institutionnel, couleurs par priorité, données directement exploitables</li>
@@ -494,7 +494,7 @@ Le service réclamations</div>
       L'inspecteur BCEAO demande l'historique complet des actions effectuées sur le dossier
       <code>RECB-202608-00127</code> : qui a fait quoi, quand, et avec quel résultat.
     </p>
-    <h4>Ce que fait RéclamPro</h4>
+    <h4>Ce que fait Réclamatik</h4>
     <p class="menu">Dossier → Journal d'audit (immuable)</p>
     <div class="auto-box">22/08/2026 08:14 | CREATION      | système      | Dossier créé via WEB
 22/08/2026 08:14 | ACR           | système      | Email envoyé → aminata.kone@email.ci
@@ -507,7 +507,7 @@ Le service réclamations</div>
 23/08/2026 09:12 | EN_COURS      | m.bah        | Prélèvement frauduleux confirmé
 23/08/2026 10:30 | CLOTURE       | admin        | Motif : FAVORABLE — Remboursement effectué</div>
     <div class="message-cle">
-      <strong>Message clé :</strong> RéclamPro est un système de preuve. Chaque action est horodatée, nominative et immuable.
+      <strong>Message clé :</strong> Réclamatik est un système de preuve. Chaque action est horodatée, nominative et immuable.
       Aucun agent ne peut modifier ou supprimer une entrée du journal. La banque peut répondre à n'importe quelle
       question de l'auditeur en moins de 60 secondes.
     </div>
@@ -521,7 +521,7 @@ Le service réclamations</div>
       La réglementation BCEAO (RG011) impose de conserver les dossiers de réclamations pendant
       <strong>5 ans</strong> et de les anonymiser après <strong>10 ans</strong>.
     </p>
-    <h4>Ce que fait RéclamPro</h4>
+    <h4>Ce que fait Réclamatik</h4>
     <p>Le moteur de rétention s'exécute automatiquement :</p>
     <table>
       <thead><tr><th>Règle</th><th>Délai</th><th>Action automatique</th></tr></thead>
@@ -578,7 +578,7 @@ AUDIT TRAIL IMMUABLE (réponse inspecteur en &lt; 60 secondes)</div>
     <h3>AVANTAGES CLÉS POUR LE DÉCIDEUR</h3>
     <table>
       <thead>
-        <tr><th>Avant RéclamPro</th><th>Avec RéclamPro</th></tr>
+        <tr><th>Avant Réclamatik</th><th>Avec Réclamatik</th></tr>
       </thead>
       <tbody>
         <tr><td>Registre Excel tenu manuellement, risque d'erreur</td><td>Base centralisée, registre BCEAO généré en 30 secondes</td></tr>
@@ -604,8 +604,8 @@ AUDIT TRAIL IMMUABLE (réponse inspecteur en &lt; 60 secondes)</div>
         <tr><td><strong>Agent</strong></td><td>agent</td><td>agent123</td><td>File d'attente, traitement, commentaires, pièces jointes</td></tr>
       </tbody>
     </table>
-    <p style="margin-top:12px"><strong>URL application :</strong> <code>https://reclampro.vercel.app</code></p>
-    <p><strong>Portail client public :</strong> <code>https://reclampro.vercel.app/portail.html</code></p>
+    <p style="margin-top:12px"><strong>URL application :</strong> <code>https://reclamatik.vercel.app</code></p>
+    <p><strong>Portail client public :</strong> <code>https://reclamatik.vercel.app/portail.html</code></p>
     <p style="margin-top:8px;font-size:12.5px;color:#555">
       Le portefeuille de démonstration contient <strong>25 réclamations</strong> réparties sur 4 catégories
       (Financière, Contractuelle, Service, Fraude), avec des cas réels : dossiers en alerte SLA, dossiers clôturés,
@@ -615,7 +615,7 @@ AUDIT TRAIL IMMUABLE (réponse inspecteur en &lt; 60 secondes)</div>
 
   <!-- FOOTER -->
   <div class="footer">
-    <p>RéclamPro — Application de gestion des réclamations clients BCEAO / CIMA</p>
+    <p>Réclamatik — Application de gestion des réclamations clients BCEAO / CIMA</p>
     <p>Document de présentation commerciale — Août 2026</p>
     <p>Confidentiel — Usage interne et présentation client uniquement</p>
   </div>

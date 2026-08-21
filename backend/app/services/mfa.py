@@ -16,7 +16,7 @@ def verifier_code(secret: str, code: str) -> bool:
     return pyotp.TOTP(secret).verify(code, valid_window=1)
 
 
-def provisioning_uri(username: str, secret: str, issuer: str = "RéclamPro") -> str:
+def provisioning_uri(username: str, secret: str, issuer: str = "Réclamatik") -> str:
     """URI standard otpauth:// utilisée par les apps d'authentification."""
     return pyotp.TOTP(secret).provisioning_uri(name=username, issuer_name=issuer)
 

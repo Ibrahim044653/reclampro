@@ -1,4 +1,7 @@
 // Vue détail d'une réclamation : timeline + actions de workflow.
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
 if (!requireAuth()) throw new Error("redirect");
 document.getElementById("app").innerHTML = renderLayout("liste", "Détail du dossier");
 brancherLogout();

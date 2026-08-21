@@ -5,7 +5,7 @@ Approche hybride :
 2. **Apprentissage par voisinage** : si des dossiers similaires existent et sont
    déjà qualifiés, on récupère leur catégorie/priorité majoritaire (similarité Jaccard)
 
-Pas de dépendance externe (LLM/API) — c'est un MVP démontrable hors-ligne.
+Pas de dépendance externe (LLM/API) — démontrable hors-ligne.
 On peut remplacer par un appel Claude/GPT dans `_score_lexical` si désiré.
 """
 from collections import Counter

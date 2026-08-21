@@ -80,14 +80,14 @@ def rappeler_agents_echeance(db: Session) -> dict:
         if not agent or not agent.email_pro:
             continue
         heures = (r.date_echeance_sla - now).total_seconds() / 3600
-        sujet = f"[RéclamPro] Rappel SLA : dossier {r.code} expire dans {heures:.0f}h"
+        sujet = f"[Réclamatik] Rappel SLA : dossier {r.code} expire dans {heures:.0f}h"
         corps = (
             f"Bonjour {agent.prenom} {agent.nom},\n\n"
             f"Le dossier {r.code} ({r.categorie} · {r.priorite}) expire dans "
             f"environ {heures:.0f} heures.\n"
             f"Échéance : {r.date_echeance_sla.strftime('%d/%m/%Y %H:%M')} UTC\n\n"
             f"Merci d'agir rapidement pour respecter le délai réglementaire.\n\n"
-            f"RéclamPro — Gestion des réclamations BCEAO/CIMA\n"
+            f"Réclamatik — Gestion des réclamations BCEAO/CIMA\n"
         )
         communication.envoyer_email(agent.email_pro, sujet, corps)
         rappels += 1

@@ -44,8 +44,8 @@ function renderLayout(pageActive, titre) {
         <div class="logo">
           <div class="logo-icon">R</div>
           <div>
-            <div class="logo-text">RéclamPro</div>
-            <div class="logo-sub">MVP — Banque/Assurance CI</div>
+            <div class="logo-text">Réclamatik</div>
+            <div class="logo-sub">Banque/Assurance CI</div>
           </div>
         </div>
         <div class="nav">${navHtml}</div>

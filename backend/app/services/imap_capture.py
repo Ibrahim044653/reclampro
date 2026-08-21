@@ -1,7 +1,7 @@
 """Capture des emails entrants (FR002).
 
 Approche : un endpoint admin déclenche le traitement (polling manuel ou
-cron externe). Pour le MVP, pas de daemon long-lived.
+cron externe). Pas de daemon long-lived.
 
 Chaque email :
 - Sujet → sous_categorie + description (corps texte)

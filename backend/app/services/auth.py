@@ -1,6 +1,6 @@
 """Service d'authentification : hash bcrypt + JWT HS256.
 
-Volontairement minimaliste pour un MVP — pas de refresh token, pas de
+Volontairement minimaliste — pas de refresh token, pas de
 rotation de clé. Pour la prod il faudra ajouter ces aspects.
 """
 from datetime import datetime, timedelta, timezone

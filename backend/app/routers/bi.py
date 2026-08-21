@@ -2,7 +2,7 @@
 
 Authentification : Bearer JWT classique. Dans Power BI :
     Source > Web > URL avancée
-    URL : http://api.reclampro.local/api/bi/reclamations
+    URL : http://api.reclamatik.local/api/bi/reclamations
     En-tête HTTP : Authorization = Bearer <jeton>
 """
 from datetime import datetime

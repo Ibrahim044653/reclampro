@@ -46,14 +46,14 @@ def _init_db():
         try:
             if db.query(models.Agent).filter_by(username="admin").first():
                 return  # déjà seedé
-            entite = models.Entite(code="RECB", libelle="Banque RéclamPro", type="BANQUE")
+            entite = models.Entite(code="RECB", libelle="Banque Réclamatik", type="BANQUE")
             db.add(entite); db.flush()
             equipe = models.Equipe(code="ADMIN", libelle="Administration",
                                    description="Équipe admin", id_entite=entite.id)
             db.add(equipe); db.flush()
             for username, mdp, role in [("admin", "admin123", "ADMIN"), ("agent", "agent123", "AGENT")]:
                 db.add(models.Agent(
-                    nom=username.capitalize(), prenom="Demo", email_pro=f"{username}@reclampro.ci",
+                    nom=username.capitalize(), prenom="Demo", email_pro=f"{username}@reclamatik.ci",
                     role=role, service=equipe.libelle, username=username,
                     password_hash=auth_svc.hasher_mot_de_passe(mdp),
                     id_equipe=equipe.id, id_entite=entite.id,
@@ -68,8 +68,8 @@ def _init_db():
 _init_db()
 
 app = FastAPI(
-    title="RéclamPro — API gestion des réclamations",
-    description="MVP conforme BCEAO/CIMA — capture, workflow, SLA, dashboard, registre.",
+    title="Réclamatik — API gestion des réclamations",
+    description="conforme BCEAO/CIMA — capture, workflow, SLA, dashboard, registre.",
     version="0.1.0",
 )
 

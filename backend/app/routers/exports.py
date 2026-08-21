@@ -99,7 +99,7 @@ def export_xlsx(
 
     ws.merge_cells("A2:H2")
     ws["A2"] = (
-        f"Établissement : RéclamPro — Période d'extraction : {datetime.utcnow():%d/%m/%Y %H:%M} "
+        f"Établissement : Réclamatik — Période d'extraction : {datetime.utcnow():%d/%m/%Y %H:%M} "
         f"— Total : {len(reclamations)} dossier(s)"
     )
     ws["A2"].font = Font(italic=True, size=10)
@@ -207,7 +207,7 @@ def export_pdf(
     elements = [
         Paragraph("Registre des réclamations clients", titre_style),
         Paragraph(
-            f"Établissement : RéclamPro — Extraction : {datetime.utcnow():%d/%m/%Y %H:%M} "
+            f"Établissement : Réclamatik — Extraction : {datetime.utcnow():%d/%m/%Y %H:%M} "
             f"— Total : <b>{len(reclamations)}</b> dossier(s)",
             meta_style,
         ),
