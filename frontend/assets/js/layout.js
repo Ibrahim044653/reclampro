@@ -16,10 +16,6 @@ function renderLayout(pageActive, titre) {
     { id: "nouvelle",     href: "/nouvelle.html",            label: t("Nouveau dossier"),      section: t("Dossiers"), adminOnly: false },
     { id: "registre",     href: `/api/exports/registre.csv?token=${auth.token()}`, label: t("Registre BCEAO (CSV)"), section: t("Conformité"), adminOnly: true },
     { id: "utilisateurs",      href: "/utilisateurs.html",        label: t("Utilisateurs"),              section: t("Administration"), adminOnly: true },
-    { id: "guide-utilisateur", href: "/guide-utilisateur.html",   label: t("Guide utilisateur"),         section: t("Aide"), adminOnly: false },
-    { id: "guide-admin",       href: "/guide-admin.html",         label: t("Guide admin"),               section: t("Aide"), adminOnly: true },
-    { id: "doc-technique",     href: "/doc-technique.html",       label: t("Doc. technique"),            section: t("Aide"), adminOnly: true },
-    { id: "guide-presentation",href: "/guide-presentation.html",  label: t("Présentation client"),      section: t("Aide"), adminOnly: true },
   ].filter(it => !it.adminOnly || estAdmin);
 
   const groupes = {};
