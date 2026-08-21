@@ -141,3 +141,8 @@ if FRONTEND_DIR.exists():
         if cible.exists():
             return FileResponse(cible)
         return FileResponse(FRONTEND_DIR / "index.html")
+
+    docs_dir = FRONTEND_DIR / "docs"
+    if docs_dir.exists():
+        from fastapi.staticfiles import StaticFiles as _SF
+        app.mount("/docs", _SF(directory=docs_dir), name="docs")
