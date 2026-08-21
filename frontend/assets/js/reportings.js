@@ -52,6 +52,10 @@ function renderShell() {
           </select>
         </div>
         <button class="btn btn-primary" id="f_appliquer">Appliquer</button>
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <button class="btn" id="btn_export_csv" title="Exporter la période en CSV">CSV</button>
+          <button class="btn" id="btn_export_xlsx" title="Exporter la période en Excel">Excel</button>
+        </div>
       </div>
     </div>
     <div id="resultats"></div>
@@ -67,6 +71,24 @@ function brancherFiltres() {
     });
     location.search = qs.toString();
   };
+
+  async function telecharger(format) {
+    const periode = document.getElementById("f_periode").value;
+    const url = `/api/exports/registre.${format}?token=${auth.token()}&periode=${periode}`;
+    try {
+      const res = await fetch(url, { headers: { "Authorization": "Bearer " + auth.token() } });
+      if (!res.ok) throw new Error("Export impossible (" + res.status + ")");
+      const blob = await res.blob();
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `reporting_${periode}_${new Date().toISOString().slice(0,10)}.${format}`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    } catch (e) { alert(e.message); }
+  }
+
+  document.getElementById("btn_export_csv").onclick  = () => telecharger("csv");
+  document.getElementById("btn_export_xlsx").onclick = () => telecharger("xlsx");
 }
 
 async function rafraichir() {

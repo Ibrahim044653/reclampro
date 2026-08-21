@@ -8,7 +8,8 @@ Trois formats au choix :
 import csv
 import io
 from datetime import datetime
-from fastapi import APIRouter, Depends
+from typing import Optional
+from fastapi import APIRouter, Depends, Query
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from sqlalchemy import select
@@ -16,6 +17,7 @@ from sqlalchemy import select
 from .. import models
 from ..database import get_db
 from .auth import utilisateur_admin_download
+from .reports import _bornes_periode
 
 router = APIRouter(prefix="/api/exports", tags=["exports"])
 
@@ -39,25 +41,32 @@ COLONNES = [
 ]
 
 
-def _toutes_reclamations(db: Session):
-    return list(db.scalars(
-        select(models.Reclamation).order_by(models.Reclamation.date_reception.desc())
-    ))
+def _charger_reclamations(db: Session, periode: Optional[str] = None):
+    stmt = select(models.Reclamation).order_by(models.Reclamation.date_reception.desc())
+    if periode:
+        debut, fin = _bornes_periode(periode, datetime.utcnow())
+        stmt = stmt.where(
+            models.Reclamation.date_reception >= debut,
+            models.Reclamation.date_reception <= fin,
+        )
+    return list(db.scalars(stmt))
 
 
 @router.get("/registre.csv")
 def export_csv(
     db: Session = Depends(get_db),
     _admin: models.Agent = Depends(utilisateur_admin_download),
+    periode: Optional[str] = Query(None),
 ):
-    reclamations = _toutes_reclamations(db)
+    reclamations = _charger_reclamations(db, periode)
     buffer = io.StringIO()
     writer = csv.writer(buffer, delimiter=";")
     writer.writerow([c[0] for c in COLONNES])
     for r in reclamations:
         writer.writerow([fn(r) for _, fn in COLONNES])
     buffer.seek(0)
-    nom_fichier = f"registre_reclamations_{datetime.utcnow():%Y%m%d}.csv"
+    suffixe = f"_{periode}" if periode else ""
+    nom_fichier = f"registre_reclamations{suffixe}_{datetime.utcnow():%Y%m%d}.csv"
     return StreamingResponse(
         iter([buffer.getvalue()]),
         media_type="text/csv; charset=utf-8",
@@ -69,12 +78,13 @@ def export_csv(
 def export_xlsx(
     db: Session = Depends(get_db),
     _admin: models.Agent = Depends(utilisateur_admin_download),
+    periode: Optional[str] = Query(None),
 ):
     """Excel formaté pour les inspections BCEAO/CIMA (FR053)."""
     from openpyxl import Workbook
     from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 
-    reclamations = _toutes_reclamations(db)
+    reclamations = _charger_reclamations(db, periode)
     wb = Workbook()
     ws = wb.active
     ws.title = "Registre des réclamations"
@@ -134,7 +144,8 @@ def export_xlsx(
     buf = io.BytesIO()
     wb.save(buf)
     buf.seek(0)
-    nom_fichier = f"registre_reclamations_{datetime.utcnow():%Y%m%d}.xlsx"
+    suffixe = f"_{periode}" if periode else ""
+    nom_fichier = f"registre_reclamations{suffixe}_{datetime.utcnow():%Y%m%d}.xlsx"
     return StreamingResponse(
         iter([buf.getvalue()]),
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
