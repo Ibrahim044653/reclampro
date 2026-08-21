@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RéclamPro — Présentation commerciale</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <style>
+    body { background: #fff; color: #1F1E1A; }
+
+    /* Topnav */
+    .doc-nav {
+      background: #fff;
+      border-bottom: 1px solid #E5E1D8;
+      padding: 0 40px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .doc-nav .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .doc-nav .logo-icon {
+      width: 32px; height: 32px;
+      background: #185FA5;
+      color: #fff;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .doc-nav .brand-name { font-weight: 700; font-size: 16px; color: #185FA5; }
+    .doc-nav .back-link {
+      font-size: 13px;
+      color: #185FA5;
+      text-decoration: none;
+    }
+    .doc-nav .back-link:hover { text-decoration: underline; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #185FA5 0%, #0d3d6e 100%);
+      color: #fff;
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin: 0 0 16px;
+      letter-spacing: -0.5px;
+    }
+    .hero .subtitle {
+      font-size: 20px;
+      opacity: 0.88;
+      max-width: 620px;
+      margin: 0 auto 48px;
+      line-height: 1.5;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 12px;
+      padding: 24px 36px;
+      min-width: 160px;
+    }
+    .hero-stat .value {
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .hero-stat .label {
+      font-size: 13px;
+      opacity: 0.82;
+      line-height: 1.4;
+    }
+
+    /* Sections */
+    .section { padding: 72px 40px; max-width: 1100px; margin: 0 auto; }
+    .section-gray { background: #F7F5EE; }
+    .section-gray .section { background: transparent; }
+    .section-wrap { padding: 0; }
+    .section-wrap .section { padding: 72px 40px; }
+
+    h2.section-title {
+      font-size: 30px;
+      font-weight: 700;
+      color: #185FA5;
+      margin: 0 0 12px;
+    }
+    h2.section-title.dark { color: #1F1E1A; }
+    .section-lead {
+      font-size: 16px;
+      color: #6B6862;
+      max-width: 640px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+
+    /* Problème */
+    .problem-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .problem-card {
+      background: #fff;
+      border: 1px solid #E5E1D8;
+      border-left: 4px solid #E24B4A;
+      border-radius: 8px;
+      padding: 20px 24px;
+    }
+    .problem-card h3 { margin: 0 0 8px; font-size: 15px; color: #E24B4A; }
+    .problem-card p { margin: 0; font-size: 14px; color: #6B6862; line-height: 1.5; }
+
+    /* Solution grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      background: #fff;
+      border: 1px solid #E5E1D8;
+      border-radius: 10px;
+      padding: 24px;
+      transition: box-shadow 0.2s;
+    }
+    .feature-card:hover { box-shadow: 0 4px 20px rgba(24,95,165,0.12); }
+    .feature-icon {
+      width: 44px; height: 44px;
+      background: #E6F1FB;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      margin-bottom: 14px;
+    }
+    .feature-card h3 { margin: 0 0 8px; font-size: 16px; font-weight: 600; }
+    .feature-card p { margin: 0; font-size: 14px; color: #6B6862; line-height: 1.5; }
+
+    /* Conformité */
+    .conformite-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .conformite-table th {
+      background: #185FA5;
+      color: #fff;
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+    }
+    .conformite-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #E5E1D8;
+      vertical-align: top;
+    }
+    .conformite-table tr:nth-child(even) td { background: #F7F5EE; }
+    .badge-ok {
+      display: inline-block;
+      background: #EAF3DE;
+      color: #639922;
+      border-radius: 12px;
+      padding: 3px 10px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* Démo */
+    .demo-box {
+      background: #E6F1FB;
+      border: 1px solid #B5D4F4;
+      border-radius: 12px;
+      padding: 32px 40px;
+      max-width: 600px;
+    }
+    .demo-box h3 { margin: 0 0 20px; font-size: 20px; color: #185FA5; }
+    .creds-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .creds-table td { padding: 10px 14px; border-bottom: 1px solid #B5D4F4; }
+    .creds-table td:first-child { font-weight: 600; color: #185FA5; width: 130px; }
+    .creds-table tr:last-child td { border-bottom: none; }
+    .demo-url {
+      margin-top: 20px;
+      font-size: 13px;
+      color: #6B6862;
+    }
+    .demo-url a { color: #185FA5; font-weight: 600; }
+
+    /* Footer */
+    footer {
+      background: #0d3d6e;
+      color: rgba(255,255,255,0.75);
+      padding: 40px;
+      text-align: center;
+      font-size: 14px;
+    }
+    footer .footer-links { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 20px; }
+    footer .footer-links a { color: rgba(255,255,255,0.75); text-decoration: none; }
+    footer .footer-links a:hover { color: #fff; text-decoration: underline; }
+    footer p { margin: 8px 0 0; }
+
+    /* Other guides */
+    .other-guides {
+      background: #F7F5EE;
+      border-top: 1px solid #E5E1D8;
+      padding: 32px 40px;
+      text-align: center;
+    }
+    .other-guides p { margin: 0 0 16px; font-size: 14px; color: #6B6862; }
+    .other-guides .guide-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .other-guides a {
+      display: inline-block;
+      background: #fff;
+      border: 1px solid #E5E1D8;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #185FA5;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .other-guides a:hover { background: #E6F1FB; border-color: #185FA5; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="doc-nav">
+    <a href="/login.html" class="brand">
+      <div class="logo-icon">R</div>
+      <span class="brand-name">RéclamPro</span>
+    </a>
+    <a href="/login.html" class="back-link">← Retour à l'application</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>RéclamPro</h1>
+    <p class="subtitle">La plateforme de gestion des réclamations conçue pour les banques et assurances de l'UEMOA — conforme BCEAO &amp; CIMA, opérationnelle en 48 h.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="value">5 j</div>
+        <div class="label">Délai réglementaire<br>BCEAO respecté</div>
+      </div>
+      <div class="hero-stat">
+        <div class="value">100%</div>
+        <div class="label">Conformité CIMA<br>Code des assurances</div>
+      </div>
+      <div class="hero-stat">
+        <div class="value">5</div>
+        <div class="label">Canaux d'entrée :<br>Email, WhatsApp, Web, Tel, Guichet</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problème -->
+  <div class="section-gray section-wrap">
+    <div class="section">
+      <h2 class="section-title dark" id="probleme">Le problème que vous connaissez</h2>
+      <p class="section-lead">Dans les établissements financiers de l'UEMOA, la gestion des réclamations reste largement manuelle, source de risques réglementaires et de perte de confiance client.</p>
+      <div class="problem-cards">
+        <div class="problem-card">
+          <h3>Réclamations non tracées</h3>
+          <p>Les dossiers arrivent par email, courrier, téléphone ou au guichet. Sans système centralisé, des réclamations sont perdues ou oubliées — exposant l'institution à des sanctions.</p>
+        </div>
+        <div class="problem-card">
+          <h3>Délais non maîtrisés</h3>
+          <p>La BCEAO impose un délai de traitement de 5 jours ouvrés. Sans suivi automatisé, les dépassements sont fréquents et non détectés avant l'audit.</p>
+        </div>
+        <div class="problem-card">
+          <h3>Absence de reporting réglementaire</h3>
+          <p>Les rapports trimestriels BCEAO et les états statistiques CIMA sont produits manuellement sur Excel, avec des erreurs et un délai de plusieurs jours de travail.</p>
+        </div>
+        <div class="problem-card">
+          <h3>Risque réglementaire croissant</h3>
+          <p>Les sanctions de la BCEAO et de la Commission CIMA pour non-conformité sur le traitement des réclamations se sont renforcées depuis 2022. L'enjeu est financier et réputationnel.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solution -->
+  <div class="section-wrap">
+    <div class="section">
+      <h2 class="section-title" id="solution">La solution RéclamPro</h2>
+      <p class="section-lead">Une plateforme intégrée qui couvre l'intégralité du cycle de vie d'une réclamation, de la réception jusqu'à l'archivage réglementaire, avec conformité BCEAO et CIMA native.</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Dashboard temps réel</h3>
+          <p>Vision consolidée : volume par statut, délai moyen, taux de conformité SLA, alertes pour les dossiers en dépassement. Métriques actualisées à chaque connexion.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚙️</div>
+          <h3>Workflow structuré</h3>
+          <p>Circuit de traitement configurable : réception → qualification → affectation → traitement → validation superviseur → clôture. Historique complet de chaque action.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📁</div>
+          <h3>Exports réglementaires BCEAO</h3>
+          <p>Génération en un clic des états réglementaires au format CSV, XLSX et PDF conformes au modèle BCEAO. Filtrage par période, entité et type de réclamation.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌐</div>
+          <h3>Portail client public</h3>
+          <p>Interface web accessible sans compte pour permettre aux clients de suivre leur dossier via un code de référence et leur email — sans intervention de l'agent.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⏱️</div>
+          <h3>Escalade SLA automatique</h3>
+          <p>Cron quotidien qui détecte les dossiers en risque de dépassement et escalade automatiquement vers le superviseur avec notification email. Aucune surveillance manuelle requise.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📬</div>
+          <h3>Multi-canal intégré</h3>
+          <p>Réception unifiée depuis 5 canaux : email IMAP, WhatsApp Business, formulaire web, téléphone (saisie manuelle) et guichet. Tous les dossiers dans une seule interface.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Conformité -->
+  <div class="section-gray section-wrap">
+    <div class="section">
+      <h2 class="section-title dark" id="conformite">Conformité BCEAO / CIMA</h2>
+      <p class="section-lead">RéclamPro a été conçu avec les obligations réglementaires en vigueur dans l'UEMOA comme contraintes de design, pas comme des ajouts ultérieurs.</p>
+      <table class="conformite-table">
+        <thead>
+          <tr>
+            <th>Obligation</th>
+            <th>Référentiel</th>
+            <th>Comment RéclamPro y répond</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Délai de traitement 5 jours ouvrés</td>
+            <td>BCEAO — Instruction 008</td>
+            <td>SLA configuré à 5 j, escalade automatique à J-1, rapport de conformité exportable</td>
+            <td><span class="badge-ok">Couvert</span></td>
+          </tr>
+          <tr>
+            <td>Enregistrement de toutes les réclamations</td>
+            <td>BCEAO — RG011</td>
+            <td>Capture multi-canal, numérotation séquentielle automatique, horodatage immuable</td>
+            <td><span class="badge-ok">Couvert</span></td>
+          </tr>
+          <tr>
+            <td>Rapport trimestriel des réclamations</td>
+            <td>BCEAO — Circulaire 2022</td>
+            <td>Export CSV/XLSX/PDF filtré par trimestre, par entité, par type de réclamation</td>
+            <td><span class="badge-ok">Couvert</span></td>
+          </tr>
+          <tr>
+            <td>Conservation 5 ans minimum</td>
+            <td>BCEAO — RG011 art. 14</td>
+            <td>Archivage logiciel avec statut ARCHIVÉ, suppression physique bloquée avant 5 ans</td>
+            <td><span class="badge-ok">Couvert</span></td>
+          </tr>
+          <tr>
+            <td>Traitement réclamations assurance</td>
+            <td>Code CIMA — art. 79</td>
+            <td>Catégories dédiées assurance, workflow adapté, délais CIMA configurables séparément</td>
+            <td><span class="badge-ok">Couvert</span></td>
+          </tr>
+          <tr>
+            <td>Protection des données personnelles</td>
+            <td>BCEAO — Règlement données</td>
+            <td>Chiffrement Fernet des données PII (noms, contacts), hachage bcrypt des mots de passe</td>
+            <td><span class="badge-ok">Couvert</span></td>
+          </tr>
+          <tr>
+            <td>Traçabilité des actions</td>
+            <td>BCEAO / CIMA</td>
+            <td>Log complet de chaque changement de statut, commentaire et affectation avec horodatage et auteur</td>
+            <td><span class="badge-ok">Couvert</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Accès démo -->
+  <div class="section-wrap">
+    <div class="section">
+      <h2 class="section-title" id="demo">Accès à la démonstration</h2>
+      <p class="section-lead">Une instance de démonstration est disponible avec des données fictives représentatives d'une banque UEMOA. Connectez-vous avec les identifiants ci-dessous.</p>
+      <div class="demo-box">
+        <h3>Identifiants de démonstration</h3>
+        <table class="creds-table">
+          <tr>
+            <td>Rôle</td>
+            <td>Email</td>
+            <td>Mot de passe</td>
+          </tr>
+          <tr>
+            <td>Administrateur</td>
+            <td>admin@bceao-demo.sn</td>
+            <td><code style="background:#fff;padding:2px 6px;border-radius:4px;border:1px solid #B5D4F4;">Admin2024!</code></td>
+          </tr>
+          <tr>
+            <td>Superviseur</td>
+            <td>superviseur@bceao-demo.sn</td>
+            <td><code style="background:#fff;padding:2px 6px;border-radius:4px;border:1px solid #B5D4F4;">Superv2024!</code></td>
+          </tr>
+          <tr>
+            <td>Agent</td>
+            <td>agent@bceao-demo.sn</td>
+            <td><code style="background:#fff;padding:2px 6px;border-radius:4px;border:1px solid #B5D4F4;">Agent2024!</code></td>
+          </tr>
+        </table>
+        <p class="demo-url">Accès : <a href="/login.html">/login.html</a> — Portail client : <a href="/portail.html">/portail.html</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Autres guides -->
+  <div class="other-guides">
+    <p>Autres ressources disponibles :</p>
+    <div class="guide-links">
+      <a href="/guide-utilisateur.html">Guide utilisateur</a>
+      <a href="/doc-technique.html">Documentation technique</a>
+      <a href="/guide-admin.html">Guide administrateur</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/login.html">Application</a>
+      <a href="/guide-utilisateur.html">Guide utilisateur</a>
+      <a href="/doc-technique.html">Documentation technique</a>
+      <a href="/guide-admin.html">Guide administrateur</a>
+    </div>
+    <p>RéclamPro — Gestion des réclamations conforme BCEAO &amp; CIMA pour l'UEMOA</p>
+    <p style="margin-top:6px;font-size:12px;opacity:0.6;">Contact : support@reclampro.sn</p>
+  </footer>
+
+</body>
+</html>

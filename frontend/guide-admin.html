@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RéclamPro — Guide administrateur</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <style>
+    body { background: #fff; color: #1F1E1A; margin: 0; }
+
+    /* Topnav */
+    .doc-nav {
+      background: #fff;
+      border-bottom: 1px solid #E5E1D8;
+      padding: 0 40px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .doc-nav .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .doc-nav .logo-icon {
+      width: 32px; height: 32px;
+      background: #185FA5;
+      color: #fff;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .doc-nav .brand-name { font-weight: 700; font-size: 16px; color: #185FA5; }
+    .doc-nav .back-link {
+      font-size: 13px;
+      color: #185FA5;
+      text-decoration: none;
+    }
+    .doc-nav .back-link:hover { text-decoration: underline; }
+
+    /* Layout */
+    .doc-layout {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: flex-start;
+    }
+
+    /* TOC */
+    .toc {
+      width: 260px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 56px;
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+      border-right: 1px solid #E5E1D8;
+      padding: 24px 0;
+      background: #F7F5EE;
+    }
+    .toc-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9B968D;
+      padding: 0 20px;
+      margin-bottom: 12px;
+    }
+    .toc a {
+      display: block;
+      padding: 7px 20px;
+      font-size: 13px;
+      color: #6B6862;
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      line-height: 1.4;
+    }
+    .toc a:hover {
+      background: #E6F1FB;
+      color: #185FA5;
+      border-left-color: #185FA5;
+    }
+
+    /* Contenu */
+    .doc-content {
+      flex: 1;
+      padding: 40px 48px;
+      min-width: 0;
+    }
+
+    /* En-tête */
+    .page-header {
+      border-bottom: 2px solid #E5E1D8;
+      padding-bottom: 28px;
+      margin-bottom: 40px;
+    }
+    .page-header .badge {
+      display: inline-block;
+      background: #FAEEDA;
+      color: #BA7517;
+      border-radius: 12px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .page-header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #185FA5;
+      margin: 0 0 12px;
+    }
+    .page-header p {
+      font-size: 16px;
+      color: #6B6862;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Sections */
+    .doc-section {
+      margin-bottom: 56px;
+      scroll-margin-top: 72px;
+    }
+    .doc-section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #185FA5;
+      margin: 0 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .doc-section h2 .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #185FA5;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .doc-section h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 24px 0 10px;
+      color: #1F1E1A;
+    }
+    .doc-section p {
+      font-size: 14px;
+      color: #1F1E1A;
+      line-height: 1.7;
+      margin: 0 0 14px;
+    }
+    .doc-section ul, .doc-section ol {
+      font-size: 14px;
+      color: #1F1E1A;
+      line-height: 1.7;
+      padding-left: 24px;
+      margin: 0 0 14px;
+    }
+    .doc-section li { margin-bottom: 6px; }
+
+    /* Steps */
+    .steps {
+      counter-reset: step;
+      list-style: none;
+      padding: 0;
+      margin: 0 0 16px;
+    }
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+    .steps li::before {
+      content: counter(step);
+      min-width: 26px;
+      height: 26px;
+      background: #185FA5;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .steps li span { font-size: 14px; line-height: 1.6; color: #1F1E1A; }
+
+    /* Tables */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 12px 0;
+    }
+    .data-table th {
+      background: #185FA5;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+    .data-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #E5E1D8;
+      vertical-align: top;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:nth-child(even) td { background: #F7F5EE; }
+
+    /* Alertes */
+    .alert-info {
+      background: #E6F1FB;
+      border: 1px solid #B5D4F4;
+      border-left: 4px solid #185FA5;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-size: 14px;
+      color: #0d3d6e;
+      margin: 16px 0;
+      line-height: 1.5;
+    }
+    .alert-warn {
+      background: #FAEEDA;
+      border: 1px solid #f0d08a;
+      border-left: 4px solid #BA7517;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-size: 14px;
+      color: #7a4c0f;
+      margin: 16px 0;
+      line-height: 1.5;
+    }
+    .alert-danger {
+      background: #FCEBEB;
+      border: 1px solid #f5b8b8;
+      border-left: 4px solid #E24B4A;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-size: 14px;
+      color: #7a1f1f;
+      margin: 16px 0;
+      line-height: 1.5;
+    }
+
+    /* Blocs commandes shell */
+    .shell-block {
+      background: #1a1a2e;
+      color: #e0e0e0;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-x: auto;
+      margin: 12px 0;
+    }
+    .shell-block .prompt { color: #569CD6; }
+    .shell-block .comment { color: #6A9955; }
+
+    code {
+      font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+      font-size: 12.5px;
+      background: #F0EDE6;
+      border: 1px solid #E5E1D8;
+      border-radius: 4px;
+      padding: 2px 6px;
+      color: #185FA5;
+    }
+
+    /* SLA cards */
+    .sla-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .sla-card {
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    .sla-card.crit { background: #FCEBEB; border: 1px solid #f5b8b8; }
+    .sla-card.urgent { background: #FAEEDA; border: 1px solid #f0d08a; }
+    .sla-card.std { background: #EAF3DE; border: 1px solid #c8e89e; }
+    .sla-card .sla-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .sla-card.crit .sla-label { color: #E24B4A; }
+    .sla-card.urgent .sla-label { color: #BA7517; }
+    .sla-card.std .sla-label { color: #639922; }
+    .sla-card .sla-value { font-size: 32px; font-weight: 800; margin-bottom: 4px; }
+    .sla-card.crit .sla-value { color: #E24B4A; }
+    .sla-card.urgent .sla-value { color: #BA7517; }
+    .sla-card.std .sla-value { color: #639922; }
+    .sla-card .sla-desc { font-size: 12px; color: #6B6862; }
+
+    /* Badge */
+    .badge { display: inline-block; border-radius: 10px; padding: 2px 9px; font-size: 11px; font-weight: 600; }
+    .badge-blue { background: #E6F1FB; color: #185FA5; }
+    .badge-green { background: #EAF3DE; color: #639922; }
+    .badge-orange { background: #FAEEDA; color: #BA7517; }
+    .badge-red { background: #FCEBEB; color: #E24B4A; }
+
+    /* Séparateur */
+    .section-divider { border: none; border-top: 1px solid #E5E1D8; margin: 48px 0; }
+
+    /* Autres guides */
+    .other-guides {
+      background: #F7F5EE;
+      border-top: 1px solid #E5E1D8;
+      padding: 32px 40px;
+      text-align: center;
+    }
+    .other-guides p { margin: 0 0 16px; font-size: 14px; color: #6B6862; }
+    .other-guides .guide-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .other-guides a {
+      display: inline-block;
+      background: #fff;
+      border: 1px solid #E5E1D8;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #185FA5;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .other-guides a:hover { background: #E6F1FB; border-color: #185FA5; }
+
+    footer {
+      background: #0d3d6e;
+      color: rgba(255,255,255,0.75);
+      padding: 28px 40px;
+      text-align: center;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="doc-nav">
+    <a href="/login.html" class="brand">
+      <div class="logo-icon">R</div>
+      <span class="brand-name">RéclamPro</span>
+    </a>
+    <a href="/login.html" class="back-link">← Retour à l'application</a>
+  </nav>
+
+  <div class="doc-layout">
+
+    <!-- TOC -->
+    <nav class="toc">
+      <div class="toc-title">Guide administrateur</div>
+      <a href="#utilisateurs">1. Gestion des utilisateurs</a>
+      <a href="#equipes">2. Gestion des équipes</a>
+      <a href="#sla">3. Configuration SLA</a>
+      <a href="#smtp">4. Configuration email SMTP</a>
+      <a href="#cron">5. Cron et escalade SLA</a>
+      <a href="#exports">6. Exports réglementaires</a>
+      <a href="#portail">7. Portail client</a>
+      <a href="#conservation">8. Conservation des données</a>
+      <a href="#cron-secret">9. Ajout CRON_SECRET Vercel</a>
+      <a href="#depannage">10. Dépannage</a>
+    </nav>
+
+    <!-- Contenu -->
+    <main class="doc-content">
+
+      <!-- En-tête -->
+      <div class="page-header">
+        <div class="badge">Réservé aux administrateurs</div>
+        <h1>Guide d'administration RéclamPro</h1>
+        <p>Ce guide est destiné à l'administrateur système responsable de la configuration, de la maintenance et de la supervision de la plateforme RéclamPro. Les actions décrites ici nécessitent le rôle <strong>Administrateur</strong>.</p>
+      </div>
+
+      <!-- Section 1 — Utilisateurs -->
+      <div class="doc-section" id="utilisateurs">
+        <h2><span class="num">1</span> Gestion des utilisateurs</h2>
+        <p>La gestion des comptes utilisateurs s'effectue depuis la page <strong>Utilisateurs</strong> de l'interface (<code>/utilisateurs.html</code>), accessible uniquement aux administrateurs.</p>
+
+        <h3>Créer un compte utilisateur</h3>
+        <ol class="steps">
+          <li><span>Accédez à <code>/utilisateurs.html</code> via la sidebar.</span></li>
+          <li><span>Cliquez sur <strong>+ Ajouter un utilisateur</strong>.</span></li>
+          <li><span>Renseignez le nom complet, l'adresse email professionnelle, le rôle (Agent, Superviseur ou Administrateur) et l'équipe d'affectation.</span></li>
+          <li><span>Un mot de passe temporaire est généré automatiquement et envoyé à l'adresse email indiquée. L'utilisateur devra le modifier à sa première connexion.</span></li>
+        </ol>
+
+        <div class="alert-info">
+          <strong>Astuce :</strong> Créez les équipes avant de créer les utilisateurs pour pouvoir les affecter immédiatement à la bonne équipe.
+        </div>
+
+        <h3>Désactiver un compte</h3>
+        <p>Pour désactiver un compte sans le supprimer (en cas de départ d'un collaborateur) :</p>
+        <ol class="steps">
+          <li><span>Trouvez l'utilisateur dans la liste et cliquez sur son nom.</span></li>
+          <li><span>Dans le panneau de droite, basculez le switch <strong>Compte actif</strong> en position désactivée.</span></li>
+          <li><span>Confirmez l'action. L'utilisateur ne pourra plus se connecter mais ses données et dossiers sont préservés.</span></li>
+        </ol>
+
+        <div class="alert-warn">
+          <strong>Important :</strong> Ne supprimez jamais un compte utilisateur — cela casserait l'historique des actions sur les dossiers. Désactivez le compte à la place.
+        </div>
+
+        <h3>Changer le rôle d'un utilisateur</h3>
+        <p>Cliquez sur l'utilisateur, puis modifiez le champ <strong>Rôle</strong> dans le panneau de droite. Le changement prend effet à la prochaine connexion de l'utilisateur (les sessions actives ne sont pas invalidées immédiatement).</p>
+
+        <h3>Réinitialiser le mot de passe</h3>
+        <p>Cliquez sur l'utilisateur, puis sur <strong>Réinitialiser le mot de passe</strong>. Un nouveau mot de passe temporaire est généré et envoyé par email. Le MFA n'est pas réinitialisé en même temps — c'est une action séparée.</p>
+
+        <h3>Réinitialiser le MFA</h3>
+        <p>Si un utilisateur a perdu son téléphone ou son application MFA, cliquez sur <strong>Réinitialiser le MFA</strong> dans le panneau utilisateur. Au prochain login, un nouveau QR code sera présenté à l'utilisateur pour qu'il reconfigure son application d'authentification.</p>
+
+        <h3>Tableau des rôles et permissions</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Fonctionnalité</th><th>Agent</th><th>Superviseur</th><th>Admin</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Voir ses dossiers</td><td><span class="badge badge-green">Oui</span></td><td><span class="badge badge-green">Oui</span></td><td><span class="badge badge-green">Oui</span></td></tr>
+            <tr><td>Voir tous les dossiers de l'équipe</td><td><span class="badge badge-red">Non</span></td><td><span class="badge badge-green">Oui</span></td><td><span class="badge badge-green">Oui</span></td></tr>
+            <tr><td>Voir tous les dossiers (toutes équipes)</td><td><span class="badge badge-red">Non</span></td><td><span class="badge badge-red">Non</span></td><td><span class="badge badge-green">Oui</span></td></tr>
+            <tr><td>Créer des dossiers</td><td><span class="badge badge-green">Oui</span></td><td><span class="badge badge-green">Oui</span></td><td><span class="badge badge-green">Oui</span></td></tr>
+            <tr><td>Réassigner en masse</td><td><span class="badge badge-red">Non</span></td><td><span class="badge badge-green">Oui</span></td><td><span class="badge badge-green">Oui</span></td></tr>
+            <tr><td>Exports réglementaires</td><td><span class="badge badge-red">Non</span></td><td><span class="badge badge-orange">Limité</span></td><td><span class="badge badge-green">Oui</span></td></tr>
+            <tr><td>Gestion utilisateurs</td><td><span class="badge badge-red">Non</span></td><td><span class="badge badge-red">Non</span></td><td><span class="badge badge-green">Oui</span></td></tr>
+            <tr><td>Configuration SLA</td><td><span class="badge badge-red">Non</span></td><td><span class="badge badge-red">Non</span></td><td><span class="badge badge-green">Oui</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 2 — Équipes -->
+      <div class="doc-section" id="equipes">
+        <h2><span class="num">2</span> Gestion des équipes</h2>
+        <p>Les équipes structurent le workflow de traitement. Chaque réclamation est affectée à une équipe, et chaque équipe a un superviseur désigné qui reçoit les alertes SLA.</p>
+
+        <h3>Créer une équipe</h3>
+        <ol class="steps">
+          <li><span>Accédez à <code>/utilisateurs.html</code> et cliquez sur l'onglet <strong>Équipes</strong>.</span></li>
+          <li><span>Cliquez sur <strong>+ Nouvelle équipe</strong>.</span></li>
+          <li><span>Renseignez le nom de l'équipe (ex. "Équipe Bancaire Nord", "Équipe Assurance CIMA").</span></li>
+          <li><span>Sélectionnez le superviseur responsable parmi les utilisateurs ayant le rôle Superviseur ou Admin.</span></li>
+          <li><span>Sauvegardez. L'équipe est maintenant disponible pour l'affectation des agents et des dossiers.</span></li>
+        </ol>
+
+        <h3>Affecter des agents à une équipe</h3>
+        <p>Deux méthodes possibles :</p>
+        <ul>
+          <li><strong>Depuis la fiche utilisateur :</strong> sélectionnez l'équipe dans le champ "Équipe" de chaque agent.</li>
+          <li><strong>Depuis la fiche équipe :</strong> dans l'onglet Équipes, ouvrez une équipe et utilisez le champ "Membres" pour ajouter plusieurs agents en une fois.</li>
+        </ul>
+
+        <div class="alert-info">
+          <strong>Bonne pratique :</strong> Créez au moins une équipe "Défaut" qui reçoit les dossiers non affectés. Cela évite que des réclamations restent sans équipe assignée.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 3 — SLA -->
+      <div class="doc-section" id="sla">
+        <h2><span class="num">3</span> Configuration SLA</h2>
+        <p>Les délais SLA (Service Level Agreement) définissent le temps maximum de traitement par niveau de priorité. Ces délais sont conformes aux obligations réglementaires BCEAO.</p>
+
+        <div class="sla-grid">
+          <div class="sla-card crit">
+            <div class="sla-label">Critique</div>
+            <div class="sla-value">24h</div>
+            <div class="sla-desc">Réclamations urgentes avec impact financier immédiat</div>
+          </div>
+          <div class="sla-card urgent">
+            <div class="sla-label">Urgent</div>
+            <div class="sla-value">72h</div>
+            <div class="sla-desc">Réclamations importantes nécessitant traitement rapide</div>
+          </div>
+          <div class="sla-card std">
+            <div class="sla-label">Standard</div>
+            <div class="sla-value">5 j</div>
+            <div class="sla-desc">Réclamations courantes — délai réglementaire BCEAO</div>
+          </div>
+        </div>
+
+        <div class="alert-warn">
+          <strong>Réglementation :</strong> Le délai de 5 jours ouvrés pour les réclamations STANDARD est imposé par la BCEAO (Instruction 008). Ne réduisez pas ce délai sans vérification réglementaire, et ne l'augmentez jamais — cela exposerait l'institution à des sanctions.
+        </div>
+
+        <h3>Modifier les délais SLA</h3>
+        <p>Les délais SLA sont configurés dans les variables d'environnement Vercel :</p>
+        <table class="data-table">
+          <thead>
+            <tr><th>Variable</th><th>Valeur par défaut</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>SLA_CRITIQUE_HEURES</code></td><td>24</td><td>Délai en heures pour les dossiers CRITIQUE</td></tr>
+            <tr><td><code>SLA_URGENT_HEURES</code></td><td>72</td><td>Délai en heures pour les dossiers URGENT</td></tr>
+            <tr><td><code>SLA_STANDARD_JOURS</code></td><td>5</td><td>Délai en jours ouvrés pour les dossiers STANDARD</td></tr>
+          </tbody>
+        </table>
+        <p>Modifiez ces valeurs dans Vercel (Settings → Environment Variables) puis redéployez.</p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 4 — SMTP -->
+      <div class="doc-section" id="smtp">
+        <h2><span class="num">4</span> Configuration email SMTP</h2>
+        <p>Le système d'email est utilisé pour les notifications d'alerte SLA, les confirmations aux clients et les réinitialisations de mot de passe.</p>
+
+        <h3>Variables d'environnement à configurer</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Variable</th><th>Exemple</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>EMAIL_DRIVER</code></td><td><code>smtp</code></td><td>Mettre <code>smtp</code> pour l'envoi réel, <code>console</code> pour les tests (logs uniquement)</td></tr>
+            <tr><td><code>SMTP_HOST</code></td><td><code>smtp.gmail.com</code></td><td>Serveur SMTP de l'établissement ou fournisseur (SendGrid, Mailgun…)</td></tr>
+            <tr><td><code>SMTP_PORT</code></td><td><code>587</code></td><td>Port SMTP — 587 (STARTTLS) recommandé, 465 pour SSL direct</td></tr>
+            <tr><td><code>SMTP_USER</code></td><td><code>reclamations@mabanque.sn</code></td><td>Compte SMTP d'envoi</td></tr>
+            <tr><td><code>SMTP_PASSWORD</code></td><td><code>app-password-ici</code></td><td>Mot de passe SMTP ou App Password (Gmail)</td></tr>
+            <tr><td><code>SMTP_FROM</code></td><td><code>Réclamations BCEAO &lt;rec@mabanque.sn&gt;</code></td><td>Nom et adresse affichés dans les emails envoyés</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Configuration avec Gmail</h3>
+        <ol class="steps">
+          <li><span>Activez la vérification en deux étapes sur le compte Gmail de l'établissement.</span></li>
+          <li><span>Accédez à <strong>Compte Google → Sécurité → Mots de passe des applications</strong>.</span></li>
+          <li><span>Créez un mot de passe d'application pour "RéclamPro".</span></li>
+          <li><span>Utilisez ce mot de passe (16 caractères) comme valeur de <code>SMTP_PASSWORD</code>.</span></li>
+          <li><span>Configurez <code>SMTP_HOST=smtp.gmail.com</code>, <code>SMTP_PORT=587</code>.</span></li>
+        </ol>
+
+        <h3>Tester la configuration email</h3>
+        <p>Après avoir configuré les variables SMTP dans Vercel, testez en déclenchant manuellement l'endpoint cron (qui envoie des emails) :</p>
+        <div class="shell-block">
+          <span class="comment"># Déclenche un test email via le cron SLA</span><br>
+          <span class="prompt">$</span> curl -X GET \<br>
+          &nbsp;&nbsp;https://votre-app.vercel.app/api/health \<br>
+          &nbsp;&nbsp;-H "Authorization: Bearer VOTRE_CRON_SECRET"
+        </div>
+        <p>Vérifiez ensuite dans les logs Vercel (Dashboard → Logs) que l'email a bien été envoyé sans erreur SMTP.</p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 5 — Cron -->
+      <div class="doc-section" id="cron">
+        <h2><span class="num">5</span> Cron et escalade SLA</h2>
+        <p>L'escalade SLA est automatisée par un cron Vercel qui s'exécute quotidiennement à 7h00 UTC (8h00 WAT). Il identifie les dossiers en risque de dépassement et notifie les superviseurs.</p>
+
+        <h3>Comportement automatique</h3>
+        <ul>
+          <li>Dossiers à <strong>moins de 24h de l'échéance</strong> : notification email envoyée au superviseur de l'équipe assignée.</li>
+          <li>Dossiers avec <strong>SLA dépassé</strong> : priorité automatiquement remontée à CRITIQUE, notification email superviseur et admin.</li>
+          <li>Toutes les escalades sont loggées dans la table <code>interactions</code> avec le type <code>ESCALADE_SLA</code>.</li>
+        </ul>
+
+        <h3>Tester le cron manuellement</h3>
+        <p>Pour vérifier le fonctionnement du cron sans attendre l'exécution automatique :</p>
+        <div class="shell-block">
+          <span class="comment"># Test manuel du cron SLA — remplacez par votre URL et CRON_SECRET</span><br>
+          <span class="prompt">$</span> curl -X GET \<br>
+          &nbsp;&nbsp;https://votre-app.vercel.app/api/cron/sla-check \<br>
+          &nbsp;&nbsp;-H "Authorization: Bearer VOTRE_CRON_SECRET" \<br>
+          &nbsp;&nbsp;-v
+        </div>
+        <p>La réponse attendue est <code>200 OK</code> avec un corps JSON indiquant le nombre de dossiers escaladés :</p>
+        <div class="shell-block">
+          <span class="comment">{ "escalades": 3, "notifications_envoyees": 2, "status": "ok" }</span>
+        </div>
+
+        <div class="alert-info">
+          <strong>Logs Vercel :</strong> Les détails de chaque exécution cron sont visibles dans Vercel Dashboard → votre projet → Logs. Filtrez par <code>/api/cron/sla-check</code> pour voir uniquement les exécutions cron.
+        </div>
+
+        <div class="alert-warn">
+          <strong>Si le cron n'envoie pas d'emails :</strong> Vérifiez que <code>EMAIL_DRIVER=smtp</code> (pas <code>console</code>) et que les variables SMTP sont correctement configurées. En mode <code>console</code>, les emails apparaissent dans les logs Vercel mais ne sont pas réellement envoyés.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 6 — Exports -->
+      <div class="doc-section" id="exports">
+        <h2><span class="num">6</span> Exports réglementaires</h2>
+        <p>Les exports réglementaires permettent de générer les états statistiques requis par la BCEAO et la Commission CIMA. Ils sont accessibles depuis la sidebar sous "Reporting".</p>
+
+        <h3>Formats disponibles</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Format</th><th>Usage</th><th>Contenu</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-green">CSV</span></td>
+              <td>Import dans Excel, traitement analytique</td>
+              <td>Tous les champs de chaque dossier, séparateur virgule, encodage UTF-8</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-blue">XLSX</span></td>
+              <td>Rapport BCEAO format standard</td>
+              <td>Tableur Excel formaté avec en-têtes, colonnes conformes au modèle BCEAO, totaux automatiques</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-orange">PDF</span></td>
+              <td>Rapport officiel, archivage</td>
+              <td>Rapport formaté avec logo, période, métriques agrégées et liste des dossiers</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Procédure d'export</h3>
+        <ol class="steps">
+          <li><span>Accédez à la page <strong>Reporting</strong> via la sidebar (<code>/reportings.html</code>).</span></li>
+          <li><span>Sélectionnez la période (trimestre, mois ou plage de dates personnalisée).</span></li>
+          <li><span>Filtrez si nécessaire par entité, type de réclamation ou statut.</span></li>
+          <li><span>Cliquez sur le bouton du format souhaité : <strong>CSV</strong>, <strong>Excel (XLSX)</strong> ou <strong>PDF</strong>.</span></li>
+          <li><span>Le fichier est téléchargé automatiquement dans votre navigateur.</span></li>
+        </ol>
+
+        <div class="alert-info">
+          <strong>Fréquence recommandée :</strong> Générez et archivez un rapport XLSX ou PDF chaque trimestre pour satisfaire aux obligations de reporting trimestriel BCEAO. Conservez ces fichiers sur un espace sécurisé interne.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 7 — Portail -->
+      <div class="doc-section" id="portail">
+        <h2><span class="num">7</span> Portail client public</h2>
+        <p>Le portail client est une interface web publique qui permet aux clients de consulter l'état de leur réclamation sans créer de compte. Il est accessible à l'URL <code>/portail.html</code>.</p>
+
+        <h3>Fonctionnement</h3>
+        <ul>
+          <li>Le client saisit sa <strong>référence de dossier</strong> (ex. <code>REC-2024-00123</code>) et son adresse email.</li>
+          <li>Le système vérifie que l'email correspond au client enregistré pour ce dossier (protection anti-consultation non autorisée).</li>
+          <li>Si la vérification est réussie, le client voit le statut actuel, la date de réception et la dernière mise à jour.</li>
+          <li>Si le dossier est résolu ou clos, la réponse de l'établissement est affichée.</li>
+        </ul>
+
+        <h3>Informations non visibles par le client</h3>
+        <ul>
+          <li>Les commentaires internes des agents</li>
+          <li>Le nom des agents assignés</li>
+          <li>Les pièces jointes internes</li>
+          <li>L'historique complet des actions</li>
+        </ul>
+
+        <h3>URL du portail</h3>
+        <p>L'URL publique à communiquer aux clients est :</p>
+        <div class="shell-block">
+          https://votre-app.vercel.app/portail.html
+        </div>
+
+        <div class="alert-info">
+          <strong>Astuce :</strong> Ajoutez un lien vers ce portail sur le site internet de votre établissement et dans vos emails de confirmation automatique. Les clients pourront ainsi suivre leurs dossiers de façon autonome, réduisant les appels entrants.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 8 — Conservation -->
+      <div class="doc-section" id="conservation">
+        <h2><span class="num">8</span> Conservation des données</h2>
+        <p>La politique de conservation des données est définie par la réglementation BCEAO (Règlement RG011) et les bonnes pratiques de protection des données personnelles.</p>
+
+        <h3>Règles de conservation</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Type de donnée</th><th>Durée de conservation</th><th>Action à l'échéance</th><th>Base légale</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Dossiers de réclamations</td>
+              <td><strong>5 ans minimum</strong></td>
+              <td>Archivage (statut ARCHIVÉ, inaccessible aux agents)</td>
+              <td>BCEAO RG011 art. 14</td>
+            </tr>
+            <tr>
+              <td>Données personnelles clients</td>
+              <td><strong>10 ans maximum</strong></td>
+              <td>Anonymisation (suppression des données PII chiffrées)</td>
+              <td>BCEAO RG011 + RGPD CEDEAO</td>
+            </tr>
+            <tr>
+              <td>Logs d'interactions</td>
+              <td><strong>5 ans</strong></td>
+              <td>Archivage avec le dossier</td>
+              <td>BCEAO — traçabilité</td>
+            </tr>
+            <tr>
+              <td>Pièces jointes</td>
+              <td><strong>5 ans</strong></td>
+              <td>Suppression physique après validation juridique</td>
+              <td>Aligné sur le dossier</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Archivage manuel</h3>
+        <p>Pour archiver un dossier manuellement avant l'échéance automatique :</p>
+        <ol class="steps">
+          <li><span>Ouvrez le dossier en vue détail.</span></li>
+          <li><span>Changez le statut à <strong>ARCHIVÉ</strong> via le menu déroulant.</span></li>
+          <li><span>Le dossier n'apparaît plus dans les listes actives mais reste consultable avec le filtre "Archivé".</span></li>
+        </ol>
+
+        <div class="alert-danger">
+          <strong>Interdiction :</strong> Il est strictement interdit de supprimer physiquement un dossier ou des données client avant le délai légal de 5 ans. Cette action exposerait l'établissement à des sanctions BCEAO lors d'un audit. L'interface n'autorise pas la suppression pour cette raison.
+        </div>
+
+        <h3>Anonymisation à 10 ans</h3>
+        <p>L'anonymisation des données personnelles après 10 ans est une opération à effectuer manuellement via l'API (ou à planifier comme un cron annuel). Elle supprime les colonnes PII chiffrées (<code>nom_chiffre</code>, <code>email_chiffre</code>, <code>telephone_chiffre</code>) tout en conservant le dossier et ses métadonnées.</p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 9 — CRON_SECRET -->
+      <div class="doc-section" id="cron-secret">
+        <h2><span class="num">9</span> Ajout de CRON_SECRET dans Vercel</h2>
+        <p>Le <code>CRON_SECRET</code> est indispensable pour sécuriser l'endpoint de cron SLA. Sans lui, n'importe qui pourrait déclencher l'escalade SLA depuis l'extérieur. Voici la procédure complète d'ajout.</p>
+
+        <h3>Via la CLI Vercel (recommandé)</h3>
+        <ol class="steps">
+          <li><span>Installez la CLI Vercel si ce n'est pas fait : <code>npm install -g vercel</code></span></li>
+          <li><span>Connectez-vous : <code>vercel login</code></span></li>
+          <li><span>Générez un secret sécurisé :</span></li>
+        </ol>
+        <div class="shell-block">
+          <span class="comment"># Génération d'un secret de 32 caractères hexadécimaux</span><br>
+          <span class="prompt">$</span> openssl rand -hex 16<br>
+          <span style="color:#CE9178;">a3f8b2c1d9e4f5a6b7c8d9e0f1a2b3c4</span>
+        </div>
+        <ol class="steps" style="counter-reset:step 3;">
+          <li><span>Ajoutez le secret à Vercel :</span></li>
+        </ol>
+        <div class="shell-block">
+          <span class="comment"># Ajouter CRON_SECRET à toutes les environments (production, preview, dev)</span><br>
+          <span class="prompt">$</span> vercel env add CRON_SECRET production<br>
+          <span style="color:#9CDCFE;">? What's the value of CRON_SECRET? </span><span style="color:#CE9178;">a3f8b2c1d9e4f5a6b7c8d9e0f1a2b3c4</span><br><br>
+          <span class="comment"># Répétez pour preview et development si nécessaire</span><br>
+          <span class="prompt">$</span> vercel env add CRON_SECRET preview
+        </div>
+        <ol class="steps" style="counter-reset:step 4;">
+          <li><span>Redéployez l'application pour que le changement prenne effet : <code>vercel --prod</code> ou déclenchez un déploiement depuis le dashboard Vercel.</span></li>
+        </ol>
+
+        <h3>Via le Dashboard Vercel</h3>
+        <ol class="steps">
+          <li><span>Ouvrez votre projet sur <a href="https://vercel.com" style="color:#185FA5;">vercel.com</a>.</span></li>
+          <li><span>Allez dans <strong>Settings → Environment Variables</strong>.</span></li>
+          <li><span>Cliquez sur <strong>Add New</strong>, entrez <code>CRON_SECRET</code> comme nom et collez votre valeur générée.</span></li>
+          <li><span>Cochez les environnements cibles (Production, Preview).</span></li>
+          <li><span>Sauvegardez, puis redéployez depuis l'onglet <strong>Deployments</strong>.</span></li>
+        </ol>
+
+        <div class="alert-info">
+          <strong>Vérification :</strong> Après redéploiement, testez en appelant <code>/api/health</code> — si la réponse est 200, le déploiement est opérationnel. Testez ensuite le cron avec le header <code>Authorization: Bearer VOTRE_CRON_SECRET</code>.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 10 — Dépannage -->
+      <div class="doc-section" id="depannage">
+        <h2><span class="num">10</span> Dépannage</h2>
+        <p>Cette section recense les problèmes fréquents et leurs solutions.</p>
+
+        <h3>Logs Vercel</h3>
+        <p>Les logs en temps réel sont disponibles dans Vercel Dashboard → votre projet → <strong>Logs</strong>. Filtrez par :</p>
+        <ul>
+          <li><strong>Error</strong> : pour voir uniquement les erreurs</li>
+          <li><strong>/api/</strong> : pour filtrer les appels API</li>
+          <li><strong>/api/cron/</strong> : pour les logs cron</li>
+        </ul>
+
+        <h3>Vérifier l'état du service</h3>
+        <div class="shell-block">
+          <span class="comment"># Health check — doit retourner 200 avec {"status": "ok", "db": "connected"}</span><br>
+          <span class="prompt">$</span> curl https://votre-app.vercel.app/api/health
+        </div>
+
+        <h3>Problèmes courants et solutions</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Symptôme</th><th>Cause probable</th><th>Solution</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Login impossible, erreur 500</td>
+              <td>Base de données inaccessible ou <code>DATABASE_URL</code> incorrecte</td>
+              <td>Vérifier <code>/api/health</code>, contrôler la variable <code>DATABASE_URL</code> dans Vercel</td>
+            </tr>
+            <tr>
+              <td>Token JWT invalide après déploiement</td>
+              <td><code>JWT_SECRET</code> a changé — les anciens tokens sont invalidés</td>
+              <td>Normal si la clé a changé. Les utilisateurs doivent se reconnecter. Ne changez <code>JWT_SECRET</code> qu'en cas de compromission.</td>
+            </tr>
+            <tr>
+              <td>Les emails ne sont pas envoyés</td>
+              <td><code>EMAIL_DRIVER=console</code> ou configuration SMTP incorrecte</td>
+              <td>Vérifier <code>EMAIL_DRIVER=smtp</code> et tester les credentials SMTP avec un client mail</td>
+            </tr>
+            <tr>
+              <td>Le cron ne s'exécute pas</td>
+              <td>Plan Vercel Hobby (pas de cron) ou <code>CRON_SECRET</code> manquant</td>
+              <td>Vérifier que le plan Vercel supporte les crons, et que <code>CRON_SECRET</code> est configuré</td>
+            </tr>
+            <tr>
+              <td>Données de démo absentes</td>
+              <td><code>SEED_AT_STARTUP=false</code> ou seed déjà exécuté</td>
+              <td>Mettre temporairement <code>SEED_AT_STARTUP=true</code> et redéployer. Remettre à <code>false</code> après.</td>
+            </tr>
+            <tr>
+              <td>Pièces jointes perdues après redéploiement</td>
+              <td>Vercel utilise <code>/tmp</code> ephémère — les fichiers sont perdus à chaque déploiement</td>
+              <td>Configurer un bucket de stockage persistant (Vercel Blob, AWS S3 ou Cloudflare R2) pour <code>UPLOAD_DIR</code></td>
+            </tr>
+            <tr>
+              <td>MFA ne fonctionne plus (codes refusés)</td>
+              <td>Décalage de l'horloge système ou utilisateur</td>
+              <td>Synchroniser l'horloge de l'appareil mobile du l'utilisateur (paramètre "heure automatique"). Si le problème persiste, réinitialiser le MFA de l'utilisateur.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Réinitialiser le seed de données</h3>
+        <div class="shell-block">
+          <span class="comment"># Pour réinitialiser les données de démo :</span><br>
+          <span class="comment"># 1. Mettre SEED_AT_STARTUP=true dans Vercel env vars</span><br>
+          <span class="comment"># 2. Redéployer</span><br>
+          <span class="prompt">$</span> vercel env add SEED_AT_STARTUP production<br>
+          <span style="color:#9CDCFE;">? Value: </span><span style="color:#CE9178;">true</span><br>
+          <span class="prompt">$</span> vercel --prod<br><br>
+          <span class="comment"># 3. Après redéploiement, remettre à false</span><br>
+          <span class="prompt">$</span> vercel env add SEED_AT_STARTUP production<br>
+          <span style="color:#9CDCFE;">? Value: </span><span style="color:#CE9178;">false</span><br>
+          <span class="prompt">$</span> vercel --prod
+        </div>
+
+        <div class="alert-warn">
+          <strong>Attention :</strong> Le seed écrase les données existantes en production. N'activez <code>SEED_AT_STARTUP=true</code> qu'en environnement de démo ou de développement. En production réelle, ne l'activez jamais.
+        </div>
+
+        <h3>Contact support</h3>
+        <p>Pour tout problème non résolu par cette documentation, contactez l'équipe technique à <a href="mailto:support@reclampro.sn" style="color:#185FA5;">support@reclampro.sn</a> en joignant :</p>
+        <ul>
+          <li>La capture d'écran de l'erreur affichée</li>
+          <li>L'URL complète ayant causé l'erreur</li>
+          <li>L'extrait de log Vercel correspondant (copier depuis Vercel Dashboard → Logs)</li>
+          <li>L'heure exacte (en WAT) à laquelle l'erreur s'est produite</li>
+        </ul>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Autres guides -->
+  <div class="other-guides">
+    <p>Autres ressources disponibles :</p>
+    <div class="guide-links">
+      <a href="/guide-presentation.html">Présentation commerciale</a>
+      <a href="/guide-utilisateur.html">Guide utilisateur</a>
+      <a href="/doc-technique.html">Documentation technique</a>
+    </div>
+  </div>
+
+  <footer>
+    RéclamPro — Guide administrateur v1.0 — Réservé à l'usage interne
+  </footer>
+
+</body>
+</html>

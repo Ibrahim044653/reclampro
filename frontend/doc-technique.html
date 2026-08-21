@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RéclamPro — Documentation technique</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <style>
+    body { background: #F7F5EE; color: #1F1E1A; margin: 0; }
+
+    /* Topnav */
+    .doc-nav {
+      background: #fff;
+      border-bottom: 1px solid #E5E1D8;
+      padding: 0 40px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .doc-nav .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .doc-nav .logo-icon {
+      width: 32px; height: 32px;
+      background: #185FA5;
+      color: #fff;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .doc-nav .brand-name { font-weight: 700; font-size: 16px; color: #185FA5; }
+    .doc-nav .back-link {
+      font-size: 13px;
+      color: #185FA5;
+      text-decoration: none;
+    }
+    .doc-nav .back-link:hover { text-decoration: underline; }
+
+    /* Layout */
+    .doc-layout {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: flex-start;
+    }
+
+    /* TOC */
+    .toc {
+      width: 260px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 56px;
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+      border-right: 1px solid #E5E1D8;
+      padding: 24px 0;
+      background: #fff;
+    }
+    .toc-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9B968D;
+      padding: 0 20px;
+      margin-bottom: 12px;
+    }
+    .toc a {
+      display: block;
+      padding: 7px 20px;
+      font-size: 13px;
+      color: #6B6862;
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      line-height: 1.4;
+    }
+    .toc a:hover {
+      background: #E6F1FB;
+      color: #185FA5;
+      border-left-color: #185FA5;
+    }
+    .toc a.sub {
+      padding-left: 32px;
+      font-size: 12px;
+    }
+
+    /* Contenu */
+    .doc-content {
+      flex: 1;
+      padding: 40px 48px;
+      min-width: 0;
+    }
+
+    /* En-tête */
+    .page-header {
+      background: #fff;
+      border: 1px solid #E5E1D8;
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-bottom: 32px;
+    }
+    .page-header .badge {
+      display: inline-block;
+      background: #E6F1FB;
+      color: #185FA5;
+      border-radius: 12px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .page-header h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #185FA5;
+      margin: 0 0 10px;
+    }
+    .page-header p {
+      font-size: 15px;
+      color: #6B6862;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Cards de section */
+    .doc-section {
+      background: #fff;
+      border: 1px solid #E5E1D8;
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      scroll-margin-top: 72px;
+    }
+    .doc-section h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #185FA5;
+      margin: 0 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #E5E1D8;
+      padding-bottom: 14px;
+    }
+    .doc-section h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 22px 0 10px;
+      color: #1F1E1A;
+    }
+    .doc-section p {
+      font-size: 14px;
+      color: #1F1E1A;
+      line-height: 1.7;
+      margin: 0 0 12px;
+    }
+    .doc-section ul, .doc-section ol {
+      font-size: 14px;
+      line-height: 1.7;
+      padding-left: 24px;
+      margin: 0 0 12px;
+    }
+    .doc-section li { margin-bottom: 5px; }
+
+    /* Tables */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 12px 0;
+    }
+    .data-table th {
+      background: #185FA5;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+    .data-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #E5E1D8;
+      vertical-align: top;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:nth-child(even) td { background: #F7F5EE; }
+
+    /* Code monospace */
+    code {
+      font-family: "Cascadia Code", "Fira Code", "Consolas", "Courier New", monospace;
+      font-size: 12.5px;
+      background: #F0EDE6;
+      border: 1px solid #E5E1D8;
+      border-radius: 4px;
+      padding: 2px 6px;
+      color: #185FA5;
+    }
+    pre {
+      background: #1a1a2e;
+      color: #e0e0e0;
+      border-radius: 8px;
+      padding: 20px 24px;
+      font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-x: auto;
+      margin: 12px 0;
+    }
+    pre .comment { color: #6A9955; }
+    pre .key { color: #9CDCFE; }
+    pre .value { color: #CE9178; }
+    pre .kw { color: #569CD6; }
+
+    /* Architecture diagram */
+    .arch-diagram {
+      background: #F0EDE6;
+      border: 1px solid #E5E1D8;
+      border-radius: 8px;
+      padding: 24px;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      font-size: 13px;
+      line-height: 1.8;
+      margin: 16px 0;
+      color: #1F1E1A;
+    }
+
+    /* Alertes */
+    .alert-info {
+      background: #E6F1FB;
+      border: 1px solid #B5D4F4;
+      border-left: 4px solid #185FA5;
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #0d3d6e;
+      margin: 12px 0;
+    }
+    .alert-warn {
+      background: #FAEEDA;
+      border: 1px solid #f0d08a;
+      border-left: 4px solid #BA7517;
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #7a4c0f;
+      margin: 12px 0;
+    }
+
+    /* Badge */
+    .badge { display: inline-block; border-radius: 10px; padding: 2px 9px; font-size: 11px; font-weight: 600; }
+    .badge-blue { background: #E6F1FB; color: #185FA5; }
+    .badge-green { background: #EAF3DE; color: #639922; }
+    .badge-orange { background: #FAEEDA; color: #BA7517; }
+
+    /* Env var list */
+    .env-list {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0;
+    }
+    .env-list li {
+      display: flex;
+      gap: 16px;
+      padding: 10px 14px;
+      border-bottom: 1px solid #E5E1D8;
+      font-size: 13px;
+      align-items: flex-start;
+    }
+    .env-list li:last-child { border-bottom: none; }
+    .env-list li:nth-child(even) { background: #F7F5EE; }
+    .env-var-name {
+      font-family: "Cascadia Code", "Consolas", monospace;
+      font-weight: 600;
+      color: #185FA5;
+      min-width: 200px;
+      flex-shrink: 0;
+    }
+    .env-var-desc { color: #6B6862; line-height: 1.5; }
+    .env-required {
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    /* Autres guides */
+    .other-guides {
+      background: #fff;
+      border: 1px solid #E5E1D8;
+      border-radius: 10px;
+      padding: 24px 32px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .other-guides p { margin: 0 0 16px; font-size: 14px; color: #6B6862; }
+    .other-guides .guide-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .other-guides a {
+      display: inline-block;
+      background: #F7F5EE;
+      border: 1px solid #E5E1D8;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #185FA5;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .other-guides a:hover { background: #E6F1FB; border-color: #185FA5; }
+
+    footer {
+      background: #0d3d6e;
+      color: rgba(255,255,255,0.75);
+      padding: 28px 40px;
+      text-align: center;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="doc-nav">
+    <a href="/login.html" class="brand">
+      <div class="logo-icon">R</div>
+      <span class="brand-name">RéclamPro</span>
+    </a>
+    <a href="/login.html" class="back-link">← Retour à l'application</a>
+  </nav>
+
+  <div class="doc-layout">
+
+    <!-- TOC -->
+    <nav class="toc">
+      <div class="toc-title">Documentation technique</div>
+      <a href="#architecture">1. Architecture</a>
+      <a href="#stack">2. Stack technique</a>
+      <a href="#schema">3. Schéma de BDD</a>
+      <a href="#env">4. Variables d'environnement</a>
+      <a href="#api">5. Endpoints API</a>
+      <a href="#securite">6. Sécurité</a>
+      <a href="#deploiement">7. Déploiement</a>
+      <a href="#cron">8. Cron jobs</a>
+    </nav>
+
+    <!-- Contenu -->
+    <main class="doc-content">
+
+      <!-- En-tête -->
+      <div class="page-header">
+        <div class="badge">Documentation technique</div>
+        <h1>Documentation technique RéclamPro</h1>
+        <p>Référence technique complète pour les développeurs et équipes DSI. Couvre l'architecture, le schéma de base de données, les endpoints API, la sécurité et le déploiement.</p>
+      </div>
+
+      <!-- Section 1 — Architecture -->
+      <div class="doc-section" id="architecture">
+        <h2>1. Architecture générale</h2>
+        <p>RéclamPro est une application web fullstack déployée sur Vercel (serverless) avec une base de données PostgreSQL managée sur Neon. Le frontend est en Vanilla JS/HTML pur, le backend est en FastAPI (Python) exposé via des fonctions serverless Vercel.</p>
+
+        <div class="arch-diagram">
+          ┌─────────────────────────────────────────────────────────────┐
+          │                     Client (navigateur)                      │
+          │          Vanilla JS + HTML + CSS — Vercel CDN               │
+          └───────────────────────────┬─────────────────────────────────┘
+                                      │ HTTPS
+          ┌───────────────────────────▼─────────────────────────────────┐
+          │              Vercel Serverless Functions                      │
+          │  /api/* — FastAPI (Python 3.11) — runtime edge/node         │
+          │  Chaque route = fonction indépendante                        │
+          └──────────────┬──────────────────────┬────────────────────────┘
+                         │ asyncpg              │ Services externes
+          ┌──────────────▼──────┐   ┌───────────▼────────────────────┐
+          │  Neon PostgreSQL    │   │  SMTP (email sortant)          │
+          │  (managed, pool)    │   │  IMAP (email entrant)          │
+          └─────────────────────┘   │  WhatsApp Business API         │
+                                    │  Fernet (chiffrement PII)      │
+                                    └────────────────────────────────┘
+        </div>
+
+        <h3>Flux de traitement d'une réclamation</h3>
+        <ol>
+          <li>Réception : email IMAP polling / webhook WhatsApp / formulaire web / saisie manuelle agent</li>
+          <li>Création automatique d'un dossier en base (statut NOUVEAU, numérotation séquentielle)</li>
+          <li>Notification agent assigné par email</li>
+          <li>Traitement par l'agent, changements de statut loggés dans la table <code>interactions</code></li>
+          <li>Cron quotidien SLA check : escalade automatique si délai dépassé</li>
+          <li>Clôture et archivage avec conservation 5 ans</li>
+        </ol>
+      </div>
+
+      <!-- Section 2 — Stack -->
+      <div class="doc-section" id="stack">
+        <h2>2. Stack technique</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Composant</th><th>Technologie</th><th>Version</th><th>Rôle</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Backend API</td>
+              <td>FastAPI (Python)</td>
+              <td>0.111+</td>
+              <td>Routes REST, logique métier, JWT, exports</td>
+            </tr>
+            <tr>
+              <td>Runtime serverless</td>
+              <td>Vercel Functions</td>
+              <td>Node 20 / Python 3.11</td>
+              <td>Hébergement sans serveur, auto-scaling</td>
+            </tr>
+            <tr>
+              <td>Base de données</td>
+              <td>PostgreSQL (Neon)</td>
+              <td>16</td>
+              <td>Stockage principal, pool de connexions Neon</td>
+            </tr>
+            <tr>
+              <td>Driver BDD</td>
+              <td>asyncpg</td>
+              <td>0.29+</td>
+              <td>Connexion async PostgreSQL depuis Python</td>
+            </tr>
+            <tr>
+              <td>Authentification</td>
+              <td>JWT HS256 + MFA TOTP</td>
+              <td>—</td>
+              <td>Sessions, refresh tokens, MFA Google Authenticator</td>
+            </tr>
+            <tr>
+              <td>Chiffrement</td>
+              <td>Fernet (cryptography)</td>
+              <td>42+</td>
+              <td>Chiffrement des données PII (noms, contacts)</td>
+            </tr>
+            <tr>
+              <td>Hachage mots de passe</td>
+              <td>bcrypt</td>
+              <td>4+</td>
+              <td>Stockage sécurisé des mots de passe</td>
+            </tr>
+            <tr>
+              <td>Email sortant</td>
+              <td>SMTP (smtplib)</td>
+              <td>—</td>
+              <td>Notifications, réponses clients</td>
+            </tr>
+            <tr>
+              <td>Email entrant</td>
+              <td>IMAP (imaplib)</td>
+              <td>—</td>
+              <td>Ingestion automatique des réclamations email</td>
+            </tr>
+            <tr>
+              <td>WhatsApp</td>
+              <td>WhatsApp Business Cloud API</td>
+              <td>v20.0</td>
+              <td>Réception/envoi messages WhatsApp</td>
+            </tr>
+            <tr>
+              <td>Exports</td>
+              <td>openpyxl, reportlab</td>
+              <td>—</td>
+              <td>Génération XLSX et PDF réglementaires</td>
+            </tr>
+            <tr>
+              <td>Rate limiting</td>
+              <td>slowapi</td>
+              <td>—</td>
+              <td>Protection contre les abus d'API</td>
+            </tr>
+            <tr>
+              <td>Frontend</td>
+              <td>Vanilla JS / HTML5 / CSS3</td>
+              <td>—</td>
+              <td>Interface utilisateur, PWA (manifest + sw.js)</td>
+            </tr>
+            <tr>
+              <td>CI/CD</td>
+              <td>GitHub Actions + Vercel</td>
+              <td>—</td>
+              <td>Déploiement automatique sur push main</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section 3 — BDD -->
+      <div class="doc-section" id="schema">
+        <h2>3. Schéma de base de données</h2>
+        <p>La base de données contient 11 tables principales. Les données PII (Personally Identifiable Information) sont chiffrées avec Fernet avant insertion.</p>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>Table</th><th>Colonnes clés</th><th>Rôle</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>agents</code></td>
+              <td>id, email, password_hash, role, mfa_secret, equipe_id, is_active</td>
+              <td>Comptes utilisateurs — agents, superviseurs, admins</td>
+            </tr>
+            <tr>
+              <td><code>reclamations</code></td>
+              <td>id, reference, client_id, type, statut, priorite, canal, agent_id, equipe_id, entite_id, sla_echeance, description, created_at</td>
+              <td>Table centrale — chaque dossier de réclamation</td>
+            </tr>
+            <tr>
+              <td><code>clients</code></td>
+              <td>id, nom_chiffre, email_chiffre, telephone_chiffre, created_at</td>
+              <td>Données clients — noms/contacts chiffrés Fernet</td>
+            </tr>
+            <tr>
+              <td><code>interactions</code></td>
+              <td>id, reclamation_id, agent_id, type_action, contenu, created_at</td>
+              <td>Historique complet de chaque action sur un dossier (log immuable)</td>
+            </tr>
+            <tr>
+              <td><code>notifications</code></td>
+              <td>id, agent_id, type, message, lu, reclamation_id, created_at</td>
+              <td>Notifications in-app pour les agents</td>
+            </tr>
+            <tr>
+              <td><code>equipes</code></td>
+              <td>id, nom, description, superviseur_id</td>
+              <td>Équipes de traitement avec superviseur désigné</td>
+            </tr>
+            <tr>
+              <td><code>entites</code></td>
+              <td>id, nom, type (BANQUE | ASSURANCE), pays, code_bceao</td>
+              <td>Établissements financiers concernés par les réclamations</td>
+            </tr>
+            <tr>
+              <td><code>pieces_jointes</code></td>
+              <td>id, reclamation_id, nom_fichier, chemin, taille, mime_type, uploaded_by, created_at</td>
+              <td>Fichiers attachés aux dossiers</td>
+            </tr>
+            <tr>
+              <td><code>modeles_reponse</code></td>
+              <td>id, titre, contenu, type_reclamation, langue, created_by</td>
+              <td>Réponses types réutilisables par les agents</td>
+            </tr>
+            <tr>
+              <td><code>approbations_niveaux</code></td>
+              <td>id, reclamation_id, niveau, agent_id, statut, commentaire, created_at</td>
+              <td>Workflow de validation multi-niveaux pour les dossiers sensibles</td>
+            </tr>
+            <tr>
+              <td><code>sequence_compteurs</code></td>
+              <td>id, annee, mois, compteur</td>
+              <td>Génération de la numérotation séquentielle des références dossiers</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="alert-info">
+          <strong>Chiffrement PII :</strong> Les colonnes <code>nom_chiffre</code>, <code>email_chiffre</code> et <code>telephone_chiffre</code> de la table <code>clients</code> sont chiffrées avec Fernet (clé symétrique AES-128-CBC + HMAC-SHA256) avant toute insertion. Le déchiffrement s'effectue exclusivement côté backend Python — jamais exposé au frontend.
+        </div>
+      </div>
+
+      <!-- Section 4 — Env vars -->
+      <div class="doc-section" id="env">
+        <h2>4. Variables d'environnement</h2>
+        <p>Toutes les variables doivent être configurées dans Vercel (Settings → Environment Variables) pour les environnements Production et Preview. En local, créez un fichier <code>.env</code> à la racine du projet.</p>
+
+        <ul class="env-list">
+          <li>
+            <span class="env-var-name">DATABASE_URL</span>
+            <span class="env-var-desc">URL de connexion Neon PostgreSQL avec pooler. Format : <code>postgresql://user:pass@ep-xxx.neon.tech/neondb?sslmode=require</code></span>
+            <span class="env-required"><span class="badge badge-blue">Requis</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">JWT_SECRET</span>
+            <span class="env-var-desc">Clé secrète HS256 pour la signature des tokens JWT. Générer avec <code>openssl rand -hex 32</code>. Minimum 32 caractères.</span>
+            <span class="env-required"><span class="badge badge-blue">Requis</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">FERNET_KEY</span>
+            <span class="env-var-desc">Clé Fernet Base64 pour le chiffrement des données PII. Générer avec <code>python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"</code></span>
+            <span class="env-required"><span class="badge badge-blue">Requis</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">SEED_AT_STARTUP</span>
+            <span class="env-var-desc">Valeur <code>true</code> pour initialiser la base avec des données de démonstration au premier démarrage. Mettre <code>false</code> en production réelle.</span>
+            <span class="env-required"><span class="badge badge-orange">Optionnel</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">CRON_SECRET</span>
+            <span class="env-var-desc">Token secret pour authentifier les appels aux endpoints cron (<code>/api/cron/sla-check</code>). Générer avec <code>openssl rand -hex 16</code>.</span>
+            <span class="env-required"><span class="badge badge-blue">Requis</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">EMAIL_DRIVER</span>
+            <span class="env-var-desc">Moteur email : <code>smtp</code> (production) ou <code>console</code> (développement — affiche les emails dans les logs).</span>
+            <span class="env-required"><span class="badge badge-blue">Requis</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">SMTP_HOST</span>
+            <span class="env-var-desc">Serveur SMTP pour l'envoi d'emails (ex. <code>smtp.gmail.com</code>, <code>smtp.sendgrid.net</code>).</span>
+            <span class="env-required"><span class="badge badge-orange">Si smtp</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">SMTP_PORT</span>
+            <span class="env-var-desc">Port SMTP : <code>587</code> (STARTTLS recommandé) ou <code>465</code> (SSL).</span>
+            <span class="env-required"><span class="badge badge-orange">Si smtp</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">SMTP_USER</span>
+            <span class="env-var-desc">Identifiant SMTP (souvent l'adresse email d'envoi).</span>
+            <span class="env-required"><span class="badge badge-orange">Si smtp</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">SMTP_PASSWORD</span>
+            <span class="env-var-desc">Mot de passe SMTP ou mot de passe d'application (App Password pour Gmail).</span>
+            <span class="env-required"><span class="badge badge-orange">Si smtp</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">SMTP_FROM</span>
+            <span class="env-var-desc">Adresse email d'expéditeur affichée dans les emails envoyés (ex. <code>reclamations@mabanque.sn</code>).</span>
+            <span class="env-required"><span class="badge badge-orange">Si smtp</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">IMAP_HOST</span>
+            <span class="env-var-desc">Serveur IMAP pour la lecture des emails entrants (ex. <code>imap.gmail.com</code>).</span>
+            <span class="env-required"><span class="badge badge-orange">Optionnel</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">IMAP_USER</span>
+            <span class="env-var-desc">Identifiant IMAP (adresse email de réception).</span>
+            <span class="env-required"><span class="badge badge-orange">Optionnel</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">IMAP_PASSWORD</span>
+            <span class="env-var-desc">Mot de passe IMAP ou App Password.</span>
+            <span class="env-required"><span class="badge badge-orange">Optionnel</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">WHATSAPP_TOKEN</span>
+            <span class="env-var-desc">Token d'accès permanent à l'API WhatsApp Business Cloud (Meta Developer Portal).</span>
+            <span class="env-required"><span class="badge badge-orange">Optionnel</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">WHATSAPP_PHONE_ID</span>
+            <span class="env-var-desc">ID du numéro de téléphone WhatsApp Business configuré dans Meta.</span>
+            <span class="env-required"><span class="badge badge-orange">Optionnel</span></span>
+          </li>
+          <li>
+            <span class="env-var-name">UPLOAD_DIR</span>
+            <span class="env-var-desc">Répertoire de stockage des pièces jointes. En production Vercel : <code>/tmp</code> (éphémère — préférez un bucket S3/R2 pour la persistance).</span>
+            <span class="env-required"><span class="badge badge-orange">Optionnel</span></span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Section 5 — API -->
+      <div class="doc-section" id="api">
+        <h2>5. Endpoints API principaux</h2>
+        <p>Tous les endpoints sont préfixés par <code>/api</code>. L'authentification JWT est requise sur tous les endpoints sauf mention contraire. Le token doit être passé dans l'en-tête <code>Authorization: Bearer &lt;token&gt;</code>.</p>
+
+        <h3>Authentification</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Méthode</th><th>Route</th><th>Description</th><th>Auth</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>POST</td><td><code>/api/auth/login</code></td><td>Connexion (email + mot de passe)</td><td>Non</td></tr>
+            <tr><td>POST</td><td><code>/api/auth/mfa-verify</code></td><td>Vérification code TOTP MFA</td><td>Non</td></tr>
+            <tr><td>POST</td><td><code>/api/auth/refresh</code></td><td>Renouvellement du JWT</td><td>Refresh token</td></tr>
+            <tr><td>POST</td><td><code>/api/auth/logout</code></td><td>Invalidation de session</td><td>Oui</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Réclamations</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>GET</td><td><code>/api/reclamations</code></td><td>Liste paginée avec filtres (statut, priorité, canal, agent, période)</td></tr>
+            <tr><td>POST</td><td><code>/api/reclamations</code></td><td>Créer une nouvelle réclamation</td></tr>
+            <tr><td>GET</td><td><code>/api/reclamations/{id}</code></td><td>Détail complet d'un dossier</td></tr>
+            <tr><td>PATCH</td><td><code>/api/reclamations/{id}</code></td><td>Modifier statut, assignation, priorité, étiquettes</td></tr>
+            <tr><td>POST</td><td><code>/api/reclamations/{id}/comment</code></td><td>Ajouter un commentaire interne</td></tr>
+            <tr><td>POST</td><td><code>/api/reclamations/bulk-assign</code></td><td>Réassignation en masse</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Agents et équipes</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>GET</td><td><code>/api/agents</code></td><td>Liste des agents (admin uniquement)</td></tr>
+            <tr><td>POST</td><td><code>/api/agents</code></td><td>Créer un compte agent</td></tr>
+            <tr><td>PATCH</td><td><code>/api/agents/{id}</code></td><td>Modifier rôle, équipe, statut actif</td></tr>
+            <tr><td>POST</td><td><code>/api/agents/{id}/reset-password</code></td><td>Réinitialiser le mot de passe</td></tr>
+            <tr><td>GET</td><td><code>/api/equipes</code></td><td>Liste des équipes</td></tr>
+            <tr><td>POST</td><td><code>/api/equipes</code></td><td>Créer une équipe</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Exports et reporting</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Méthode</th><th>Route</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>GET</td><td><code>/api/exports/csv</code></td><td>Export CSV des réclamations (filtres query params)</td></tr>
+            <tr><td>GET</td><td><code>/api/exports/xlsx</code></td><td>Export XLSX format BCEAO</td></tr>
+            <tr><td>GET</td><td><code>/api/exports/pdf</code></td><td>Export PDF rapport réglementaire</td></tr>
+            <tr><td>GET</td><td><code>/api/dashboard/metrics</code></td><td>Métriques agrégées pour le tableau de bord</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Portail client et cron</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Méthode</th><th>Route</th><th>Auth</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>POST</td><td><code>/api/portail/track</code></td><td>Non</td><td>Suivi dossier par référence + email (portail public)</td></tr>
+            <tr><td>GET</td><td><code>/api/cron/sla-check</code></td><td>CRON_SECRET header</td><td>Escalade SLA automatique — déclenché par Vercel Cron</td></tr>
+            <tr><td>GET</td><td><code>/api/health</code></td><td>Non</td><td>Health check — retourne 200 si le service est opérationnel</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section 6 — Sécurité -->
+      <div class="doc-section" id="securite">
+        <h2>6. Sécurité</h2>
+
+        <h3>Authentification JWT HS256</h3>
+        <p>Les tokens JWT sont signés avec l'algorithme HS256 en utilisant la clé <code>JWT_SECRET</code>. Les access tokens expirent après 8 heures, les refresh tokens après 7 jours. Les tokens révoqués sont blacklistés en base.</p>
+
+        <h3>MFA TOTP</h3>
+        <p>L'authentification multi-facteurs utilise le standard TOTP (RFC 6238) compatible avec Google Authenticator, Microsoft Authenticator et Authy. Le secret TOTP est stocké chiffré en base de données.</p>
+
+        <h3>Chiffrement des données PII</h3>
+        <p>Les données personnelles identifiables (noms, emails, téléphones clients) sont chiffrées avec Fernet (AES-128-CBC + HMAC-SHA256) avant stockage. La clé est dans la variable d'environnement <code>FERNET_KEY</code>, jamais en base.</p>
+
+        <h3>Hachage des mots de passe</h3>
+        <p>Les mots de passe sont hachés avec bcrypt (facteur de coût 12) avant stockage. Aucune vérification de mot de passe en clair n'est effectuée en base.</p>
+
+        <h3>Rate limiting</h3>
+        <p>L'API est protégée par slowapi avec les limites suivantes :</p>
+        <ul>
+          <li>Endpoints d'authentification : 10 requêtes/minute par IP</li>
+          <li>Endpoints API généraux : 100 requêtes/minute par token JWT</li>
+          <li>Exports : 10 requêtes/heure par token JWT</li>
+        </ul>
+
+        <h3>CORS et headers de sécurité</h3>
+        <p>CORS configuré pour n'autoriser que le domaine Vercel de l'application. Headers de sécurité HTTP configurés : <code>X-Frame-Options: DENY</code>, <code>X-Content-Type-Options: nosniff</code>, <code>Referrer-Policy: strict-origin</code>.</p>
+
+        <div class="alert-warn">
+          <strong>Important :</strong> Ne committez jamais <code>JWT_SECRET</code>, <code>FERNET_KEY</code> ou <code>CRON_SECRET</code> dans le dépôt Git. Utilisez exclusivement les variables d'environnement Vercel.
+        </div>
+      </div>
+
+      <!-- Section 7 — Déploiement -->
+      <div class="doc-section" id="deploiement">
+        <h2>7. Déploiement sur Vercel + Neon</h2>
+
+        <h3>Pré-requis</h3>
+        <ul>
+          <li>Compte Vercel (plan Hobby ou Pro)</li>
+          <li>Compte Neon (plan Free ou Pro)</li>
+          <li>Repository GitHub avec le code source</li>
+          <li>Vercel CLI installé : <code>npm install -g vercel</code></li>
+        </ul>
+
+        <h3>Étapes de déploiement</h3>
+        <ol>
+          <li>Créer un projet Neon, récupérer l'URL de connexion avec pooler (format <code>postgresql://...</code>)</li>
+          <li>Importer le projet GitHub dans Vercel (New Project → Import Git Repository)</li>
+          <li>Configurer toutes les variables d'environnement dans Vercel (Settings → Environment Variables)</li>
+          <li>Activer la variable <code>SEED_AT_STARTUP=true</code> pour le premier déploiement — désactiver ensuite</li>
+          <li>Déployer : Vercel détecte automatiquement le fichier <code>vercel.json</code> et configure les routes</li>
+          <li>Configurer le cron Vercel (voir section suivante)</li>
+        </ol>
+
+        <pre><span class="comment"># vercel.json — configuration des routes serverless</span>
+<span class="key">{
+  "functions": {
+    "backend/main.py": { "maxDuration": 30 }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/backend/main.py" }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/sla-check",
+      "schedule": "0 7 * * *"
+    }
+  ]
+}</span></pre>
+
+        <div class="alert-info">
+          <strong>Note Neon :</strong> Utilisez toujours l'URL de connexion avec pooler (contient <code>-pooler</code> dans le hostname) pour les fonctions serverless — cela évite la saturation du nombre de connexions PostgreSQL ouvertes.
+        </div>
+      </div>
+
+      <!-- Section 8 — Cron -->
+      <div class="doc-section" id="cron">
+        <h2>8. Cron jobs — Escalade SLA</h2>
+        <p>Un cron job Vercel déclenche quotidiennement (à 7h00 UTC) l'endpoint <code>/api/cron/sla-check</code> pour identifier et escalader les dossiers en risque de dépassement SLA.</p>
+
+        <h3>Comportement du cron</h3>
+        <ol>
+          <li>Récupère tous les dossiers avec statut NOUVEAU, EN_ATTENTE ou EN_COURS</li>
+          <li>Calcule le délai restant avant l'échéance SLA (<code>sla_echeance</code>)</li>
+          <li>Pour les dossiers à moins de 24h de l'échéance : envoie une notification email au superviseur de l'équipe assignée</li>
+          <li>Pour les dossiers dont le SLA est déjà dépassé : change la priorité à CRITIQUE et notifie</li>
+          <li>Logue toutes les escalades dans la table <code>interactions</code></li>
+        </ol>
+
+        <h3>Authentification du cron</h3>
+        <p>L'endpoint cron est protégé par le header <code>Authorization: Bearer &lt;CRON_SECRET&gt;</code>. Vercel envoie ce header automatiquement depuis la configuration <code>vercel.json</code>. Pour tester manuellement :</p>
+        <pre>curl -X GET \
+  https://votre-app.vercel.app/api/cron/sla-check \
+  -H "Authorization: Bearer VOTRE_CRON_SECRET"</pre>
+
+        <div class="alert-info">
+          <strong>Fuseau horaire :</strong> Le cron est configuré en UTC. 7h00 UTC correspond à 8h00 en Afrique de l'Ouest (WAT/GMT+1), heure de début de journée ouvrée dans l'UEMOA.
+        </div>
+      </div>
+
+      <!-- Autres guides -->
+      <div class="other-guides">
+        <p>Autres ressources :</p>
+        <div class="guide-links">
+          <a href="/guide-presentation.html">Présentation commerciale</a>
+          <a href="/guide-utilisateur.html">Guide utilisateur</a>
+          <a href="/guide-admin.html">Guide administrateur</a>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <footer>
+    RéclamPro — Documentation technique v1.0 — Architecture FastAPI + Neon + Vercel
+  </footer>
+
+</body>
+</html>

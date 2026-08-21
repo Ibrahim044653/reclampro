@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RéclamPro — Guide utilisateur</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <style>
+    body { background: #fff; color: #1F1E1A; margin: 0; }
+
+    /* Topnav */
+    .doc-nav {
+      background: #fff;
+      border-bottom: 1px solid #E5E1D8;
+      padding: 0 40px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .doc-nav .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .doc-nav .logo-icon {
+      width: 32px; height: 32px;
+      background: #185FA5;
+      color: #fff;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .doc-nav .brand-name { font-weight: 700; font-size: 16px; color: #185FA5; }
+    .doc-nav .back-link {
+      font-size: 13px;
+      color: #185FA5;
+      text-decoration: none;
+    }
+    .doc-nav .back-link:hover { text-decoration: underline; }
+
+    /* Layout principal : sidebar TOC + contenu */
+    .doc-layout {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0;
+      align-items: flex-start;
+    }
+
+    /* Table des matières */
+    .toc {
+      width: 260px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 56px;
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+      border-right: 1px solid #E5E1D8;
+      padding: 24px 0;
+      background: #F7F5EE;
+    }
+    .toc-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9B968D;
+      padding: 0 20px;
+      margin-bottom: 12px;
+    }
+    .toc a {
+      display: block;
+      padding: 7px 20px;
+      font-size: 13px;
+      color: #6B6862;
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      line-height: 1.4;
+    }
+    .toc a:hover {
+      background: #E6F1FB;
+      color: #185FA5;
+      border-left-color: #185FA5;
+    }
+    .toc a.sub {
+      padding-left: 32px;
+      font-size: 12px;
+      color: #9B968D;
+    }
+    .toc a.sub:hover { color: #185FA5; }
+
+    /* Contenu */
+    .doc-content {
+      flex: 1;
+      padding: 40px 48px;
+      min-width: 0;
+    }
+
+    /* En-tête page */
+    .page-header {
+      border-bottom: 2px solid #E5E1D8;
+      padding-bottom: 28px;
+      margin-bottom: 40px;
+    }
+    .page-header .badge {
+      display: inline-block;
+      background: #E6F1FB;
+      color: #185FA5;
+      border-radius: 12px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .page-header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #185FA5;
+      margin: 0 0 12px;
+    }
+    .page-header p {
+      font-size: 16px;
+      color: #6B6862;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Rôles */
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 28px 0;
+    }
+    .role-card {
+      border: 1px solid #E5E1D8;
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+    .role-card h3 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #185FA5;
+    }
+    .role-card p {
+      margin: 0;
+      font-size: 13px;
+      color: #6B6862;
+      line-height: 1.5;
+    }
+
+    /* Sections numérotées */
+    .doc-section {
+      margin-bottom: 56px;
+      scroll-margin-top: 72px;
+    }
+    .doc-section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #185FA5;
+      margin: 0 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .doc-section h2 .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #185FA5;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .doc-section h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 24px 0 10px;
+      color: #1F1E1A;
+    }
+    .doc-section p {
+      font-size: 14px;
+      color: #1F1E1A;
+      line-height: 1.7;
+      margin: 0 0 14px;
+    }
+    .doc-section ul, .doc-section ol {
+      font-size: 14px;
+      color: #1F1E1A;
+      line-height: 1.7;
+      padding-left: 24px;
+      margin: 0 0 14px;
+    }
+    .doc-section li { margin-bottom: 6px; }
+
+    /* Alerte info */
+    .alert-info {
+      background: #E6F1FB;
+      border: 1px solid #B5D4F4;
+      border-left: 4px solid #185FA5;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-size: 14px;
+      color: #0d3d6e;
+      margin: 16px 0;
+      line-height: 1.5;
+    }
+    .alert-info strong { font-weight: 700; }
+
+    /* Alerte warn */
+    .alert-warn {
+      background: #FAEEDA;
+      border: 1px solid #f0d08a;
+      border-left: 4px solid #BA7517;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-size: 14px;
+      color: #7a4c0f;
+      margin: 16px 0;
+      line-height: 1.5;
+    }
+
+    /* Steps */
+    .steps {
+      counter-reset: step;
+      list-style: none;
+      padding: 0;
+      margin: 0 0 16px;
+    }
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+    .steps li::before {
+      content: counter(step);
+      min-width: 26px;
+      height: 26px;
+      background: #185FA5;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .steps li span { font-size: 14px; line-height: 1.6; color: #1F1E1A; }
+
+    /* Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 16px 0;
+    }
+    .data-table th {
+      background: #185FA5;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+    .data-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #E5E1D8;
+      vertical-align: top;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:nth-child(even) td { background: #F7F5EE; }
+
+    /* Badge statut */
+    .badge { display: inline-block; border-radius: 10px; padding: 2px 9px; font-size: 11px; font-weight: 600; }
+    .badge-blue { background: #E6F1FB; color: #185FA5; }
+    .badge-green { background: #EAF3DE; color: #639922; }
+    .badge-orange { background: #FAEEDA; color: #BA7517; }
+    .badge-red { background: #FCEBEB; color: #E24B4A; }
+    .badge-gray { background: #F7F5EE; color: #6B6862; }
+
+    /* Séparateur section */
+    .section-divider {
+      border: none;
+      border-top: 1px solid #E5E1D8;
+      margin: 48px 0;
+    }
+
+    /* Footer */
+    .other-guides {
+      background: #F7F5EE;
+      border-top: 1px solid #E5E1D8;
+      padding: 32px 40px;
+      text-align: center;
+    }
+    .other-guides p { margin: 0 0 16px; font-size: 14px; color: #6B6862; }
+    .other-guides .guide-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .other-guides a {
+      display: inline-block;
+      background: #fff;
+      border: 1px solid #E5E1D8;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #185FA5;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .other-guides a:hover { background: #E6F1FB; border-color: #185FA5; }
+
+    footer {
+      background: #0d3d6e;
+      color: rgba(255,255,255,0.75);
+      padding: 28px 40px;
+      text-align: center;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="doc-nav">
+    <a href="/login.html" class="brand">
+      <div class="logo-icon">R</div>
+      <span class="brand-name">RéclamPro</span>
+    </a>
+    <a href="/login.html" class="back-link">← Retour à l'application</a>
+  </nav>
+
+  <div class="doc-layout">
+
+    <!-- Table des matières -->
+    <nav class="toc">
+      <div class="toc-title">Table des matières</div>
+      <a href="#intro">Introduction</a>
+      <a href="#connexion">1. Connexion et MFA</a>
+      <a href="#dashboard">2. Tableau de bord</a>
+      <a href="#creer">3. Créer un dossier</a>
+      <a href="#traiter">4. Traiter un dossier</a>
+      <a href="#recherche">5. Recherche globale</a>
+      <a href="#etiquettes">6. Étiquettes</a>
+      <a href="#masse">7. Réassignation en masse</a>
+      <a href="#notifications">8. Notifications</a>
+      <a href="#pieces">9. Pièces jointes</a>
+      <a href="#portail">10. Portail client public</a>
+    </nav>
+
+    <!-- Contenu -->
+    <main class="doc-content">
+
+      <!-- En-tête -->
+      <div class="page-header">
+        <div class="badge">Guide utilisateur</div>
+        <h1>Guide utilisateur RéclamPro</h1>
+        <p>Ce guide couvre l'ensemble des fonctionnalités de RéclamPro pour les agents de traitement, superviseurs et administrateurs. Il suit l'ordre logique du workflow quotidien.</p>
+      </div>
+
+      <!-- Intro -->
+      <div class="doc-section" id="intro">
+        <h2>Introduction</h2>
+        <p>RéclamPro est une plateforme de gestion des réclamations client conçue pour les établissements bancaires et d'assurance de l'UEMOA. Elle centralise tous les dossiers reçus par différents canaux (email, WhatsApp, formulaire web, téléphone, guichet) et assure le suivi jusqu'à clôture dans les délais réglementaires BCEAO et CIMA.</p>
+
+        <h3>Rôles disponibles</h3>
+        <div class="roles-grid">
+          <div class="role-card">
+            <h3>Agent</h3>
+            <p>Crée, traite et clôt les dossiers. Peut commenter, affecter à un collègue de la même équipe, et ajouter des pièces jointes.</p>
+          </div>
+          <div class="role-card">
+            <h3>Superviseur</h3>
+            <p>Accès complet à tous les dossiers de son équipe. Valide les dossiers sensibles, peut réassigner en masse et consulte les métriques SLA.</p>
+          </div>
+          <div class="role-card">
+            <h3>Administrateur</h3>
+            <p>Accès global. Gère les utilisateurs, équipes, configuration SLA, exports réglementaires et paramètres système.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 1 — Connexion -->
+      <div class="doc-section" id="connexion">
+        <h2><span class="num">1</span> Connexion et MFA</h2>
+        <p>L'accès à RéclamPro est protégé par une authentification en deux étapes (MFA — Multi-Factor Authentication) obligatoire pour tous les comptes.</p>
+
+        <h3>Première connexion</h3>
+        <ol class="steps">
+          <li><span>Rendez-vous sur <strong>/login.html</strong> et saisissez votre adresse email professionnelle et votre mot de passe temporaire remis par l'administrateur.</span></li>
+          <li><span>Au premier accès, l'application affiche un QR code à scanner avec une application d'authentification (Google Authenticator, Microsoft Authenticator ou Authy).</span></li>
+          <li><span>Scannez le QR code, puis saisissez le code à 6 chiffres affiché dans votre application pour confirmer l'activation.</span></li>
+          <li><span>Modifiez votre mot de passe temporaire — choisissez un mot de passe d'au moins 8 caractères avec une majuscule, une minuscule, un chiffre et un caractère spécial.</span></li>
+        </ol>
+
+        <div class="alert-info">
+          <strong>Astuce :</strong> Conservez votre code de récupération MFA dans un endroit sécurisé. En cas de perte de votre téléphone, contactez l'administrateur pour une réinitialisation.
+        </div>
+
+        <h3>Connexions suivantes</h3>
+        <ol class="steps">
+          <li><span>Saisissez email et mot de passe sur /login.html.</span></li>
+          <li><span>Sur la page MFA, saisissez le code à 6 chiffres actuellement affiché dans votre application d'authentification. Les codes sont valides 30 secondes.</span></li>
+          <li><span>Vous êtes redirigé vers le tableau de bord principal.</span></li>
+        </ol>
+
+        <div class="alert-warn">
+          <strong>Attention :</strong> Ne partagez jamais votre mot de passe ni votre code MFA. En cas de suspicion de compromission, demandez immédiatement une réinitialisation à votre administrateur.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 2 — Dashboard -->
+      <div class="doc-section" id="dashboard">
+        <h2><span class="num">2</span> Tableau de bord</h2>
+        <p>Le tableau de bord est la première page visible après la connexion. Il donne une vision instantanée de l'activité de traitement.</p>
+
+        <h3>Métriques principales</h3>
+        <p>La ligne de métriques en haut affiche :</p>
+        <ul>
+          <li><strong>Total dossiers :</strong> nombre total de réclamations dans le système (ou dans votre périmètre selon votre rôle).</li>
+          <li><strong>En cours :</strong> dossiers ayant le statut EN_COURS ou EN_ATTENTE.</li>
+          <li><strong>Résolus :</strong> dossiers clôturés dans les délais SLA.</li>
+          <li><strong>SLA critique :</strong> dossiers dont le délai de traitement expire dans moins de 24 heures ou est déjà dépassé.</li>
+        </ul>
+
+        <h3>Alertes SLA</h3>
+        <p>Les dossiers en dépassement SLA ou à risque apparaissent dans un encadré rouge en haut de page. Cliquez sur un dossier pour l'ouvrir directement. Les niveaux d'alerte sont :</p>
+        <table class="data-table">
+          <thead>
+            <tr><th>Niveau</th><th>Signification</th><th>Action recommandée</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-red">CRITIQUE</span></td>
+              <td>SLA dépassé ou moins de 24h restantes</td>
+              <td>Traiter immédiatement ou escalader au superviseur</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-orange">URGENT</span></td>
+              <td>Moins de 48h restantes</td>
+              <td>Planifier le traitement aujourd'hui</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-blue">NORMAL</span></td>
+              <td>Dans les délais</td>
+              <td>Traitement selon planning habituel</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Liste des dossiers récents</h3>
+        <p>Sous les métriques, la liste affiche les dossiers les plus récents ou les plus urgents selon votre rôle. Cliquez sur un dossier pour ouvrir la vue détail.</p>
+
+        <div class="alert-info">
+          <strong>Astuce :</strong> Le tableau de bord se rafraîchit automatiquement toutes les 60 secondes. Vous pouvez forcer un rafraîchissement en appuyant sur F5.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 3 — Créer un dossier -->
+      <div class="doc-section" id="creer">
+        <h2><span class="num">3</span> Créer un dossier</h2>
+        <p>Un nouveau dossier de réclamation peut être créé manuellement depuis l'interface pour les réclamations reçues par téléphone ou au guichet. Les réclamations reçues par email ou WhatsApp sont créées automatiquement.</p>
+
+        <h3>Accès au formulaire</h3>
+        <p>Cliquez sur le bouton <strong>+ Nouvelle réclamation</strong> dans la barre supérieure ou dans la sidebar. Vous pouvez aussi accéder à <code>/nouvelle.html</code>.</p>
+
+        <h3>Champs du formulaire</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Champ</th><th>Obligatoire</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Nom du client</td><td>Oui</td><td>Nom complet du réclamant</td></tr>
+            <tr><td>Email</td><td>Non</td><td>Email de contact pour les notifications automatiques</td></tr>
+            <tr><td>Téléphone</td><td>Non</td><td>Numéro de contact (format international recommandé)</td></tr>
+            <tr><td>Type de réclamation</td><td>Oui</td><td>Catégorie parmi les types configurés (virement, carte, assurance, etc.)</td></tr>
+            <tr><td>Priorité</td><td>Oui</td><td>STANDARD (5j), URGENT (72h) ou CRITIQUE (24h)</td></tr>
+            <tr><td>Canal d'entrée</td><td>Oui</td><td>EMAIL, WHATSAPP, WEB, TELEPHONE ou GUICHET</td></tr>
+            <tr><td>Description</td><td>Oui</td><td>Contenu détaillé de la réclamation — être le plus précis possible</td></tr>
+            <tr><td>Entité concernée</td><td>Oui</td><td>Banque ou compagnie d'assurance concernée</td></tr>
+            <tr><td>Équipe</td><td>Non</td><td>Affectation à une équipe spécifique (sinon auto-affecté)</td></tr>
+          </tbody>
+        </table>
+
+        <div class="alert-info">
+          <strong>Astuce :</strong> La référence dossier (ex. <code>REC-2024-00123</code>) est générée automatiquement à la sauvegarde. Communiquez-la au client pour le suivi sur le portail public.
+        </div>
+
+        <h3>Canal d'entrée</h3>
+        <p>Sélectionnez toujours le canal réel par lequel la réclamation est parvenue — cette information est utilisée dans les statistiques réglementaires BCEAO.</p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 4 — Traiter un dossier -->
+      <div class="doc-section" id="traiter">
+        <h2><span class="num">4</span> Traiter un dossier</h2>
+        <p>Le traitement d'un dossier s'effectue depuis la vue détail, accessible en cliquant sur n'importe quel dossier dans la liste.</p>
+
+        <h3>Changer le statut</h3>
+        <p>Le cycle de vie d'un dossier suit les statuts suivants :</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 20px;">
+          <span class="badge badge-gray">NOUVEAU</span>
+          <span style="color:#9B968D;align-self:center;">→</span>
+          <span class="badge badge-orange">EN_ATTENTE</span>
+          <span style="color:#9B968D;align-self:center;">→</span>
+          <span class="badge badge-blue">EN_COURS</span>
+          <span style="color:#9B968D;align-self:center;">→</span>
+          <span class="badge badge-green">RESOLU</span>
+          <span style="color:#9B968D;align-self:center;">→</span>
+          <span class="badge badge-gray">CLOS</span>
+        </div>
+        <p>Pour changer le statut, utilisez le menu déroulant <strong>Statut</strong> dans le panneau de droite de la vue détail, puis cliquez sur <strong>Enregistrer</strong>. Chaque changement est loggé automatiquement.</p>
+
+        <h3>Affecter un dossier</h3>
+        <p>Dans le panneau détail, le champ <strong>Agent assigné</strong> permet de (ré)affecter le dossier à un collègue de votre équipe. Seuls les membres de l'équipe affectée au dossier sont disponibles dans la liste.</p>
+
+        <h3>Transférer à une autre équipe</h3>
+        <p>Si le dossier ne relève pas de votre équipe, utilisez le champ <strong>Équipe</strong> pour le transférer. Cette action requiert le rôle Superviseur ou Administrateur.</p>
+
+        <h3>Commenter un dossier</h3>
+        <p>La section <strong>Commentaires</strong> en bas de la vue détail permet d'ajouter des notes internes (visibles uniquement des agents et superviseurs, pas du client). Ces commentaires sont horodatés et signés automatiquement.</p>
+
+        <div class="alert-info">
+          <strong>Bonne pratique :</strong> Commentez chaque action significative sur le dossier (appel client, document reçu, décision prise). Cela constitue la traçabilité exigée par la BCEAO.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 5 — Recherche -->
+      <div class="doc-section" id="recherche">
+        <h2><span class="num">5</span> Recherche globale</h2>
+        <p>La barre de recherche globale est accessible depuis la barre de navigation supérieure (topbar) sur toutes les pages de l'application.</p>
+
+        <h3>Recherche rapide</h3>
+        <p>Tapez au moins 3 caractères dans la barre de recherche pour déclencher une recherche sur les champs suivants :</p>
+        <ul>
+          <li>Référence dossier (ex. <code>REC-2024-00123</code>)</li>
+          <li>Nom ou email du client</li>
+          <li>Description de la réclamation (recherche plein texte)</li>
+        </ul>
+        <p>Les résultats s'affichent en temps réel dans un menu déroulant. Cliquez sur un résultat pour ouvrir directement le dossier.</p>
+
+        <h3>Filtres avancés</h3>
+        <p>Sur la page <strong>Réclamations</strong> (<code>/reclamations.html</code>), utilisez le panneau de filtres sur la gauche pour affiner par :</p>
+        <ul>
+          <li>Statut (Nouveau, En cours, Résolu, Clos)</li>
+          <li>Priorité (Standard, Urgent, Critique)</li>
+          <li>Canal d'entrée</li>
+          <li>Agent assigné</li>
+          <li>Équipe</li>
+          <li>Période (date de création de-à)</li>
+          <li>Entité</li>
+        </ul>
+        <p>Les filtres sont cumulables. Cliquez sur <strong>Réinitialiser</strong> pour effacer tous les filtres actifs.</p>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 6 — Étiquettes -->
+      <div class="doc-section" id="etiquettes">
+        <h2><span class="num">6</span> Étiquettes (tags)</h2>
+        <p>Les étiquettes permettent de catégoriser les dossiers de manière flexible, en complément du type de réclamation et du statut.</p>
+
+        <h3>Ajouter une étiquette</h3>
+        <ol class="steps">
+          <li><span>Ouvrez le dossier concerné en vue détail.</span></li>
+          <li><span>Dans le panneau de droite, cliquez sur le champ <strong>Étiquettes</strong>.</span></li>
+          <li><span>Tapez le nom de l'étiquette ou sélectionnez une étiquette existante dans la liste.</span></li>
+          <li><span>Validez avec Entrée ou en cliquant sur l'étiquette proposée.</span></li>
+        </ol>
+
+        <h3>Étiquettes courantes recommandées</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Étiquette</th><th>Usage</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="badge badge-red">litigieux</span></td><td>Dossier susceptible d'aboutir à un recours judiciaire</td></tr>
+            <tr><td><span class="badge badge-orange">escalade</span></td><td>Dossier escaladé vers la direction</td></tr>
+            <tr><td><span class="badge badge-blue">doublon</span></td><td>Réclamation déjà enregistrée sous une autre référence</td></tr>
+            <tr><td><span class="badge badge-green">model-response</span></td><td>Réponse type utilisée, utile pour les statistiques</td></tr>
+          </tbody>
+        </table>
+
+        <div class="alert-info">
+          <strong>Astuce :</strong> Les étiquettes sont filtrables depuis la page Réclamations. Vous pouvez donc rapidement isoler tous les dossiers marqués "litigieux" pour un reporting spécifique.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 7 — Réassignation en masse -->
+      <div class="doc-section" id="masse">
+        <h2><span class="num">7</span> Réassignation en masse</h2>
+        <p>La réassignation en masse permet de transférer plusieurs dossiers à un autre agent en une seule action. Cette fonctionnalité est accessible aux Superviseurs et Administrateurs.</p>
+
+        <h3>Procédure</h3>
+        <ol class="steps">
+          <li><span>Depuis la page <strong>Réclamations</strong>, activez les cases à cocher en cliquant sur l'icône de sélection en haut à gauche de la liste.</span></li>
+          <li><span>Cochez les dossiers que vous souhaitez réassigner. Vous pouvez aussi utiliser <strong>Tout sélectionner</strong> pour prendre tous les dossiers de la page courante.</span></li>
+          <li><span>Une barre d'actions flottante apparaît en bas de l'écran, indiquant le nombre de dossiers sélectionnés.</span></li>
+          <li><span>Dans la barre flottante, cliquez sur <strong>Réassigner</strong> et sélectionnez l'agent de destination dans le menu déroulant.</span></li>
+          <li><span>Confirmez en cliquant sur <strong>Appliquer</strong>. Tous les dossiers sélectionnés sont immédiatement réassignés.</span></li>
+        </ol>
+
+        <div class="alert-warn">
+          <strong>Attention :</strong> La réassignation en masse est irréversible depuis l'interface. En cas d'erreur, vous devrez re-sélectionner et réassigner manuellement.
+        </div>
+
+        <h3>Autres actions en masse</h3>
+        <p>La barre flottante propose également :</p>
+        <ul>
+          <li><strong>Changer le statut :</strong> passer plusieurs dossiers à EN_COURS ou CLOS en une action.</li>
+          <li><strong>Ajouter une étiquette :</strong> tagguer plusieurs dossiers simultanément.</li>
+          <li><strong>Exporter la sélection :</strong> générer un export CSV des dossiers sélectionnés uniquement.</li>
+        </ul>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 8 — Notifications -->
+      <div class="doc-section" id="notifications">
+        <h2><span class="num">8</span> Notifications</h2>
+        <p>Le système de notifications vous informe en temps réel des événements nécessitant votre attention.</p>
+
+        <h3>Accéder aux notifications</h3>
+        <p>L'icône de cloche dans la barre de navigation supérieure affiche un badge avec le nombre de notifications non lues. Cliquez dessus pour ouvrir le panneau, ou accédez à la page complète <code>/notifications.html</code>.</p>
+
+        <h3>Types de notifications</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Type</th><th>Déclencheur</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Nouveau dossier assigné</td><td>Un dossier vient d'être affecté à votre compte</td></tr>
+            <tr><td>Alerte SLA</td><td>Un dossier que vous gérez approche de son délai</td></tr>
+            <tr><td>SLA dépassé</td><td>Un dossier est en dépassement de délai</td></tr>
+            <tr><td>Commentaire ajouté</td><td>Un collègue a commenté un dossier que vous suivez</td></tr>
+            <tr><td>Statut modifié</td><td>Le statut d'un dossier a changé</td></tr>
+            <tr><td>Réassignation</td><td>Vous avez reçu ou perdu l'affectation d'un dossier</td></tr>
+          </tbody>
+        </table>
+
+        <div class="alert-info">
+          <strong>Astuce :</strong> Les alertes SLA sont également envoyées par email. Vérifiez que votre adresse email dans votre profil est correcte pour ne pas manquer les escalades.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 9 — Pièces jointes -->
+      <div class="doc-section" id="pieces">
+        <h2><span class="num">9</span> Pièces jointes</h2>
+        <p>Chaque dossier peut contenir des pièces jointes (documents client, captures d'écran, relevés, etc.).</p>
+
+        <h3>Ajouter une pièce jointe</h3>
+        <ol class="steps">
+          <li><span>Ouvrez le dossier en vue détail.</span></li>
+          <li><span>Faites défiler jusqu'à la section <strong>Pièces jointes</strong>.</span></li>
+          <li><span>Cliquez sur <strong>Ajouter un fichier</strong> ou faites glisser-déposer le document directement dans la zone.</span></li>
+          <li><span>Le fichier est uploadé et visible immédiatement dans la liste des pièces jointes.</span></li>
+        </ol>
+
+        <h3>Formats acceptés et limites</h3>
+        <table class="data-table">
+          <thead>
+            <tr><th>Paramètre</th><th>Valeur</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Formats acceptés</td><td>PDF, JPG, PNG, XLSX, CSV, DOCX</td></tr>
+            <tr><td>Taille maximale par fichier</td><td>10 Mo</td></tr>
+            <tr><td>Nombre maximum par dossier</td><td>20 fichiers</td></tr>
+          </tbody>
+        </table>
+
+        <div class="alert-warn">
+          <strong>Important :</strong> Les pièces jointes contenant des données personnelles (CNI, passeport) sont stockées de façon chiffrée. Ne partagez pas les liens directs en dehors de l'application.
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Section 10 — Portail client -->
+      <div class="doc-section" id="portail">
+        <h2><span class="num">10</span> Portail client public</h2>
+        <p>Le portail client permet à vos clients de suivre l'avancement de leur réclamation sans avoir besoin d'un compte dans RéclamPro. Il est accessible à l'URL <code>/portail.html</code>.</p>
+
+        <h3>Informations visibles par le client</h3>
+        <ul>
+          <li>Statut actuel du dossier</li>
+          <li>Date de réception</li>
+          <li>Délai de traitement estimé</li>
+          <li>Dernière mise à jour</li>
+          <li>Réponse de l'établissement (si le dossier est résolu)</li>
+        </ul>
+
+        <h3>Comment communiquer la référence au client</h3>
+        <ol class="steps">
+          <li><span>Après création du dossier, notez la référence générée (ex. <code>REC-2024-00123</code>).</span></li>
+          <li><span>Communiquez cette référence et l'email du client par SMS ou email.</span></li>
+          <li><span>Le client se rend sur <code>/portail.html</code>, saisit sa référence et son email, et consulte son dossier.</span></li>
+        </ol>
+
+        <div class="alert-info">
+          <strong>Astuce :</strong> Si le client a fourni son email lors de la création du dossier, un email automatique lui est envoyé avec sa référence et le lien vers le portail.
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Autres guides -->
+  <div class="other-guides">
+    <p>Autres ressources disponibles :</p>
+    <div class="guide-links">
+      <a href="/guide-presentation.html">Présentation commerciale</a>
+      <a href="/doc-technique.html">Documentation technique</a>
+      <a href="/guide-admin.html">Guide administrateur</a>
+    </div>
+  </div>
+
+  <footer>
+    RéclamPro — Guide utilisateur v1.0 — Conforme BCEAO &amp; CIMA
+  </footer>
+
+</body>
+</html>
