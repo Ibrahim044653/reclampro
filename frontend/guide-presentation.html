@@ -3,455 +3,623 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RéclamPro — Présentation commerciale</title>
-  <link rel="stylesheet" href="/assets/css/styles.css">
+  <title>RéclamPro — Guide de Présentation Client</title>
   <style>
-    body { background: #fff; color: #1F1E1A; }
-
-    /* Topnav */
-    .doc-nav {
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: #1a1a1a;
       background: #fff;
-      border-bottom: 1px solid #E5E1D8;
-      padding: 0 40px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      padding: 0;
     }
-    .doc-nav .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: inherit;
+    .page {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 52px 60px;
     }
-    .doc-nav .logo-icon {
-      width: 32px; height: 32px;
-      background: #185FA5;
-      color: #fff;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 700;
+    /* COVER */
+    .cover { margin-bottom: 48px; padding-bottom: 28px; border-bottom: 2px solid #185FA5; }
+    .cover h1 { font-size: 28px; font-weight: 700; color: #185FA5; margin-bottom: 6px; }
+    .cover h2 { font-size: 17px; font-weight: 600; color: #333; margin-bottom: 16px; }
+    .cover-meta { font-size: 12.5px; color: #555; line-height: 1.8; }
+    .cover-meta strong { color: #1a1a1a; }
+    /* SECTIONS */
+    .section { margin-bottom: 36px; padding-bottom: 28px; border-bottom: 1px solid #ddd; }
+    .section:last-child { border-bottom: none; }
+    h3 {
       font-size: 16px;
-    }
-    .doc-nav .brand-name { font-weight: 700; font-size: 16px; color: #185FA5; }
-    .doc-nav .back-link {
-      font-size: 13px;
-      color: #185FA5;
-      text-decoration: none;
-    }
-    .doc-nav .back-link:hover { text-decoration: underline; }
-
-    /* Hero */
-    .hero {
-      background: linear-gradient(135deg, #185FA5 0%, #0d3d6e 100%);
-      color: #fff;
-      padding: 80px 40px;
-      text-align: center;
-    }
-    .hero h1 {
-      font-size: 42px;
-      font-weight: 800;
-      margin: 0 0 16px;
-      letter-spacing: -0.5px;
-    }
-    .hero .subtitle {
-      font-size: 20px;
-      opacity: 0.88;
-      max-width: 620px;
-      margin: 0 auto 48px;
-      line-height: 1.5;
-    }
-    .hero-stats {
-      display: flex;
-      justify-content: center;
-      gap: 48px;
-      flex-wrap: wrap;
-    }
-    .hero-stat {
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 12px;
-      padding: 24px 36px;
-      min-width: 160px;
-    }
-    .hero-stat .value {
-      font-size: 36px;
-      font-weight: 800;
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-    .hero-stat .label {
-      font-size: 13px;
-      opacity: 0.82;
-      line-height: 1.4;
-    }
-
-    /* Sections */
-    .section { padding: 72px 40px; max-width: 1100px; margin: 0 auto; }
-    .section-gray { background: #F7F5EE; }
-    .section-gray .section { background: transparent; }
-    .section-wrap { padding: 0; }
-    .section-wrap .section { padding: 72px 40px; }
-
-    h2.section-title {
-      font-size: 30px;
       font-weight: 700;
       color: #185FA5;
-      margin: 0 0 12px;
+      margin-bottom: 10px;
+      padding-top: 4px;
     }
-    h2.section-title.dark { color: #1F1E1A; }
-    .section-lead {
-      font-size: 16px;
-      color: #6B6862;
-      max-width: 640px;
-      line-height: 1.6;
-      margin-bottom: 40px;
+    h4 { font-size: 13.5px; font-weight: 700; color: #1a1a1a; margin: 14px 0 6px; }
+    p { margin-bottom: 10px; }
+    ul { margin: 8px 0 10px 22px; }
+    li { margin-bottom: 4px; }
+    /* Menu path */
+    .menu { font-weight: 700; }
+    /* Code / ID */
+    code {
+      font-family: "Consolas", "Courier New", monospace;
+      background: #f4f4f4;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 12.5px;
     }
-
-    /* Problème */
-    .problem-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
+    /* Key message box */
+    .message-cle {
+      background: #f7fbff;
+      border-left: 4px solid #185FA5;
+      padding: 10px 14px;
+      margin: 14px 0;
+      font-style: italic;
+      color: #2a2a2a;
+      font-size: 13px;
     }
-    .problem-card {
-      background: #fff;
-      border: 1px solid #E5E1D8;
-      border-left: 4px solid #E24B4A;
-      border-radius: 8px;
-      padding: 20px 24px;
+    .message-cle strong { font-style: normal; color: #185FA5; }
+    /* Auto output box */
+    .auto-box {
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 12px 16px;
+      font-family: "Consolas", monospace;
+      font-size: 12px;
+      margin: 10px 0;
+      line-height: 1.8;
     }
-    .problem-card h3 { margin: 0 0 8px; font-size: 15px; color: #E24B4A; }
-    .problem-card p { margin: 0; font-size: 14px; color: #6B6862; line-height: 1.5; }
-
-    /* Solution grid */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
-    .feature-card {
-      background: #fff;
-      border: 1px solid #E5E1D8;
-      border-radius: 10px;
-      padding: 24px;
-      transition: box-shadow 0.2s;
-    }
-    .feature-card:hover { box-shadow: 0 4px 20px rgba(24,95,165,0.12); }
-    .feature-icon {
-      width: 44px; height: 44px;
-      background: #E6F1FB;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px;
-      margin-bottom: 14px;
-    }
-    .feature-card h3 { margin: 0 0 8px; font-size: 16px; font-weight: 600; }
-    .feature-card p { margin: 0; font-size: 14px; color: #6B6862; line-height: 1.5; }
-
-    /* Conformité */
-    .conformite-table {
+    /* Table */
+    table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 14px;
+      margin: 12px 0;
+      font-size: 13px;
     }
-    .conformite-table th {
+    th {
       background: #185FA5;
       color: #fff;
-      padding: 12px 16px;
+      padding: 8px 12px;
       text-align: left;
       font-weight: 600;
     }
-    .conformite-table td {
-      padding: 12px 16px;
-      border-bottom: 1px solid #E5E1D8;
-      vertical-align: top;
+    td { padding: 7px 12px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+    tr:nth-child(even) td { background: #f7f9fc; }
+    /* Schema ASCII */
+    .schema {
+      font-family: "Consolas", monospace;
+      font-size: 11.5px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 16px 20px;
+      margin: 14px 0;
+      line-height: 1.7;
+      white-space: pre;
     }
-    .conformite-table tr:nth-child(even) td { background: #F7F5EE; }
-    .badge-ok {
-      display: inline-block;
-      background: #EAF3DE;
-      color: #639922;
-      border-radius: 12px;
-      padding: 3px 10px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    /* Démo */
-    .demo-box {
-      background: #E6F1FB;
-      border: 1px solid #B5D4F4;
-      border-radius: 12px;
-      padding: 32px 40px;
-      max-width: 600px;
-    }
-    .demo-box h3 { margin: 0 0 20px; font-size: 20px; color: #185FA5; }
-    .creds-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    .creds-table td { padding: 10px 14px; border-bottom: 1px solid #B5D4F4; }
-    .creds-table td:first-child { font-weight: 600; color: #185FA5; width: 130px; }
-    .creds-table tr:last-child td { border-bottom: none; }
-    .demo-url {
-      margin-top: 20px;
-      font-size: 13px;
-      color: #6B6862;
-    }
-    .demo-url a { color: #185FA5; font-weight: 600; }
-
     /* Footer */
-    footer {
-      background: #0d3d6e;
-      color: rgba(255,255,255,0.75);
-      padding: 40px;
-      text-align: center;
-      font-size: 14px;
+    .footer {
+      margin-top: 40px;
+      padding-top: 18px;
+      border-top: 1px solid #ccc;
+      font-size: 11.5px;
+      color: #777;
+      font-style: italic;
     }
-    footer .footer-links { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 20px; }
-    footer .footer-links a { color: rgba(255,255,255,0.75); text-decoration: none; }
-    footer .footer-links a:hover { color: #fff; text-decoration: underline; }
-    footer p { margin: 8px 0 0; }
-
-    /* Other guides */
-    .other-guides {
-      background: #F7F5EE;
-      border-top: 1px solid #E5E1D8;
-      padding: 32px 40px;
-      text-align: center;
-    }
-    .other-guides p { margin: 0 0 16px; font-size: 14px; color: #6B6862; }
-    .other-guides .guide-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-    .other-guides a {
-      display: inline-block;
-      background: #fff;
-      border: 1px solid #E5E1D8;
+    /* Avant-propos */
+    .avant-propos {
+      background: #eef5fc;
       border-radius: 6px;
-      padding: 8px 16px;
-      font-size: 13px;
-      color: #185FA5;
-      text-decoration: none;
-      font-weight: 500;
+      padding: 18px 22px;
+      margin-bottom: 36px;
     }
-    .other-guides a:hover { background: #E6F1FB; border-color: #185FA5; }
+    .avant-propos h3 { color: #0C447C; }
+    @media print {
+      body { padding: 0; }
+      .page { padding: 30px 40px; }
+    }
   </style>
 </head>
 <body>
+<div class="page">
 
-  <!-- Navigation -->
-  <nav class="doc-nav">
-    <a href="/login.html" class="brand">
-      <div class="logo-icon">R</div>
-      <span class="brand-name">RéclamPro</span>
-    </a>
-    <a href="/login.html" class="back-link">← Retour à l'application</a>
-  </nav>
-
-  <!-- Hero -->
-  <section class="hero">
-    <h1>RéclamPro</h1>
-    <p class="subtitle">La plateforme de gestion des réclamations conçue pour les banques et assurances de l'UEMOA — conforme BCEAO &amp; CIMA, opérationnelle en 48 h.</p>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="value">5 j</div>
-        <div class="label">Délai réglementaire<br>BCEAO respecté</div>
-      </div>
-      <div class="hero-stat">
-        <div class="value">100%</div>
-        <div class="label">Conformité CIMA<br>Code des assurances</div>
-      </div>
-      <div class="hero-stat">
-        <div class="value">5</div>
-        <div class="label">Canaux d'entrée :<br>Email, WhatsApp, Web, Tel, Guichet</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Problème -->
-  <div class="section-gray section-wrap">
-    <div class="section">
-      <h2 class="section-title dark" id="probleme">Le problème que vous connaissez</h2>
-      <p class="section-lead">Dans les établissements financiers de l'UEMOA, la gestion des réclamations reste largement manuelle, source de risques réglementaires et de perte de confiance client.</p>
-      <div class="problem-cards">
-        <div class="problem-card">
-          <h3>Réclamations non tracées</h3>
-          <p>Les dossiers arrivent par email, courrier, téléphone ou au guichet. Sans système centralisé, des réclamations sont perdues ou oubliées — exposant l'institution à des sanctions.</p>
-        </div>
-        <div class="problem-card">
-          <h3>Délais non maîtrisés</h3>
-          <p>La BCEAO impose un délai de traitement de 5 jours ouvrés. Sans suivi automatisé, les dépassements sont fréquents et non détectés avant l'audit.</p>
-        </div>
-        <div class="problem-card">
-          <h3>Absence de reporting réglementaire</h3>
-          <p>Les rapports trimestriels BCEAO et les états statistiques CIMA sont produits manuellement sur Excel, avec des erreurs et un délai de plusieurs jours de travail.</p>
-        </div>
-        <div class="problem-card">
-          <h3>Risque réglementaire croissant</h3>
-          <p>Les sanctions de la BCEAO et de la Commission CIMA pour non-conformité sur le traitement des réclamations se sont renforcées depuis 2022. L'enjeu est financier et réputationnel.</p>
-        </div>
-      </div>
+  <!-- COVER -->
+  <div class="cover">
+    <h1>RéclamPro — Guide de Présentation Client</h1>
+    <h2>Application de Gestion des Réclamations Clients</h2>
+    <div class="cover-meta">
+      <strong>Secteur cible :</strong> Banques · Compagnies d'assurance · UEMOA<br>
+      <strong>Référence réglementaire :</strong> Instruction BCEAO n°008-05-2015 · Règlement CIMA Livre II<br>
+      <strong>Version :</strong> 1.0 — Août 2026
     </div>
   </div>
 
-  <!-- Solution -->
-  <div class="section-wrap">
-    <div class="section">
-      <h2 class="section-title" id="solution">La solution RéclamPro</h2>
-      <p class="section-lead">Une plateforme intégrée qui couvre l'intégralité du cycle de vie d'une réclamation, de la réception jusqu'à l'archivage réglementaire, avec conformité BCEAO et CIMA native.</p>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">📊</div>
-          <h3>Dashboard temps réel</h3>
-          <p>Vision consolidée : volume par statut, délai moyen, taux de conformité SLA, alertes pour les dossiers en dépassement. Métriques actualisées à chaque connexion.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">⚙️</div>
-          <h3>Workflow structuré</h3>
-          <p>Circuit de traitement configurable : réception → qualification → affectation → traitement → validation superviseur → clôture. Historique complet de chaque action.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">📁</div>
-          <h3>Exports réglementaires BCEAO</h3>
-          <p>Génération en un clic des états réglementaires au format CSV, XLSX et PDF conformes au modèle BCEAO. Filtrage par période, entité et type de réclamation.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🌐</div>
-          <h3>Portail client public</h3>
-          <p>Interface web accessible sans compte pour permettre aux clients de suivre leur dossier via un code de référence et leur email — sans intervention de l'agent.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">⏱️</div>
-          <h3>Escalade SLA automatique</h3>
-          <p>Cron quotidien qui détecte les dossiers en risque de dépassement et escalade automatiquement vers le superviseur avec notification email. Aucune surveillance manuelle requise.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">📬</div>
-          <h3>Multi-canal intégré</h3>
-          <p>Réception unifiée depuis 5 canaux : email IMAP, WhatsApp Business, formulaire web, téléphone (saisie manuelle) et guichet. Tous les dossiers dans une seule interface.</p>
-        </div>
-      </div>
+  <!-- AVANT-PROPOS -->
+  <div class="avant-propos">
+    <h3>AVANT-PROPOS</h3>
+    <p style="margin-top:8px">
+      Ce document présente le fonctionnement de RéclamPro à travers le <strong>cycle de vie complet d'une réclamation client</strong>,
+      depuis la soumission par le client jusqu'à la clôture et la production du registre réglementaire BCEAO.
+      Chaque module est illustré par des actions concrètes, dans l'ordre chronologique où un agent les utiliserait au quotidien.
+    </p>
+  </div>
+
+  <!-- ACTE 1 -->
+  <div class="section">
+    <h3>ACTE 1 — L'INSATISFACTION : LE CLIENT SOUMET SA RÉCLAMATION</h3>
+    <h4>Situation</h4>
+    <p>
+      Mme <strong>Koné Aminata</strong>, cliente de la Banque Régionale depuis 8 ans, constate un prélèvement non autorisé
+      de <strong>350 000 FCFA</strong> sur son compte le 15 août 2026. Elle se rend sur le site de la banque pour
+      signaler le problème — sans se déplacer en agence, sans attendre en file.
+    </p>
+    <h4>Ce que fait Mme Koné dans RéclamPro</h4>
+    <p class="menu">Portail client → Soumettre une réclamation</p>
+    <p>Elle renseigne un formulaire simple :</p>
+    <ul>
+      <li>Nom, prénom, email, téléphone</li>
+      <li>Catégorie : <strong>Problème financier (débit, frais, virement)</strong></li>
+      <li>Sous-catégorie : Débit non autorisé</li>
+      <li>Niveau d'urgence : <strong>Critique</strong></li>
+      <li>Montant en jeu : <strong>350 000 FCFA</strong></li>
+      <li>Description : « Le 15/08/2026, un prélèvement de 350 000 FCFA a été effectué sans mon autorisation… »</li>
+    </ul>
+    <p>RéclamPro génère automatiquement :</p>
+    <div class="auto-box">Numéro de dossier unique : RECB-202608-00127
+Token de suivi sécurisé   : aX9kP2mQvTrZ…
+Statut initial            : NOUVEAU
+Délai SLA                 : 24 heures (CRITIQUE)</div>
+    <div class="message-cle">
+      <strong>Ce que voit le client :</strong> son dossier est enregistré instantanément. Elle reçoit en temps réel son numéro de dossier
+      et un lien de suivi personnel — sans créer de compte, sans téléphoner à un call center.
     </div>
   </div>
 
-  <!-- Conformité -->
-  <div class="section-gray section-wrap">
-    <div class="section">
-      <h2 class="section-title dark" id="conformite">Conformité BCEAO / CIMA</h2>
-      <p class="section-lead">RéclamPro a été conçu avec les obligations réglementaires en vigueur dans l'UEMOA comme contraintes de design, pas comme des ajouts ultérieurs.</p>
-      <table class="conformite-table">
-        <thead>
-          <tr>
-            <th>Obligation</th>
-            <th>Référentiel</th>
-            <th>Comment RéclamPro y répond</th>
-            <th>Statut</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Délai de traitement 5 jours ouvrés</td>
-            <td>BCEAO — Instruction 008</td>
-            <td>SLA configuré à 5 j, escalade automatique à J-1, rapport de conformité exportable</td>
-            <td><span class="badge-ok">Couvert</span></td>
-          </tr>
-          <tr>
-            <td>Enregistrement de toutes les réclamations</td>
-            <td>BCEAO — RG011</td>
-            <td>Capture multi-canal, numérotation séquentielle automatique, horodatage immuable</td>
-            <td><span class="badge-ok">Couvert</span></td>
-          </tr>
-          <tr>
-            <td>Rapport trimestriel des réclamations</td>
-            <td>BCEAO — Circulaire 2022</td>
-            <td>Export CSV/XLSX/PDF filtré par trimestre, par entité, par type de réclamation</td>
-            <td><span class="badge-ok">Couvert</span></td>
-          </tr>
-          <tr>
-            <td>Conservation 5 ans minimum</td>
-            <td>BCEAO — RG011 art. 14</td>
-            <td>Archivage logiciel avec statut ARCHIVÉ, suppression physique bloquée avant 5 ans</td>
-            <td><span class="badge-ok">Couvert</span></td>
-          </tr>
-          <tr>
-            <td>Traitement réclamations assurance</td>
-            <td>Code CIMA — art. 79</td>
-            <td>Catégories dédiées assurance, workflow adapté, délais CIMA configurables séparément</td>
-            <td><span class="badge-ok">Couvert</span></td>
-          </tr>
-          <tr>
-            <td>Protection des données personnelles</td>
-            <td>BCEAO — Règlement données</td>
-            <td>Chiffrement Fernet des données PII (noms, contacts), hachage bcrypt des mots de passe</td>
-            <td><span class="badge-ok">Couvert</span></td>
-          </tr>
-          <tr>
-            <td>Traçabilité des actions</td>
-            <td>BCEAO / CIMA</td>
-            <td>Log complet de chaque changement de statut, commentaire et affectation avec horodatage et auteur</td>
-            <td><span class="badge-ok">Couvert</span></td>
-          </tr>
-        </tbody>
-      </table>
+  <!-- ACTE 2 -->
+  <div class="section">
+    <h3>ACTE 2 — L'ACCUSÉ DE RÉCEPTION AUTOMATIQUE</h3>
+    <h4>Situation</h4>
+    <p>
+      L'Instruction BCEAO n°008-05-2015 impose à tout établissement financier d'adresser un accusé de réception
+      au client dans un délai maximal de <strong>48 heures</strong> après la réception de sa réclamation.
+    </p>
+    <h4>Ce que fait RéclamPro</h4>
+    <p>Dès la soumission du dossier, le système envoie automatiquement un email à Mme Koné :</p>
+    <div class="auto-box">Objet : Accusé de réception de votre réclamation RECB-202608-00127
+
+Bonjour Aminata Koné,
+
+Nous accusons bonne réception de votre réclamation enregistrée
+sous la référence : RECB-202608-00127
+
+Elle sera traitée dans les délais réglementaires applicables.
+Vous pouvez suivre l'avancement via le lien ci-dessous :
+https://reclampro.vercel.app/portail-suivi.html?token=aX9kP2mQvTrZ…
+
+Cordialement,
+Le service réclamations</div>
+    <div class="message-cle">
+      <strong>Message clé :</strong> l'accusé de réception est généré et envoyé en moins d'une seconde, sans intervention humaine.
+      La banque respecte automatiquement la réglementation BCEAO sans charge opérationnelle supplémentaire.
     </div>
   </div>
 
-  <!-- Accès démo -->
-  <div class="section-wrap">
-    <div class="section">
-      <h2 class="section-title" id="demo">Accès à la démonstration</h2>
-      <p class="section-lead">Une instance de démonstration est disponible avec des données fictives représentatives d'une banque UEMOA. Connectez-vous avec les identifiants ci-dessous.</p>
-      <div class="demo-box">
-        <h3>Identifiants de démonstration</h3>
-        <table class="creds-table">
-          <tr>
-            <td>Rôle</td>
-            <td>Email</td>
-            <td>Mot de passe</td>
-          </tr>
-          <tr>
-            <td>Administrateur</td>
-            <td>admin@bceao-demo.sn</td>
-            <td><code style="background:#fff;padding:2px 6px;border-radius:4px;border:1px solid #B5D4F4;">Admin2024!</code></td>
-          </tr>
-          <tr>
-            <td>Superviseur</td>
-            <td>superviseur@bceao-demo.sn</td>
-            <td><code style="background:#fff;padding:2px 6px;border-radius:4px;border:1px solid #B5D4F4;">Superv2024!</code></td>
-          </tr>
-          <tr>
-            <td>Agent</td>
-            <td>agent@bceao-demo.sn</td>
-            <td><code style="background:#fff;padding:2px 6px;border-radius:4px;border:1px solid #B5D4F4;">Agent2024!</code></td>
-          </tr>
-        </table>
-        <p class="demo-url">Accès : <a href="/login.html">/login.html</a> — Portail client : <a href="/portail.html">/portail.html</a></p>
-      </div>
+  <!-- ACTE 3 -->
+  <div class="section">
+    <h3>ACTE 3 — LA QUALIFICATION DU DOSSIER</h3>
+    <h4>Situation</h4>
+    <p>
+      L'agent de réception, M. <strong>Traoré Ibrahima</strong>, prend en charge le dossier entrant dans la file de traitement.
+      Son tableau de bord lui signale un dossier CRITIQUE avec moins de 24 heures de délai.
+    </p>
+    <h4>Ce que fait M. Traoré dans RéclamPro</h4>
+    <p class="menu">Tableau de bord → File d'attente → RECB-202608-00127 → Qualifier</p>
+    <ul>
+      <li>Vérification de la complétude du dossier</li>
+      <li>Confirmation de la catégorie : FINANCIERE · Débit non autorisé</li>
+      <li>Confirmation du niveau d'urgence : <strong>CRITIQUE</strong> (délai SLA : 24h)</li>
+      <li>Ajout d'une note interne : « Prélèvement identifié — à vérifier avec le service monétique »</li>
+      <li>Statut mis à jour automatiquement : <code>NOUVEAU → QUALIF</code></li>
+    </ul>
+    <div class="message-cle">
+      <strong>Ce que cela apporte :</strong> chaque dossier est évalué selon un processus standardisé. Aucun dossier prioritaire
+      ne peut passer inaperçu — le tableau de bord affiche en rouge les dossiers CRITIQUE dès leur arrivée.
     </div>
   </div>
 
-  <!-- Autres guides -->
-  <div class="other-guides">
-    <p>Autres ressources disponibles :</p>
-    <div class="guide-links">
-      <a href="/guide-utilisateur.html">Guide utilisateur</a>
-      <a href="/doc-technique.html">Documentation technique</a>
-      <a href="/guide-admin.html">Guide administrateur</a>
+  <!-- ACTE 4 -->
+  <div class="section">
+    <h3>ACTE 4 — L'AFFECTATION À L'AGENT COMPÉTENT</h3>
+    <h4>Situation</h4>
+    <p>
+      Le dossier de Mme Koné concerne une fraude potentielle. Le superviseur doit l'orienter vers
+      l'équipe spécialisée en fraudes et litiges financiers.
+    </p>
+    <h4>Ce que fait le superviseur dans RéclamPro</h4>
+    <p class="menu">Dossier RECB-202608-00127 → Affecter à un agent</p>
+    <ul>
+      <li>Sélection de l'agent : <strong>Mme Bah Mariama</strong> (Équipe Fraudes & Litiges)</li>
+      <li>RéclamPro notifie instantanément Mme Bah par email et notification in-app</li>
+      <li>Statut : <code>QUALIF → AFFECTE</code></li>
+    </ul>
+    <p>Alternative : le superviseur peut transférer le dossier à une équipe entière :</p>
+    <p class="menu">Dossier → Transférer vers une équipe → Fraudes &amp; Litiges → Notifier l'équipe</p>
+    <p>Tous les membres actifs de l'équipe reçoivent une notification. Le premier disponible prend en charge.</p>
+    <div class="message-cle">
+      <strong>Ce que cela apporte :</strong> l'affectation est traçable et notifiée. Plus de dossiers perdus dans des boîtes mail,
+      plus de « je ne savais pas que c'était pour moi ».
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-links">
-      <a href="/login.html">Application</a>
-      <a href="/guide-utilisateur.html">Guide utilisateur</a>
-      <a href="/doc-technique.html">Documentation technique</a>
-      <a href="/guide-admin.html">Guide administrateur</a>
+  <!-- ACTE 5 -->
+  <div class="section">
+    <h3>ACTE 5 — LE TRAITEMENT DU DOSSIER</h3>
+    <h4>Situation</h4>
+    <p>
+      Mme <strong>Bah Mariama</strong> prend en charge le dossier. Elle contacte le service monétique, obtient
+      un relevé de transactions et demande une pièce justificative complémentaire à la cliente.
+    </p>
+    <h4>Ce que fait Mme Bah dans RéclamPro</h4>
+    <p class="menu">Dossier RECB-202608-00127 → Traitement</p>
+    <ul>
+      <li>Passage au statut <code>EN_COURS</code></li>
+      <li>Ajout d'un commentaire traçable : « Relevé monétique reçu — prélèvement initié par TPE externe. Enquête en cours. »</li>
+      <li>Upload de la pièce jointe : relevé de transactions (PDF, 850 Ko)</li>
+      <li>Passage en attente : <code>EN_COURS → ATT_CLIENT</code> avec message « Merci de nous transmettre votre relevé de compte du 15/08 »</li>
+    </ul>
+    <p>Mme Koné reçoit une notification automatique lui demandant les éléments complémentaires.</p>
+    <div class="message-cle">
+      <strong>Ce que cela apporte :</strong> chaque action de l'agent est horodatée et nominative. Le superviseur peut voir en temps réel
+      l'avancement de tous les dossiers de son équipe depuis son tableau de bord.
     </div>
-    <p>RéclamPro — Gestion des réclamations conforme BCEAO &amp; CIMA pour l'UEMOA</p>
-    <p style="margin-top:6px;font-size:12px;opacity:0.6;">Contact : support@reclampro.sn</p>
-  </footer>
+  </div>
 
+  <!-- ACTE 6 -->
+  <div class="section">
+    <h3>ACTE 6 — LE SUIVI AUTOMATIQUE DES DÉLAIS SLA</h3>
+    <h4>Situation</h4>
+    <p>
+      Sans système automatisé, un agent peut oublier qu'un dossier CRITIQUE doit être résolu en 24 heures, ou
+      qu'un dossier URGENT expire dans 3 heures. RéclamPro surveille en permanence tous les délais.
+    </p>
+    <h4>Ce que fait RéclamPro</h4>
+    <p>Pour chaque dossier ouvert, RéclamPro calcule en temps réel :</p>
+    <div class="auto-box">RECB-202608-00127 | CRITIQUE | 24h de délai
+Temps écoulé   : 19h 22min
+SLA consommé   : 80,6 %
+Statut SLA     : ⚠ ALERTE — Action urgente requise
+Barre visuelle : ████████░░ 80 %</div>
+    <p>Le tableau de bord affiche :</p>
+    <ul>
+      <li>Dossiers <strong>dans les délais</strong> (barre verte)</li>
+      <li>Dossiers en <strong>alerte</strong> à partir de 80% du délai consommé (barre orange)</li>
+      <li>Dossiers <strong>échus</strong> au-delà de l'échéance (barre rouge)</li>
+    </ul>
+    <div class="message-cle">
+      <strong>Message clé :</strong> aucune échéance réglementaire ne peut passer inaperçue. Le système surveille 24h/24 et 7j/7
+      pendant que les agents s'occupent des dossiers.
+    </div>
+  </div>
+
+  <!-- ACTE 7 -->
+  <div class="section">
+    <h3>ACTE 7 — L'ESCALADE AUTOMATIQUE</h3>
+    <h4>Situation</h4>
+    <p>
+      Un agent est absent, un dossier urgent n'a pas été traité à temps. Sans escalade automatique,
+      le client attend, la banque est en infraction réglementaire.
+    </p>
+    <h4>Ce que fait RéclamPro</h4>
+    <p>Tous les jours à 7h00 UTC, le système analyse l'ensemble du portefeuille et agit automatiquement :</p>
+    <div class="auto-box">Cron quotidien 07h00 UTC — Résultats :
+→ 3 dossiers passés en statut ALERTE (SLA ≥ 80 %)
+→ 2 emails de rappel envoyés aux agents (échéance J-1)
+→ Journal d'audit mis à jour pour chaque escalade</div>
+    <p>Chaque escalade crée une interaction immuable dans le journal d'audit :</p>
+    <div class="auto-box">Alerte SLA automatique : 83% du délai consommé.
+Statut précédent : EN_COURS → Nouveau statut : ALERTE
+Auteur : système/cron | 22/08/2026 07:00:14</div>
+    <div class="message-cle">
+      <strong>Ce que cela apporte :</strong> la banque ne peut jamais être prise en défaut par un inspecteur BCEAO pour non-respect
+      des délais — le système réagit avant même que l'agent ait ouvert son ordinateur.
+    </div>
+  </div>
+
+  <!-- ACTE 8 -->
+  <div class="section">
+    <h3>ACTE 8 — LES PIÈCES JOINTES ET LA GED</h3>
+    <h4>Situation</h4>
+    <p>
+      Mme Koné transmet son relevé de compte. Mme Bah reçoit également du service juridique un
+      formulaire de contestation de transaction signé. Ces documents doivent être centralisés dans le dossier.
+    </p>
+    <h4>Ce que fait Mme Bah dans RéclamPro</h4>
+    <p class="menu">Dossier RECB-202608-00127 → Pièces jointes → + Ajouter un fichier</p>
+    <p>RéclamPro accepte tous les formats courants (PDF, JPG, PNG, Word, Excel) jusqu'à 10 Mo par fichier.
+    Chaque document est enregistré avec :</p>
+    <ul>
+      <li>Nom du fichier, type MIME, taille</li>
+      <li>Identité de l'agent qui l'a déposé</li>
+      <li>Date et heure d'upload</li>
+      <li>Empreinte SHA-256 pour garantir l'intégrité (document non modifié)</li>
+    </ul>
+    <div class="message-cle">
+      <strong>Ce que cela apporte :</strong> fini les dossiers papier perdus, les scans introuvables en boîte mail.
+      Tout est centralisé dans le dossier, accessible depuis n'importe quel poste autorisé.
+    </div>
+  </div>
+
+  <!-- ACTE 9 -->
+  <div class="section">
+    <h3>ACTE 9 — LA VALIDATION HIÉRARCHIQUE</h3>
+    <h4>Situation</h4>
+    <p>
+      Le montant en jeu est de 350 000 FCFA, supérieur au seuil de validation interne fixé à
+      500 000 FCFA. Dans ce cas, RéclamPro n'exige pas de validation supplémentaire.
+      Mais pour les dossiers dépassant ce seuil, le processus de validation est automatiquement déclenché.
+    </p>
+    <h4>Ce que fait RéclamPro pour les montants importants</h4>
+    <p class="menu">Dossier (montant &gt; 500 000 FCFA) → Statut automatique : VALIDATION</p>
+    <ul>
+      <li>Le dossier passe en attente de validation hiérarchique</li>
+      <li>Le responsable reçoit une notification : « Dossier RECx-xxx en attente de votre validation »</li>
+      <li>Il approuve ou rejette avec commentaire obligatoire</li>
+      <li>Après validation : <code>VALIDATION → DECISION → CLOTURE</code></li>
+    </ul>
+    <div class="message-cle">
+      <strong>Ce que cela apporte :</strong> le principe des quatre yeux est intégré dans l'outil, pas dans des échanges de mails
+      informels impossibles à auditer.
+    </div>
+  </div>
+
+  <!-- ACTE 10 -->
+  <div class="section">
+    <h3>ACTE 10 — LA CLÔTURE ET LA NOTIFICATION CLIENT</h3>
+    <h4>Situation</h4>
+    <p>
+      L'enquête confirme un prélèvement frauduleux. La banque rembourse Mme Koné et clôture le dossier
+      en sa faveur. La décision doit lui être communiquée officiellement.
+    </p>
+    <h4>Ce que fait l'administrateur dans RéclamPro</h4>
+    <p class="menu">Dossier RECB-202608-00127 → Clôturer le dossier</p>
+    <ul>
+      <li>Motif de clôture : <strong>FAVORABLE</strong></li>
+      <li>Commentaire : « Prélèvement frauduleux confirmé. Remboursement de 350 000 FCFA effectué. »</li>
+    </ul>
+    <p>RéclamPro envoie automatiquement un email de clôture à Mme Koné :</p>
+    <div class="auto-box">Objet : Décision concernant votre réclamation RECB-202608-00127
+
+Bonjour Aminata Koné,
+
+Votre réclamation RECB-202608-00127 a fait l'objet
+de la décision suivante :
+
+    Favorable
+
+Si vous contestez cette décision, vous avez la possibilité
+de saisir le médiateur ou les autorités de régulation
+compétentes (BCEAO / CIMA).
+
+Cordialement,
+Le service réclamations</div>
+    <div class="message-cle">
+      <strong>Message clé :</strong> la banque respecte l'obligation d'information du client à chaque étape clé du traitement —
+      ouverture, clôture — sans charge manuelle pour les agents.
+    </div>
+  </div>
+
+  <!-- ACTE 11 -->
+  <div class="section">
+    <h3>ACTE 11 — LE PORTAIL CLIENT : LE SUIVI EN AUTONOMIE</h3>
+    <h4>Situation</h4>
+    <p>
+      Mme Koné veut savoir où en est son dossier, sans rappeler le service client.
+      Elle a reçu un lien de suivi dans son email d'accusé de réception.
+    </p>
+    <h4>Ce que fait Mme Koné</h4>
+    <p class="menu">Portail suivi → Colle son lien → Consulter mon dossier</p>
+    <p>Sans créer de compte, elle accède à une vue synthétique de son dossier :</p>
+    <ul>
+      <li>Barre de progression visuelle : Reçu → Pris en charge → En traitement → Décision → Clôturé</li>
+      <li>Statut actuel en clair : « En traitement »</li>
+      <li>Date de réception et délai de réponse cible</li>
+      <li>Historique des événements visibles (réception, accusé, mise à jour de statut)</li>
+    </ul>
+    <p>Si elle a perdu le lien, elle peut retrouver son dossier par email + numéro de dossier :</p>
+    <p class="menu">Portail suivi → Onglet « Je recherche par email » → Email + N° dossier</p>
+    <div class="message-cle">
+      <strong>Ce que voit le client :</strong> une expérience moderne, transparente, disponible 24h/24. La banque n'est plus une
+      boîte noire — le client sait exactement où en est sa réclamation à tout instant.
+    </div>
+  </div>
+
+  <!-- ACTE 12 -->
+  <div class="section">
+    <h3>ACTE 12 — LE TABLEAU DE BORD DIRECTION</h3>
+    <h4>Situation</h4>
+    <p>
+      Le Directeur de la conformité de la Banque Régionale doit présenter en comité de direction
+      les indicateurs de traitement des réclamations du mois d'août 2026.
+    </p>
+    <h4>Ce que fait RéclamPro</h4>
+    <p class="menu">Tableau de bord → Vue d'ensemble</p>
+    <p>En temps réel, sans export manuel :</p>
+    <table>
+      <thead><tr><th>Indicateur</th><th>Valeur</th><th>Seuil réglementaire</th></tr></thead>
+      <tbody>
+        <tr><td>Réclamations reçues (mois)</td><td>127</td><td>—</td></tr>
+        <tr><td>Taux de résolution dans les délais</td><td>94,5 %</td><td>≥ 90 % (BCEAO)</td></tr>
+        <tr><td>Délai moyen de traitement</td><td>3,2 jours</td><td>≤ 5 jours (STANDARD)</td></tr>
+        <tr><td>Dossiers CRITIQUE en cours</td><td>2</td><td>—</td></tr>
+        <tr><td>Dossiers en alerte SLA</td><td>5</td><td>—</td></tr>
+        <tr><td>Taux favorable / défavorable</td><td>72 % / 28 %</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <div class="message-cle">
+      <strong>Ce que cela apporte :</strong> le rapport qui prenait 2 jours à préparer sous Excel est disponible en temps réel.
+      Le directeur peut répondre à n'importe quelle question de l'inspecteur BCEAO en moins de 60 secondes.
+    </div>
+  </div>
+
+  <!-- ACTE 13 -->
+  <div class="section">
+    <h3>ACTE 13 — LE REGISTRE RÉGLEMENTAIRE BCEAO</h3>
+    <h4>Situation</h4>
+    <p>
+      La BCEAO effectue une inspection et demande le registre complet des réclamations reçues et traitées
+      depuis le début de l'exercice, conformément à l'Instruction n°008-05-2015.
+    </p>
+    <h4>Ce que fait RéclamPro</h4>
+    <p class="menu">Sidebar → Conformité → Registre BCEAO (CSV) ou (XLSX) ou (PDF)</p>
+    <p>En un clic, RéclamPro génère le registre complet :</p>
+    <ul>
+      <li><strong>CSV</strong> : export brut pour retraitement Excel par la BCEAO</li>
+      <li><strong>XLSX</strong> : format Excel mis en forme avec en-tête institutionnel, couleurs par priorité, données directement exploitables</li>
+      <li><strong>PDF</strong> : registre imprimable, paginé, prêt pour archivage physique et présentation aux inspecteurs</li>
+    </ul>
+    <p>Chaque ligne du registre contient : code dossier, canal, statut, catégorie, priorité, dates de réception et d'échéance,
+    date de clôture, motif, montant, nom et contact client, description.</p>
+    <div class="message-cle">
+      <strong>Message clé :</strong> le registre réglementaire BCEAO est généré en 30 secondes, sans risque d'erreur de copier-coller,
+      depuis n'importe quel navigateur. La banque répond à l'inspecteur sur-le-champ.
+    </div>
+  </div>
+
+  <!-- ACTE 14 -->
+  <div class="section">
+    <h3>ACTE 14 — LA TRAÇABILITÉ : LE JOURNAL D'AUDIT</h3>
+    <h4>Situation</h4>
+    <p>
+      L'inspecteur BCEAO demande l'historique complet des actions effectuées sur le dossier
+      <code>RECB-202608-00127</code> : qui a fait quoi, quand, et avec quel résultat.
+    </p>
+    <h4>Ce que fait RéclamPro</h4>
+    <p class="menu">Dossier → Journal d'audit (immuable)</p>
+    <div class="auto-box">22/08/2026 08:14 | CREATION      | système      | Dossier créé via WEB
+22/08/2026 08:14 | ACR           | système      | Email envoyé → aminata.kone@email.ci
+22/08/2026 09:31 | CHANGEMENT    | t.ibrahima   | NOUVEAU → QUALIF
+22/08/2026 10:05 | AFFECTATION   | s.diallo     | Affecté à Bah Mariama (Fraudes)
+22/08/2026 11:22 | EN_COURS      | m.bah        | Enquête monétique lancée
+22/08/2026 14:08 | ATT_CLIENT    | m.bah        | Pièce justificative demandée
+22/08/2026 19:45 | PIECE_JOINTE  | m.bah        | relevé-compte.pdf (850 Ko)
+23/08/2026 08:00 | ALERTE_SLA    | système/cron | 83% du délai consommé
+23/08/2026 09:12 | EN_COURS      | m.bah        | Prélèvement frauduleux confirmé
+23/08/2026 10:30 | CLOTURE       | admin        | Motif : FAVORABLE — Remboursement effectué</div>
+    <div class="message-cle">
+      <strong>Message clé :</strong> RéclamPro est un système de preuve. Chaque action est horodatée, nominative et immuable.
+      Aucun agent ne peut modifier ou supprimer une entrée du journal. La banque peut répondre à n'importe quelle
+      question de l'auditeur en moins de 60 secondes.
+    </div>
+  </div>
+
+  <!-- ACTE 15 -->
+  <div class="section">
+    <h3>ACTE 15 — LA CONSERVATION RÉGLEMENTAIRE</h3>
+    <h4>Situation</h4>
+    <p>
+      La réglementation BCEAO (RG011) impose de conserver les dossiers de réclamations pendant
+      <strong>5 ans</strong> et de les anonymiser après <strong>10 ans</strong>.
+    </p>
+    <h4>Ce que fait RéclamPro</h4>
+    <p>Le moteur de rétention s'exécute automatiquement :</p>
+    <table>
+      <thead><tr><th>Règle</th><th>Délai</th><th>Action automatique</th></tr></thead>
+      <tbody>
+        <tr><td>Archivage</td><td>J + 5 ans après clôture</td><td>Dossier archivé, retiré de la vue opérationnelle</td></tr>
+        <tr><td>Anonymisation</td><td>J + 10 ans après clôture</td><td>Données personnelles effacées, journal conservé</td></tr>
+      </tbody>
+    </table>
+    <div class="message-cle">
+      <strong>Ce que cela apporte :</strong> la banque respecte automatiquement les obligations de conservation et de protection
+      des données sans processus manuel — conformité BCEAO et RGPD garantie.
+    </div>
+  </div>
+
+  <!-- RECAPITULATIF -->
+  <div class="section">
+    <h3>RÉCAPITULATIF — UN ÉCOSYSTÈME INTÉGRÉ</h3>
+    <div class="schema">CLIENT (portail web, agence, email, téléphone, WhatsApp)
+    │
+    ▼
+RÉCLAMATION ──────────────────┐
+    │                         │
+    │  Accusé de réception     │ Numéro unique + token suivi
+    │  automatique (< 1 s)     │
+    ▼                         ▼
+QUALIFICATION ──── PORTAIL CLIENT (suivi autonome 24h/24)
+    │
+    ▼
+AFFECTATION ──── NOTIFICATION agent / équipe
+    │
+    ▼
+TRAITEMENT ──── PIÈCES JOINTES ── COMMENTAIRES ── GED
+    │
+    ▼
+SLA AUTOMATIQUE (alertes 80% + escalade cron quotidien)
+    │
+    ├── VALIDATION HIÉRARCHIQUE (si montant > seuil)
+    │
+    ▼
+CLÔTURE ──── NOTIFICATION CLIENT (email décision)
+    │
+    ▼
+REPORTING BCEAO (CSV / XLSX / PDF — 1 clic)
+    │
+    ▼
+CONSERVATION RÉGLEMENTAIRE (archivage J+5ans / anonymisation J+10ans)
+    │
+    ▼
+AUDIT TRAIL IMMUABLE (réponse inspecteur en &lt; 60 secondes)</div>
+  </div>
+
+  <!-- TABLEAU AVANT / APRES -->
+  <div class="section">
+    <h3>AVANTAGES CLÉS POUR LE DÉCIDEUR</h3>
+    <table>
+      <thead>
+        <tr><th>Avant RéclamPro</th><th>Avec RéclamPro</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Registre Excel tenu manuellement, risque d'erreur</td><td>Base centralisée, registre BCEAO généré en 30 secondes</td></tr>
+        <tr><td>Délais SLA suivis à la main, oublis fréquents</td><td>Alertes automatiques 24h/24 — aucune échéance ratée</td></tr>
+        <tr><td>Accusé de réception manuel (48h de délai)</td><td>ACR envoyé en moins d'une seconde à la soumission</td></tr>
+        <tr><td>Traçabilité partielle (mails, notes papier)</td><td>Journal d'audit complet, immuable, nominatif</td></tr>
+        <tr><td>Le client rappelle pour connaître l'avancement</td><td>Portail client public — suivi autonome sans compte</td></tr>
+        <tr><td>3 jours pour préparer le rapport mensuel</td><td>Dashboard en temps réel, export CSV/PDF en 1 clic</td></tr>
+        <tr><td>Validation par email non traçable</td><td>Workflow de validation intégré, auditables</td></tr>
+        <tr><td>Documents dispersés dans les boîtes mail</td><td>GED centralisée par dossier, SHA-256 garanti</td></tr>
+        <tr><td>Conservation manuelle, risque non-conformité</td><td>Archivage et anonymisation automatiques BCEAO RG011</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ACCES DEMO -->
+  <div class="section">
+    <h3>ACCÈS DE DÉMONSTRATION</h3>
+    <table>
+      <thead><tr><th>Profil</th><th>Identifiant</th><th>Mot de passe</th><th>Ce qu'il voit</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Administrateur</strong></td><td>admin</td><td>admin123</td><td>Tableau de bord complet, exports, clôture, utilisateurs</td></tr>
+        <tr><td><strong>Agent</strong></td><td>agent</td><td>agent123</td><td>File d'attente, traitement, commentaires, pièces jointes</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:12px"><strong>URL application :</strong> <code>https://reclampro.vercel.app</code></p>
+    <p><strong>Portail client public :</strong> <code>https://reclampro.vercel.app/portail.html</code></p>
+    <p style="margin-top:8px;font-size:12.5px;color:#555">
+      Le portefeuille de démonstration contient <strong>25 réclamations</strong> réparties sur 4 catégories
+      (Financière, Contractuelle, Service, Fraude), avec des cas réels : dossiers en alerte SLA, dossiers clôturés,
+      dossiers en attente de pièces — pour illustrer tous les modules en situation opérationnelle.
+    </p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>RéclamPro — Application de gestion des réclamations clients BCEAO / CIMA</p>
+    <p>Document de présentation commerciale — Août 2026</p>
+    <p>Confidentiel — Usage interne et présentation client uniquement</p>
+  </div>
+
+</div>
 </body>
 </html>
